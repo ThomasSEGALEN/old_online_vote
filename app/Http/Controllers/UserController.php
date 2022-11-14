@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
 use App\Models\Role;
 use App\Models\Title;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -48,10 +50,23 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // if ((int)$request->title === Title::MAN) return 'Mr';
-        // if ((int)$request->title === Title::WOMAN) return 'Ms';
+        $check = User::where('email', $request->email)->first();
 
-        dd($request);
+        if ($check && $check->email) return back()->with('userCreateFailure', 'Impossible de créer cet utilisateur');
+
+        $user = User::create([
+            'last_name' => $request->last_name,
+            'first_name' => $request->first_name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'avatar' => null,
+            'title_id' => intval($request->title_id),
+        ]);
+
+        $user->roles()->attach(array_map('intval', $request->role_id));
+        // $user->groups()->attach(array_map('intval', $request->group_id));
+
+        return back()->with('userCreateSuccess', 'L\'utilisateur a été créé avec succès');
     }
 
     /**
