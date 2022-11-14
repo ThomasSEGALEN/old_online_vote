@@ -96,7 +96,13 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $this->authorize('update', $user);
+
+        $groups = Group::all();
+        $roles = Role::all();
+        $titles = Title::all();
+
+        return view('users.edit', compact('groups', 'roles', 'titles'));
     }
 
     /**

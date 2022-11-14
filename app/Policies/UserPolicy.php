@@ -57,7 +57,11 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        //
+        if ($user->id === $model->id) return true;
+
+        foreach ($user->roles as $role) {
+            return $role->permissions->contains('name', 'update');
+        }
     }
 
     /**
