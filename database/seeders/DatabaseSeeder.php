@@ -23,16 +23,18 @@ class DatabaseSeeder extends Seeder
 
         // Primary tables
         // $this->call([
+        //     GroupSeeder::class,
         //     PermissionSeeder::class,
         //     RoleSeeder::class,
         //     TitleSeeder::class,
         //     UserSeeder::class,
         // ]);
-
+        
         // Pivot tables
         // $this->call([
         //     PermissionRoleSeeder::class,
         //     RoleUserSeeder::class,
+        //     GroupUserSeeder::class,
         // ]);
     }
 }
