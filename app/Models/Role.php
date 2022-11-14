@@ -14,13 +14,13 @@ class Role extends Model
     public const ADMIN = 1;
     public const USER = 2;
 
-    public function users()
-    {
-        return $this->belongsToMany(User::class);
-    }
-
     public function permissions()
     {
         return $this->belongsToMany(Permission::class);
+    }
+    
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Models\Group;
 use App\Models\Role;
 use App\Models\Title;
 use App\Models\User;
@@ -18,9 +19,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        // Manage access to view
-        // $this->authorize('read');
-        // $this->authorize('viewAny', User::class);
+        $this->authorize('viewAny', User::class);
 
         $users = User::all();
 
@@ -36,10 +35,11 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
 
+        $groups = Group::all();
         $roles = Role::all();
         $titles = Title::all();
 
-        return view('users.create', compact('roles', 'titles'));
+        return view('users.create', compact('groups', 'roles', 'titles'));
     }
 
     /**
@@ -50,6 +50,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', User::class);
+
         $check = User::where('email', $request->email)->first();
 
         if ($check && $check->email) return back()->with('userCreateFailure', 'Impossible de créer cet utilisateur');
@@ -77,7 +79,13 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $this->authorize('view', $user);
+
+        $groups = Group::all();
+        $roles = Role::all();
+        $titles = Title::all();
+
+        return view('users.show', compact('user', 'groups', 'roles', 'titles'));
     }
 
     /**

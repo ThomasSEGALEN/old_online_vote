@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         //     TitleSeeder::class,
         //     UserSeeder::class,
         // ]);
-        
+
         // Pivot tables
         // $this->call([
         //     PermissionRoleSeeder::class,

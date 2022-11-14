@@ -15,17 +15,22 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    @can ('create', \App\Models\User::class)
+                    @can ('viewAny', \App\Models\User::class)
                     <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
                         {{ __('Utilisateurs') }}
                     </x-nav-link>
                     @endcan
-                    @can ('create', \App\Models\Role::class)
+                    @can ('viewAny', \App\Models\Role::class)
                     <x-nav-link :href="route('roles.index')" :active="request()->routeIs('roles.*')">
                         {{ __('Rôles') }}
                     </x-nav-link>
                     @endcan
-                    {{-- @can ('create', \App\Models\Session::class)
+                    @can ('viewAny', \App\Models\Group::class)
+                    <x-nav-link :href="route('groups.index')" :active="request()->routeIs('groups.*')">
+                        {{ __('Groupes') }}
+                    </x-nav-link>
+                    @endcan
+                    {{-- @can ('viewAny', \App\Models\Session::class)
                     <x-nav-link :href="route('sessions.index')" :active="request()->routeIs('sessions.*')">
                         {{ __('Séances') }}
                     </x-nav-link>

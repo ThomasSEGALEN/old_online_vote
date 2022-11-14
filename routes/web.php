@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\App;
@@ -24,6 +25,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('users', UserController::class);
 
     Route::resource('roles', RoleController::class);
+
+    Route::resource('groups', GroupController::class);
 });
 
 Route::get('/', function () {
