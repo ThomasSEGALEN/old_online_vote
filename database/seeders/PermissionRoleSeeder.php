@@ -19,27 +19,51 @@ class PermissionRoleSeeder extends Seeder
     {
         DB::table('permission_role')->insert([
             [
-                'permission_id' => Permission::VIEW_ANY,
+                'permission_id' => Permission::USERS_VIEW_ANY,
                 'role_id' => Role::ADMIN,
             ],
             [
-                'permission_id' => Permission::VIEW,
+                'permission_id' => Permission::USERS_VIEW,
                 'role_id' => Role::ADMIN,
             ],
             [
-                'permission_id' => Permission::CREATE,
+                'permission_id' => Permission::USERS_CREATE,
                 'role_id' => Role::ADMIN,
             ],
             [
-                'permission_id' => Permission::UPDATE,
+                'permission_id' => Permission::USERS_UPDATE,
                 'role_id' => Role::ADMIN,
             ],
             [
-                'permission_id' => Permission::DELETE,
+                'permission_id' => Permission::USERS_DELETE,
                 'role_id' => Role::ADMIN,
             ],
             [
-                'permission_id' => Permission::VIEW_ANY,
+                'permission_id' => Permission::ROLES_VIEW_ANY,
+                'role_id' => Role::ADMIN,
+            ],
+            [
+                'permission_id' => Permission::ROLES_VIEW,
+                'role_id' => Role::ADMIN,
+            ],
+            [
+                'permission_id' => Permission::ROLES_CREATE,
+                'role_id' => Role::ADMIN,
+            ],
+            [
+                'permission_id' => Permission::ROLES_UPDATE,
+                'role_id' => Role::ADMIN,
+            ],
+            [
+                'permission_id' => Permission::ROLES_DELETE,
+                'role_id' => Role::ADMIN,
+            ],
+            [
+                'permission_id' => Permission::USERS_VIEW_ANY,
+                'role_id' => Role::USER,
+            ],
+            [
+                'permission_id' => Permission::ROLES_VIEW_ANY,
                 'role_id' => Role::USER,
             ],
         ]);
