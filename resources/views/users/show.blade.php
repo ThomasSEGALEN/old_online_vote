@@ -26,7 +26,6 @@
                         <li class="ml-4"><a href={{ route('roles.show', $role) }}>{{ $role->name }}</a></li>
                         @endforeach
                     </div>
-                    
                 </div>
             </div>
         </div>

@@ -66,7 +66,7 @@ class UserController extends Controller
         ]);
 
         $user->roles()->attach(array_map('intval', $request->role_id));
-        // $user->groups()->attach(array_map('intval', $request->group_id));
+        $user->groups()->attach(array_map('intval', $request->group_id));
 
         return back()->with('userCreateSuccess', 'L\'utilisateur a été créé avec succès');
     }
@@ -102,7 +102,7 @@ class UserController extends Controller
         $roles = Role::all();
         $titles = Title::all();
 
-        return view('users.edit', compact('groups', 'roles', 'titles'));
+        return view('users.edit', compact('user', 'groups', 'roles', 'titles'));
     }
 
     /**
@@ -112,9 +112,27 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(StoreUserRequest $request, User $user)
     {
-        //
+        $this->authorize('update', $user);
+
+        $check = User::where('email', $request->email)->first();
+
+        if ($check) return back()->with('userUpdateFailure', 'Impossible de modifier cet utilisateur');
+
+        $user->update([
+            'last_name' => $request->last_name,
+            'first_name' => $request->first_name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'avatar' => null,
+            'title_id' => intval($request->title_id),
+        ]);
+        
+        $user->roles()->attach(array_map('intval', $request->role_id));
+        $user->groups()->attach(array_map('intval', $request->group_id));
+
+        return back()->with('userUpdateSuccess', 'L\'utilisateur a été modifié avec succès');
     }
 
     /**
