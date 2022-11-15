@@ -19,11 +19,15 @@ class PermissionRoleSeeder extends Seeder
     {
         DB::table('permission_role')->insert([
             [
-                'permission_id' => Permission::CREATE,
+                'permission_id' => Permission::VIEW_ANY,
                 'role_id' => Role::ADMIN,
             ],
             [
-                'permission_id' => Permission::READ,
+                'permission_id' => Permission::VIEW,
+                'role_id' => Role::ADMIN,
+            ],
+            [
+                'permission_id' => Permission::CREATE,
                 'role_id' => Role::ADMIN,
             ],
             [
@@ -35,7 +39,7 @@ class PermissionRoleSeeder extends Seeder
                 'role_id' => Role::ADMIN,
             ],
             [
-                'permission_id' => Permission::READ,
+                'permission_id' => Permission::VIEW_ANY,
                 'role_id' => Role::USER,
             ],
         ]);

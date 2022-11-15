@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Permission;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -17,10 +18,9 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
-        // foreach ($user->roles as $role) {
-        //     return $role->permissions->contains('name', 'read');
-        // }
+        foreach ($user->roles as $role) {
+            return $role->permissions->contains('id', Permission::VIEW_ANY);
+        }
     }
 
     /**
@@ -32,7 +32,11 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        return true;
+        if ($user->id === $model->id) return true;
+
+        foreach ($user->roles as $role) {
+            return $role->permissions->contains('id', Permission::VIEW);
+        }
     }
 
     /**
@@ -44,7 +48,7 @@ class UserPolicy
     public function create(User $user)
     {
         foreach ($user->roles as $role) {
-            return $role->permissions->contains('name', 'create');
+            return $role->permissions->contains('id', Permission::CREATE);
         }
     }
 
@@ -60,7 +64,7 @@ class UserPolicy
         if ($user->id === $model->id) return true;
 
         foreach ($user->roles as $role) {
-            return $role->permissions->contains('name', 'update');
+            return $role->permissions->contains('id', Permission::UPDATE);
         }
     }
 
@@ -74,7 +78,7 @@ class UserPolicy
     public function delete(User $user, User $model)
     {
         foreach ($user->roles as $role) {
-            return $role->permissions->contains('name', 'delete');
+            return $role->permissions->contains('id', Permission::DELETE);
         }
     }
 

@@ -26,10 +26,10 @@
                                     <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="titleInput">
                                         Civilité
                                     </label>
-                                    <input id="titleInputMan" type="radio" name="title_id" value="1" checked />
-                                    <label for="titleInputMan" class="mr-5">Monsieur</label>
-                                    <input id="titleInputWoman" type="radio" name="title_id" value="2" />
-                                    <label for="titleInputWoman">Madame</label>
+                                    @foreach ($titles as $title)
+                                    <input id="titleInput-{{ $title->id }}" type="radio" name="title_id" value="{{ $title->id }}" @if ($title->id === App\Models\Title::MAN) checked @endif />
+                                    <label for="titleInput-{{ $title->id }}" class="mr-5">{{ $title->long_name }}</label>
+                                    @endforeach
                                 </div>
                                 <div class="w-full px-3 mb-3 md:mb-6">
                                     <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="lastNameInput">
@@ -101,8 +101,8 @@
                                     @foreach ($roles as $role)
                                     <div class="@error('role_id') is-invalid @enderror form-check flex flex-row">
                                         <input class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                                        id="roleInput" type="checkbox" name="role_id[]" value="{{ $role->id }}" @if ($role->id === App\Models\Role::USER ) checked @endif>
-                                        <label class="form-check-label inline-block text-gray-800" for="roleInput">
+                                        id="roleInput-{{ $role->id }}" type="checkbox" name="role_id[]" value="{{ $role->id }}" @if ($role->id === App\Models\Role::USER ) checked @endif>
+                                        <label class="form-check-label inline-block text-gray-800" for="roleInput-{{ $role->id }}">
                                             {{ $role->name }}
                                         </label>
                                     </div>
@@ -118,8 +118,8 @@
                                     @foreach ($groups as $group)
                                     <div class="@error('group_id') is-invalid @enderror form-check flex flex-row">
                                         <input class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                                        id="groupInput" type="checkbox" name="group_id[]" value="{{ $group->id }}">
-                                        <label class="form-check-label inline-block text-gray-800" for="groupInput">
+                                        id="groupInput-{{ $group->id }}" type="checkbox" name="group_id[]" value="{{ $group->id }}">
+                                        <label class="form-check-label inline-block text-gray-800" for="groupInput-{{ $group->id }}">
                                             {{ $group->name }}
                                         </label>
                                     </div>

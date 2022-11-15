@@ -17,12 +17,14 @@ class TitleSeeder extends Seeder
     {
         DB::table('titles')->insert([
             [
-                'name' => 'Monsieur',
+                'short_name' => 'M.',
+                'long_name' => 'Monsieur',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'name' => 'Madame',
+                'short_name' => 'Mme',
+                'long_name' => 'Madame',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],

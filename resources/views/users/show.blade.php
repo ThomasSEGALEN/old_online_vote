@@ -28,12 +28,14 @@
                     <div class="flex flex-col">
                         <span class="mb-4">{{ $user->title->name }} {{ $user->first_name }} {{ $user->last_name }}</span>
                         <span>Adresse mail : {{ $user->email }}</span>
+                        @if ($user->groups->first())
                         <ul>
                             <span>Groupes :<span>
                             @foreach ($user->groups as $group)
                             <li><a href={{ route('groups.show', $group) }}>{{ $group->name }}</a></li>
                             @endforeach
                         </ul>
+                        @endif
                         <ul>
                             <span>Rôles :</span>
                             @foreach ($user->roles as $role)

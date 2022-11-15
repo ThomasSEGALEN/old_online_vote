@@ -1,4 +1,4 @@
-<?php
+c<?php
 
 namespace App\Models;
 
@@ -9,7 +9,7 @@ class Title extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['short_name', 'long_name'];
 
     public const MAN = 1;
     public const WOMAN = 2;

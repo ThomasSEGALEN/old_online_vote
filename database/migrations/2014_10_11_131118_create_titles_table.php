@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('titles', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('short_name');
+            $table->string('long_name');
             $table->timestamps();
         });
     }

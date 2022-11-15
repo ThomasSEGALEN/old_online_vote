@@ -41,9 +41,7 @@ class RolePolicy
      */
     public function create(User $user)
     {
-        foreach ($user->roles as $role) {
-            return $role->permissions->contains('name', 'create');
-        }
+        //
     }
 
     /**

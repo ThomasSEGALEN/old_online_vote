@@ -11,10 +11,11 @@ class Permission extends Model
 
     protected $fillable = ['name'];
 
-    public const CREATE = 1;
-    public const READ = 2;
-    public const UPDATE = 3;
-    public const DELETE = 4;
+    public const VIEW_ANY = 1;
+    public const VIEW = 2;
+    public const CREATE = 3;
+    public const UPDATE = 4;
+    public const DELETE = 5;
 
     public function roles()
     {
