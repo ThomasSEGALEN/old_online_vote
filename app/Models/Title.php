@@ -14,6 +14,11 @@ class Title extends Model
     public const MAN = 1;
     public const WOMAN = 2;
 
+    public function scopeGetTitles()
+    {
+        return Title::all();
+    }
+
     public function users()
     {
         return $this->hasMany(User::class);

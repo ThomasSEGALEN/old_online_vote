@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\Group;
 use App\Models\Role;
 use App\Models\Title;
@@ -21,7 +22,7 @@ class UserController extends Controller
     {
         $this->authorize('viewAny', User::class);
 
-        $users = User::all();
+        $users = User::getUsers();
 
         return view('users.index', compact('users'));
     }
@@ -35,9 +36,9 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
 
-        $groups = Group::all();
-        $roles = Role::all();
-        $titles = Title::all();
+        $groups = Group::getGroups();
+        $roles = Role::getRoles();
+        $titles = Title::getTitles();
 
         return view('users.create', compact('groups', 'roles', 'titles'));
     }
@@ -48,13 +49,13 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
         $this->authorize('create', User::class);
 
-        $check = User::where('email', $request->email)->first();
-
-        if ($check && $check->email) return back()->with('userCreateFailure', 'Impossible de créer cet utilisateur');
+        $mailAlreadyUsed = User::where('email', $request->email)->first();
+            
+        if ($mailAlreadyUsed) return back()->with('userCreateFailure', 'Cette adresse mail est déjà utilisée');
 
         $user = User::create([
             'last_name' => $request->last_name,
@@ -65,10 +66,12 @@ class UserController extends Controller
             'title_id' => intval($request->title_id),
         ]);
 
-        $user->roles()->attach(array_map('intval', $request->role_id));
-        $user->groups()->attach(array_map('intval', $request->group_id));
+        if ($request->group_id) $user->groups()->attach(array_map('intval', $request->group_id));
+        else $user->groups()->attach([]);
 
-        return back()->with('userCreateSuccess', 'L\'utilisateur a été créé avec succès');
+        $user->roles()->attach(array_map('intval', $request->role_id));
+
+        return back()->with('userCreateSuccess', "L'utilisateur a été créé avec succès");
     }
 
     /**
@@ -79,11 +82,13 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        if (!$user) return back()->with('userViewFailure', "Cet utilisateur n'existe pas");
+
         $this->authorize('view', $user);
 
-        $groups = Group::all();
+        $groups = Group::getGroups();
         $roles = Role::all();
-        $titles = Title::all();
+        $titles = Title::getTitles();
 
         return view('users.show', compact('user', 'groups', 'roles', 'titles'));
     }
@@ -96,11 +101,13 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        if (!$user) return back()->with('userUpdateFailure', "Cet utilisateur n'existe pas");
+
         $this->authorize('update', $user);
 
-        $groups = Group::all();
+        $groups = Group::getGroups();
         $roles = Role::all();
-        $titles = Title::all();
+        $titles = Title::getTitles();
 
         return view('users.edit', compact('user', 'groups', 'roles', 'titles'));
     }
@@ -112,13 +119,17 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
+        if (!$user) return back()->with('userUpdateFailure', "Cet utilisateur n'existe pas");
+
         $this->authorize('update', $user);
 
-        $check = User::where('email', $request->email)->first();
-
-        if ($check) return back()->with('userUpdateFailure', 'Impossible de modifier cet utilisateur');
+        if ($request->email !== $user->email) {
+            $mailAlreadyUsed = User::where('email', $request->email)->first();
+            
+            if ($mailAlreadyUsed) return back()->with('userUpdateFailure', 'Cette adresse mail est déjà utilisée');
+        }
 
         $user->update([
             'last_name' => $request->last_name,
@@ -128,11 +139,13 @@ class UserController extends Controller
             'avatar' => null,
             'title_id' => intval($request->title_id),
         ]);
-        
-        $user->roles()->attach(array_map('intval', $request->role_id));
-        $user->groups()->attach(array_map('intval', $request->group_id));
 
-        return back()->with('userUpdateSuccess', 'L\'utilisateur a été modifié avec succès');
+        if ($request->group_id) $user->groups()->sync(array_map('intval', $request->group_id));
+        else $user->groups()->sync([]);
+
+        $user->roles()->sync(array_map('intval', $request->role_id));
+
+        return back()->with('userUpdateSuccess', "L'utilisateur a été modifié avec succès");
     }
 
     /**
@@ -143,6 +156,18 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $users = User::getUsers();
+
+        if (!$user) return view('users.index', compact('users'))->with('userDeleteFailure', "Cet utilisateur n'existe pas");
+
+        $this->authorize('delete', $user);
+
+        $user->groups()->detach($user->groups()->get()->pluck('id')->toArray());
+        $user->roles()->detach($user->roles()->get()->pluck('id')->toArray());
+        $user->delete();
+
+        $users = User::getUsers();
+
+        return view('users.index', compact('users'))->with('userDeleteSuccess', "L'utilisateur a été supprimé avec succès");
     }
 }

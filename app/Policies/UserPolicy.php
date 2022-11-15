@@ -73,7 +73,9 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        //
+        foreach ($user->roles as $role) {
+            return $role->permissions->contains('name', 'delete');
+        }
     }
 
     /**

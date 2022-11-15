@@ -38,6 +38,16 @@ class UserSeeder extends Seeder
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
+            [
+                'last_name' => 'SÉGALEN',
+                'first_name' => 'Jérôme',
+                'email' => 'jerome@vote.fr',
+                'password' => Hash::make('jerome'),
+                'avatar' => null,
+                'title_id' => Title::MAN,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
         ]);
     }
 }

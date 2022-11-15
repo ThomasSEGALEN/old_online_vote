@@ -25,6 +25,10 @@ class RoleUserSeeder extends Seeder
                 'role_id' => Role::USER,
                 'user_id' => 2,
             ],
+            [
+                'role_id' => Role::USER,
+                'user_id' => 3,
+            ],
         ]);
     }
 }

@@ -31,46 +31,46 @@
                                     <input id="titleInputWoman" type="radio" name="title_id" value="2" />
                                     <label for="titleInputWoman">Madame</label>
                                 </div>
-                                <div class="w-full px-3 md:mb-6">
+                                <div class="w-full px-3 mb-3 md:mb-6">
                                     <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="lastNameInput">
                                         Nom
                                     </label>
                                     <input
-                                        class="@error('last_name') is-invalid @enderror appearance-none block w-full bg-gray-100 rounded py-3 px-4 mb-3 md:mb-0"
+                                        class="@error('last_name') is-invalid @enderror appearance-none block w-full bg-gray-100 rounded py-3 px-4 md:mb-0"
                                         id="lastNameInput" type="text" name="last_name" value="{{ old('last_name') }}">
                                     @error('last_name')
                                     <span class="text-red-600">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="w-full px-3 md:mb-6">
+                                <div class="w-full px-3 mb-3 md:mb-6">
                                     <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="firstNameInput">
                                         Prénom
                                     </label>
                                     <input
-                                        class="@error('first_name') is-invalid @enderror appearance-none block w-full bg-gray-100 rounded py-3 px-4 mb-3 md:mb-0"
+                                        class="@error('first_name') is-invalid @enderror appearance-none block w-full bg-gray-100 rounded py-3 px-4 md:mb-0"
                                         id="firstNameInput" type="text" name="first_name" value="{{ old('first_name') }}">
                                     @error('first_name')
                                     <span class="text-red-600">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="w-full px-3 md:mb-6">
+                                <div class="w-full px-3 mb-3 md:mb-6">
                                     <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="emailInput">
                                         Adresse mail
                                     </label>
                                     <input
-                                        class="@error('email') is-invalid @enderror appearance-none block w-full bg-gray-100 rounded py-3 px-4 mb-3 md:mb-0"
+                                        class="@error('email') is-invalid @enderror appearance-none block w-full bg-gray-100 rounded py-3 px-4 md:mb-0"
                                         id="emailInput" type="email" name="email" value="{{ old('email') }}">
                                     @error('email')
                                     <span class="text-red-600">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="w-full px-3 md:mb-6"  x-data="{ show: true }">
+                                <div class="w-full px-3 mb-3 md:mb-6"  x-data="{ show: true }">
                                     <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="passwordInput">
                                         Mot de passe
                                     </label>
                                     <div class="relative">
                                     <input
-                                        class="@error('password') is-invalid @enderror appearance-none block w-full bg-gray-100 rounded py-3 px-4 mb-3 md:mb-0"
+                                        class="@error('password') is-invalid @enderror appearance-none block w-full bg-gray-100 rounded py-3 px-4 md:mb-0"
                                         id="passwordInput" :type="show ? 'password' : 'text'" name="password">
                                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
                                         <svg class="w-5 h-5" :class="{'hidden': !show, 'block': show }" @click="show = !show" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg>
@@ -81,7 +81,7 @@
                                     <span class="text-red-600">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="w-full px-3 md:mb-6">
+                                <div class="w-full px-3 mb-3 md:mb-6">
                                     <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="avatarInput">
                                         Avatar
                                     </label>
@@ -94,7 +94,7 @@
                                 </div>
                             </div>
                             <div class="flex flex-col w-1/2 h-full -mx-3">
-                                <div class="flex flex-col w-full px-3 md:mb-6">
+                                <div class="w-full px-3 mb-3 md:mb-6">
                                     <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="roleInput">
                                         Rôles
                                     </label>
@@ -111,7 +111,7 @@
                                     <span class="text-red-600">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="w-full px-3 md:mb-6">
+                                <div class="w-full px-3 mb-3 md:mb-6">
                                     <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="groupInput">
                                         Groupes
                                     </label>
