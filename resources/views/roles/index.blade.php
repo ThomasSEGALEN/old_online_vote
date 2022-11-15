@@ -15,7 +15,14 @@
                     </a>
                     @endcan --}}
                     @foreach ($roles as $role)
-                    <li>{{ $role->name }}</li>
+                    @if (auth()->user()->can('view', $role))
+                    <span><a href="{{ route('roles.show', $role) }}">{{ $role->name }}</a></span>
+                    @else
+                    <span>{{ $role->name }}</span>
+                    @endif
+                    @foreach ($role->permissions as $permission)
+                    <li>{{ $permission->name }}</li>
+                    @endforeach
                     @endforeach
                 </div>
             </div>

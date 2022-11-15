@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -18,7 +19,9 @@ class RolePolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        foreach ($user->roles as $role) {
+            return $role->permissions->contains('id', Permission::ROLES_VIEW_ANY);
+        }
     }
 
     /**
@@ -30,7 +33,9 @@ class RolePolicy
      */
     public function view(User $user, Role $role)
     {
-        //
+        foreach ($user->roles as $role) {
+            return $role->permissions->contains('id', Permission::ROLES_VIEW);
+        }
     }
 
     /**
@@ -41,7 +46,9 @@ class RolePolicy
      */
     public function create(User $user)
     {
-        //
+        foreach ($user->roles as $role) {
+            return $role->permissions->contains('id', Permission::ROLES_CREATE);
+        }
     }
 
     /**
@@ -53,7 +60,9 @@ class RolePolicy
      */
     public function update(User $user, Role $role)
     {
-        //
+        foreach ($user->roles as $role) {
+            return $role->permissions->contains('id', Permission::ROLES_UPDATE);
+        }
     }
 
     /**
@@ -65,7 +74,9 @@ class RolePolicy
      */
     public function delete(User $user, Role $role)
     {
-        //
+        foreach ($user->roles as $role) {
+            return $role->permissions->contains('id', Permission::ROLES_DELETE);
+        }
     }
 
     /**
