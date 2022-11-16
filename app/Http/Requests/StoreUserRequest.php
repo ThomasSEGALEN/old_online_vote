@@ -30,7 +30,6 @@ class StoreUserRequest extends FormRequest
             'password' => ['required', 'min:6',],
             'avatar' =>  ['nullable', 'image'],
             'role_id' => ['required', 'max:1'],
-            'group_id' => ['nullable'],
         ];
     }
 
@@ -45,7 +44,6 @@ class StoreUserRequest extends FormRequest
             'avatar.image' => 'Doit être une image',
             'role_id.required' => 'Une valeur minimum',
             'role_id.max' => 'Une valeur maximum',
-            // 'group_id.required' => 'Une valeur minimum',
         ];
     }
 }

@@ -23,16 +23,20 @@
                         @method('PUT')
                         <div class="w-full flex flex-row justify-between">
                             <div class="flex flex-col w-1/2 -mx-3">
-                                <div class="w-full px-3 mb-3 md:mb-6">
+                                <div class="w-full px-3 mb-3">
                                     <label class="block uppercase tracking-wide text-xs font-bold mb-2">
                                         Civilité
                                     </label>
-                                    @foreach ($titles as $title)
-                                    <input id="titleInput-{{ $title->id }}" type="radio" name="title_id" value="{{ $title->id }}" @if ($user->title_id === $title->id) checked @endif />
-                                    <label for="titleInput-{{ $title->id }}" class="mr-5">{{ $title->long_name }}</label>
-                                    @endforeach
+                                    <div class="flex flex-col md:flex-row">
+                                        @foreach ($titles as $title)
+                                        <div>
+                                            <input id="titleInput-{{ $title->id }}" type="radio" name="title_id" value="{{ $title->id }}" @if ($user->title_id === $title->id) checked @endif />
+                                            <label for="titleInput-{{ $title->id }}" class="mr-5">{{ $title->long_name }}</label>
+                                        </div>
+                                        @endforeach
+                                    </div>
                                 </div>
-                                <div class="w-full px-3 mb-3 md:mb-6">
+                                <div class="w-full px-3 mb-3">
                                     <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="lastNameInput">
                                         Nom
                                     </label>
@@ -43,7 +47,7 @@
                                     <span class="text-red-600">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="w-full px-3 mb-3 md:mb-6">
+                                <div class="w-full px-3 mb-3">
                                     <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="firstNameInput">
                                         Prénom
                                     </label>
@@ -54,7 +58,7 @@
                                     <span class="text-red-600">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="w-full px-3 mb-3 md:mb-6">
+                                <div class="w-full px-3 mb-3">
                                     <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="emailInput">
                                         Adresse mail
                                     </label>
@@ -65,7 +69,7 @@
                                     <span class="text-red-600">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="w-full px-3 mb-3 md:mb-6"  x-data="{ show: true }">
+                                <div class="w-full px-3 mb-3"  x-data="{ show: true }">
                                     <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="passwordInput">
                                         Mot de passe
                                     </label>
@@ -82,7 +86,7 @@
                                     <span class="text-red-600">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="w-full px-3 mb-3 md:mb-6">
+                                <div class="w-full px-3 mb-3">
                                     <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="avatarInput">
                                         Avatar
                                     </label>
@@ -95,36 +99,40 @@
                                 </div>
                             </div>
                             <div class="flex flex-col w-1/2 h-full -mx-3">
-                                <div class="w-full px-3 mb-3 md:mb-6">
+                                <div class="w-full px-3 mb-10 md:mb-4">
                                     <label class="block uppercase tracking-wide text-xs font-bold mb-2">
                                         Rôles
                                     </label>
-                                    @foreach ($roles as $role)
-                                    <div class="@error('role_id') is-invalid @enderror form-check flex flex-row">
-                                        <input class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                                        id="roleInput-{{ $role->id }}" type="checkbox" name="role_id[]" value="{{ $role->id }}" @foreach ($user->roles as $userRole) @if ($role->id === $userRole->id ) checked @endif @endforeach>
-                                        <label class="form-check-label inline-block text-gray-800" for="roleInput-{{ $role->id }}">
-                                            {{ $role->name }}
-                                        </label>
+                                    <div class="h-48 px-1 overflow-y-auto">
+                                        @foreach ($roles as $role)
+                                        <div class="@error('role_id') is-invalid @enderror form-check flex flex-row">
+                                            <input class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                            id="roleInput-{{ $role->id }}" type="checkbox" name="role_id[]" value="{{ $role->id }}" @foreach ($user->roles as $userRole) @if ($role->id === $userRole->id ) checked @endif @endforeach>
+                                            <label class="form-check-label inline-block text-gray-800" for="roleInput-{{ $role->id }}">
+                                                {{ $role->name }}
+                                            </label>
+                                        </div>
+                                        @endforeach
                                     </div>
-                                    @endforeach
                                     @error('role_id')
                                     <span class="text-red-600">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="w-full px-3 mb-3 md:mb-6">
+                                <div class="w-full px-3 mb-3">
                                     <label class="block uppercase tracking-wide text-xs font-bold mb-2">
                                         Groupes
                                     </label>
-                                    @foreach ($groups as $group)
-                                    <div class="@error('group_id') is-invalid @enderror form-check flex flex-row">
-                                        <input class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                                        id="groupInput-{{ $group->id }}" type="checkbox" name="group_id[]" value="{{ $group->id }}" @foreach ($user->groups as $userGroup) @if ($group->id === $userGroup->id) checked @endif @endforeach>
-                                        <label class="form-check-label inline-block text-gray-800" for="groupInput-{{ $group->id }}">
-                                            {{ $group->name }}
-                                        </label>
+                                    <div class="h-48 px-1 overflow-y-auto">
+                                        @foreach ($groups as $group)
+                                        <div class="@error('group_id') is-invalid @enderror form-check flex flex-row">
+                                            <input class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                            id="groupInput-{{ $group->id }}" type="checkbox" name="group_id[]" value="{{ $group->id }}" @foreach ($user->groups as $userGroup) @if ($group->id === $userGroup->id) checked @endif @endforeach>
+                                            <label class="form-check-label inline-block text-gray-800" for="groupInput-{{ $group->id }}">
+                                                {{ $group->name }}
+                                            </label>
+                                        </div>
+                                        @endforeach
                                     </div>
-                                    @endforeach
                                     @error('group_id')
                                     <span class="text-red-600">{{ $message }}</span>
                                     @enderror
