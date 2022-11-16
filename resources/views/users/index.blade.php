@@ -29,13 +29,15 @@
                         <span>Créer un utilisateur</span>
                     </a>
                     @endcan
-                    @foreach ($users as $user)
-                    @if (auth()->user()->can('view', $user))
-                    <li><a href={{ route('users.show', $user) }}>{{ $user->first_name }}</a></li>
-                    @else
-                    <li>{{ $user->first_name }}</li>
-                    @endif
-                    @endforeach
+                    <div class="flex flex-col">
+                        @foreach ($users as $user)
+                        @if (auth()->user()->can('view', $user))
+                        <li><a href={{ route('users.show', $user) }}>{{ $user->first_name }}</a></li>
+                        @else
+                        <li>{{ $user->first_name }}</li>
+                        @endif
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>

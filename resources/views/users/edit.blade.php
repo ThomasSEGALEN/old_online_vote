@@ -24,7 +24,7 @@
                         <div class="w-full flex flex-row justify-between">
                             <div class="flex flex-col w-1/2 -mx-3">
                                 <div class="w-full px-3 mb-3 md:mb-6">
-                                    <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="titleInput">
+                                    <label class="block uppercase tracking-wide text-xs font-bold mb-2">
                                         Civilité
                                     </label>
                                     @foreach ($titles as $title)
@@ -96,7 +96,7 @@
                             </div>
                             <div class="flex flex-col w-1/2 h-full -mx-3">
                                 <div class="w-full px-3 mb-3 md:mb-6">
-                                    <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="roleInput">
+                                    <label class="block uppercase tracking-wide text-xs font-bold mb-2">
                                         Rôles
                                     </label>
                                     @foreach ($roles as $role)
@@ -113,7 +113,7 @@
                                     @enderror
                                 </div>
                                 <div class="w-full px-3 mb-3 md:mb-6">
-                                    <label class="block uppercase tracking-wide text-xs font-bold mb-2" for="groupInput">
+                                    <label class="block uppercase tracking-wide text-xs font-bold mb-2">
                                         Groupes
                                     </label>
                                     @foreach ($groups as $group)

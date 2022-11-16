@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\App;
@@ -24,7 +25,14 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('users', UserController::class);
 
-    Route::resource('roles', RoleController::class);
+    // Route::resource('roles', RoleController::class);
+    Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
+    Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
+    Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create');
+    Route::get('/roles/{role}', [RoleController::class, 'show'])->name('roles.show');
+    Route::put('/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
+    Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
+    Route::get('/roles/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
 
     Route::resource('groups', GroupController::class);
 });

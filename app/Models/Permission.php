@@ -27,6 +27,11 @@ class Permission extends Model
     public const GROUPS_UPDATE = 14;
     public const GROUPS_DELETE = 15;
 
+    public function scopeGetPermissions()
+    {
+        return Permission::all();
+    }
+
     public function roles()
     {
         return $this->belongsToMany(Role::class);

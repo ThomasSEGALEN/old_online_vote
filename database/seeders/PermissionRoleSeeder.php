@@ -59,11 +59,35 @@ class PermissionRoleSeeder extends Seeder
                 'role_id' => Role::ADMIN,
             ],
             [
+                'permission_id' => Permission::GROUPS_VIEW_ANY,
+                'role_id' => Role::ADMIN,
+            ],
+            [
+                'permission_id' => Permission::GROUPS_VIEW,
+                'role_id' => Role::ADMIN,
+            ],
+            [
+                'permission_id' => Permission::GROUPS_CREATE,
+                'role_id' => Role::ADMIN,
+            ],
+            [
+                'permission_id' => Permission::GROUPS_UPDATE,
+                'role_id' => Role::ADMIN,
+            ],
+            [
+                'permission_id' => Permission::GROUPS_DELETE,
+                'role_id' => Role::ADMIN,
+            ],
+            [
                 'permission_id' => Permission::USERS_VIEW_ANY,
                 'role_id' => Role::USER,
             ],
             [
                 'permission_id' => Permission::ROLES_VIEW_ANY,
+                'role_id' => Role::USER,
+            ],
+            [
+                'permission_id' => Permission::GROUPS_VIEW_ANY,
                 'role_id' => Role::USER,
             ],
         ]);
