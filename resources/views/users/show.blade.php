@@ -25,27 +25,31 @@
                             </form>
                         @endcan
                     </div>
-                    <div class="flex flex-col">
-                        <span class="mb-4">{{ $user->title->short_name }} {{ $user->first_name }} {{ $user->last_name }}</span>
-                        <span>Adresse mail : {{ $user->email }}</span>
-                        @if ($user->groups->first())
-                        <span>Groupes :<span>
-                        @foreach ($user->groups as $group)
-                        @if (auth()->user()->can('view', $group))
-                        <li><a href={{ route('groups.show', $group) }}>{{ $group->name }}</a></li>
-                        @else
-                        <li>{{ $group->name }}</li>
-                        @endif
-                        @endforeach
-                        @endif
-                        <span>Rôles :</span>
-                        @foreach ($user->roles as $role)
-                        @if (auth()->user()->can('view', $role))
-                        <li><a href={{ route('roles.show', $role) }}>{{ $role->name }}</a></li>
-                        @else
-                        <li>{{ $role->name }}</li>
-                        @endif
-                        @endforeach
+                    <div>
+                        <div class="flex flex-col">
+                            <span class="mb-4">{{ $user->title->short_name }} {{ $user->first_name }} {{ $user->last_name }}</span>
+                            <span>Adresse mail : {{ $user->email }}</span>
+                            @if ($user->groups->first())
+                            <span>Groupes :</span>
+                            @foreach ($user->groups->sortBy('name') as $group)
+                            @if (auth()->user()->can('view', $group))
+                            <li><a href={{ route('groups.show', $group) }}>{{ $group->name }}</a></li>
+                            @else
+                            <li>{{ $group->name }}</li>
+                            @endif
+                            @endforeach
+                            @endif
+                        </div>
+                        <div>
+                            <span>Rôles :</span>
+                            @foreach ($user->roles->sortBy('name') as $role)
+                            @if (auth()->user()->can('view', $role))
+                            <li><a href={{ route('roles.show', $role) }}>{{ $role->name }}</a></li>
+                            @else
+                            <li>{{ $role->name }}</li>
+                            @endif
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Group;
+use App\Models\Permission;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -18,7 +19,9 @@ class GroupPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        foreach ($user->roles as $role) {
+            return $role->permissions->contains('id', Permission::GROUPS_VIEW_ANY);
+        }
     }
 
     /**
@@ -30,7 +33,9 @@ class GroupPolicy
      */
     public function view(User $user, Group $group)
     {
-        //
+        foreach ($user->roles as $userRole) {
+            return $userRole->permissions->contains('id', Permission::GROUPS_VIEW);
+        }
     }
 
     /**
@@ -41,7 +46,9 @@ class GroupPolicy
      */
     public function create(User $user)
     {
-        //
+        foreach ($user->roles as $userRole) {
+            return $userRole->permissions->contains('id', Permission::GROUPS_CREATE);
+        }
     }
 
     /**
@@ -53,7 +60,9 @@ class GroupPolicy
      */
     public function update(User $user, Group $group)
     {
-        //
+        foreach ($user->roles as $userRole) {
+            return $userRole->permissions->contains('id', Permission::GROUPS_UPDATE);
+        }
     }
 
     /**
@@ -65,7 +74,9 @@ class GroupPolicy
      */
     public function delete(User $user, Group $group)
     {
-        //
+        foreach ($user->roles as $userRole) {
+            return $userRole->permissions->contains('id', Permission::GROUPS_DELETE);
+        }
     }
 
     /**

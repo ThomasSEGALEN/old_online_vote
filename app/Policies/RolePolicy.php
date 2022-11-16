@@ -28,13 +28,13 @@ class RolePolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Role  $model
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Role $model)
+    public function view(User $user, Role $role)
     {
-        foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::ROLES_VIEW);
+        foreach ($user->roles as $userRole) {
+            return $userRole->permissions->contains('id', Permission::ROLES_VIEW);
         }
     }
 
@@ -55,13 +55,13 @@ class RolePolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Role  $model
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Role $model)
+    public function update(User $user, Role $role)
     {
-        foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::ROLES_UPDATE);
+        foreach ($user->roles as $userRole) {
+            return $userRole->permissions->contains('id', Permission::ROLES_UPDATE);
         }
     }
 
@@ -69,13 +69,13 @@ class RolePolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Role  $model
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Role $model)
+    public function delete(User $user, Role $role)
     {
-        foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::ROLES_DELETE);
+        foreach ($user->roles as $userRole) {
+            return $userRole->permissions->contains('id', Permission::ROLES_DELETE);
         }
     }
 
@@ -83,10 +83,10 @@ class RolePolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Role  $model
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Role $model)
+    public function restore(User $user, Role $role)
     {
         //
     }
@@ -95,10 +95,10 @@ class RolePolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Role  $model
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Role $model)
+    public function forceDelete(User $user, Role $role)
     {
         //
     }
