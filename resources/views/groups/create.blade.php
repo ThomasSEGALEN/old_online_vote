@@ -1,24 +1,24 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Créer un rôle') }}
+            {{ __('Créer un groupe') }}
         </h2>
     </x-slot>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    @if (session('roleCreateSuccess'))
+                    @if (session('groupCreateSuccess'))
                     <div class="bg-green-100 text-green-700 py-2 px-4 rounded my-4" role="alert">
-                        <span class="block sm:inline">{{ session('roleCreateSuccess') }}</span>
+                        <span class="block sm:inline">{{ session('groupCreateSuccess') }}</span>
                     </div>
                     @endif
-                    @if (session('roleCreateFailure'))
+                    @if (session('groupCreateFailure'))
                     <div class="bg-red-100 text-red-700 py-2 px-4 rounded my-4" role="alert">
-                        <span class="block sm:inline">{{ session('roleCreateFailure') }}</span>
+                        <span class="block sm:inline">{{ session('groupCreateFailure') }}</span>
                     </div>
                     @endif
-                    <form action="{{ route('roles.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('groups.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="w-full flex flex-row justify-between">
                             <div class="flex flex-col w-1/3 -mx-3">
@@ -27,9 +27,9 @@
                                         Nom
                                     </label>
                                     <input
-                                        class="@error ('name') is-invalid @enderror appearance-none block w-full bg-gray-100 rounded py-3 px-4 md:mb-0"
+                                        class="@error  ('name') is-invalid @enderror appearance-none block w-full bg-gray-100 rounded py-3 px-4 md:mb-0"
                                         id="nameInput" type="text" name="name" value="{{ old('name') }}">
-                                    @error ('name')
+                                    @error  ('name')
                                     <span class="text-red-600">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -37,33 +37,18 @@
                             <div class="flex flex-col w-2/3 h-full -mx-3">
                                 <div class="w-full px-3 mb-3 md:mb-6">
                                     <label class="block uppercase tracking-wide text-xs font-bold mb-2">
-                                        Permissions
+                                        Utilisateurs
                                     </label>
-                                    @foreach ($permissions as $key => $permission)
-                                    @if ($key === \App\Models\Permission::USERS_VIEW_ANY - 1)
-                                    <label class="block uppercase tracking-wide text-xs font-bold mb-2">
-                                        Utilisateurs :
-                                    </label>
-                                    @endif
-                                    @if ($key === \App\Models\Permission::ROLES_VIEW_ANY - 1)
-                                    <label class="block uppercase tracking-wide text-xs font-bold mb-2">
-                                        Rôles :
-                                    </label>
-                                    @endif
-                                    @if ($key === \App\Models\Permission::GROUPS_VIEW_ANY - 1)
-                                    <label class="block uppercase tracking-wide text-xs font-bold mb-2">
-                                        Groupes :
-                                    </label>
-                                    @endif
-                                    <div class="@error ('role_id') is-invalid @enderror form-check flex flex-row">
+                                    @foreach ($users->sortBy('first_name')->sortBy('last_name') as $user)
+                                    <div class="@error  ('user_id') is-invalid @enderror form-check flex flex-row">
                                         <input class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                                        id="permissionInput-{{ $permission->id }}" type="checkbox" name="permission_id[]" value="{{ $permission->id }}" @if ($permission->id === \App\Models\Permission::USERS_VIEW_ANY || $permission->id === \App\Models\Permission::ROLES_VIEW_ANY || $permission->id === \App\Models\Permission::GROUPS_VIEW_ANY) checked @endif>
-                                        <label class="form-check-label inline-block text-gray-800" for="permissionInput-{{ $permission->id }}">
-                                            {{ $permission->name }}
+                                        id="userInput-{{ $user->id }}" type="checkbox" name="user_id[]" value="{{ $user->id }}">
+                                        <label class="form-check-label inline-block text-gray-800" for="userInput-{{ $user->id }}">
+                                            {{ $user->last_name }} {{ $user->first_name }}
                                         </label>
                                     </div>
                                     @endforeach
-                                    @error ('permission_id')
+                                    @error  ('user_id')
                                     <span class="text-red-600">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -74,7 +59,7 @@
                                 Envoyer
                             </button>
                             <button type="button" class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
-                                onclick="window.location='{{ route('roles.index') }}'">
+                                onclick="window.location='{{ route('groups.index') }}'">
                                 Annuler
                             </button>
                         </div>

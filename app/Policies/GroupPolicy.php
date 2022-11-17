@@ -33,6 +33,8 @@ class GroupPolicy
      */
     public function view(User $user, Group $group)
     {
+        if ($user->groups->contains('id', $group->id)) return true;
+
         foreach ($user->roles as $userRole) {
             return $userRole->permissions->contains('id', Permission::GROUPS_VIEW);
         }

@@ -18,7 +18,7 @@ class RoleController extends Controller
     {
         $roles = Role::all();
 
-        return view('roles.index', compact('roles'));//
+        return view('roles.index', compact('roles'));
     }
 
     /**
@@ -32,7 +32,8 @@ class RoleController extends Controller
 
         $permissions = Permission::getPermissions();
 
-        return view('roles.create', compact('permissions'));    }
+        return view('roles.create', compact('permissions'));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -54,7 +55,8 @@ class RoleController extends Controller
 
         $role->permissions()->attach(array_map('intval', $request->permission_id));
 
-        return back()->with('roleCreateSuccess', 'Le rôle a été créé avec succès');    }
+        return back()->with('roleCreateSuccess', 'Le rôle a été créé avec succès');
+    }
 
     /**
      * Display the specified resource.
@@ -70,7 +72,8 @@ class RoleController extends Controller
 
         $permissions = Permission::getPermissions();
 
-        return view('roles.show', compact('role', 'permissions'));    }
+        return view('roles.show', compact('role', 'permissions'));
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -86,7 +89,8 @@ class RoleController extends Controller
 
         $permissions = Permission::getPermissions();
 
-        return view('roles.edit', compact('role', 'permissions'));    }
+        return view('roles.edit', compact('role', 'permissions'));
+    }
 
     /**
      * Update the specified resource in storage.
@@ -113,7 +117,8 @@ class RoleController extends Controller
 
         $role->permissions()->sync(array_map('intval', $request->permission_id));
 
-        return back()->with('roleUpdateSuccess', 'Le rôle a été modifié avec succès');    }
+        return back()->with('roleUpdateSuccess', 'Le rôle a été modifié avec succès');
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -123,16 +128,13 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        $roles = Role::getRoles();
-
-        if (!$role) return view('roles.index', compact('roles'))->with('roleDeleteFailure', "Ce rôle n'existe pas");
+        if (!$role) return redirect()->route('roles.index')->with('roleDeleteFailure', "Ce rôle n'existe pas");
 
         $this->authorize('delete', $role);
 
         $role->permissions()->detach($role->permissions()->get()->pluck('id')->toArray());
         $role->delete();
 
-        $roles = Role::getRoles();
-
-        return view('roles.index', compact('roles'))->with('roleDeleteSuccess', 'Le rôle a été supprimé avec succès');    }
+        return redirect()->route('roles.index')->with('roleDeleteSuccess', 'Le rôle a été supprimé avec succès');
+    }
 }

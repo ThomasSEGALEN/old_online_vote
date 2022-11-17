@@ -156,9 +156,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $users = User::getUsers();
-
-        if (!$user) return view('users.index', compact('users'))->with('userDeleteFailure', "Cet utilisateur n'existe pas");
+        if (!$user) return redirect()->route('users.index')->with('userDeleteFailure', "Cet utilisateur n'existe pas");
 
         $this->authorize('delete', $user);
 
@@ -166,8 +164,6 @@ class UserController extends Controller
         $user->roles()->detach($user->roles()->get()->pluck('id')->toArray());
         $user->delete();
 
-        $users = User::getUsers();
-
-        return view('users.index', compact('users'))->with('userDeleteSuccess', "L'utilisateur a été supprimé avec succès");
+        return redirect()->route('users.index')->with('userDeleteSuccess', "L'utilisateur a été supprimé avec succès");
     }
 }

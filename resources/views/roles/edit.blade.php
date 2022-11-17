@@ -28,9 +28,9 @@
                                         Nom
                                     </label>
                                     <input
-                                        class="@error('name') is-invalid @enderror appearance-none block w-full bg-gray-100 rounded py-3 px-4 md:mb-0"
+                                        class="@error ('name') is-invalid @enderror appearance-none block w-full bg-gray-100 rounded py-3 px-4 md:mb-0"
                                         id="nameInput" type="text" name="name" value="{{ $role->name }}">
-                                    @error('name')
+                                    @error ('name')
                                     <span class="text-red-600">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -58,7 +58,7 @@
                                     @endif
                                     <div class="form-check flex flex-row">
                                         <input class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                                        id="permissionInput-{{ $permission->id }}" type="checkbox" name="permission_id[]" value="{{ $permission->id }}" @foreach ($role->permissions as $rolePermission) @if ($permission->id === $rolePermission->id) checked @endif @endforeach>
+                                        id="permissionInput-{{ $permission->id }}" type="checkbox" name="permission_id[]" value="{{ $permission->id }}" @if ($role->permissions->contains('id', $permission->id)) checked @endif>
                                         <label class="form-check-label inline-block text-gray-800" for="permissionInput-{{ $permission->id }}">
                                             {{ $permission->name }}
                                         </label>
