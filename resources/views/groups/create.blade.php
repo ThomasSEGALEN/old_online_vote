@@ -9,12 +9,12 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     @if (session('groupCreateSuccess'))
-                    <div class="bg-green-100 text-green-700 py-2 px-4 rounded my-4" role="alert">
+                    <div class="bg-green-100 text-green-700 py-2 px-4 rounded mb-2" role="alert">
                         <span class="block sm:inline">{{ session('groupCreateSuccess') }}</span>
                     </div>
                     @endif
                     @if (session('groupCreateFailure'))
-                    <div class="bg-red-100 text-red-700 py-2 px-4 rounded my-4" role="alert">
+                    <div class="bg-red-100 text-red-700 py-2 px-4 rounded mb-2" role="alert">
                         <span class="block sm:inline">{{ session('groupCreateFailure') }}</span>
                     </div>
                     @endif
@@ -27,9 +27,9 @@
                                         Nom
                                     </label>
                                     <input
-                                        class="@error  ('name') is-invalid @enderror appearance-none block w-full bg-gray-100 rounded py-3 px-4 md:mb-0"
+                                        class="@error ('name') is-invalid @enderror appearance-none block w-full bg-gray-100 rounded py-3 px-4 md:mb-0"
                                         id="nameInput" type="text" name="name" value="{{ old('name') }}">
-                                    @error  ('name')
+                                    @error ('name')
                                     <span class="text-red-600">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -40,7 +40,7 @@
                                         Utilisateurs
                                     </label>
                                     @foreach ($users->sortBy('first_name')->sortBy('last_name') as $user)
-                                    <div class="@error  ('user_id') is-invalid @enderror form-check flex flex-row">
+                                    <div class="@error ('user_id') is-invalid @enderror form-check flex flex-row">
                                         <input class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                         id="userInput-{{ $user->id }}" type="checkbox" name="user_id[]" value="{{ $user->id }}">
                                         <label class="form-check-label inline-block text-gray-800" for="userInput-{{ $user->id }}">
@@ -48,7 +48,7 @@
                                         </label>
                                     </div>
                                     @endforeach
-                                    @error  ('user_id')
+                                    @error ('user_id')
                                     <span class="text-red-600">{{ $message }}</span>
                                     @enderror
                                 </div>

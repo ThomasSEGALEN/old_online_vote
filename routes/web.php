@@ -3,6 +3,7 @@
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('roles', RoleController::class);
 
     Route::resource('groups', GroupController::class);
+
+    Route::resource('sessions', SessionController::class);
 });
 
 Route::get('/', function () {

@@ -2,12 +2,12 @@
 
 namespace App\Policies;
 
-use App\Models\Group;
 use App\Models\Permission;
+use App\Models\Session;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class GroupPolicy
+class SessionPolicy
 {
     use HandlesAuthorization;
 
@@ -20,7 +20,7 @@ class GroupPolicy
     public function viewAny(User $user)
     {
         foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::GROUPS_VIEW_ANY);
+            return $role->permissions->contains('id', Permission::SESSIONS_VIEW_ANY);
         }
     }
 
@@ -28,15 +28,15 @@ class GroupPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Group  $group
+     * @param  \App\Models\Session  $session
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Group $group)
+    public function view(User $user, Session $session)
     {
-        if ($user->groups->contains('id', $group->id)) return true;
+        if ($user->sessions->contains('id', $session->id)) return true;
 
         foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::GROUPS_VIEW);
+            return $role->permissions->contains('id', Permission::SESSIONS_VIEW);
         }
     }
 
@@ -49,7 +49,7 @@ class GroupPolicy
     public function create(User $user)
     {
         foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::GROUPS_CREATE);
+            return $role->permissions->contains('id', Permission::SESSIONS_CREATE);
         }
     }
 
@@ -57,13 +57,13 @@ class GroupPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Group  $group
+     * @param  \App\Models\Session  $session
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Group $group)
+    public function update(User $user, Session $session)
     {
         foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::GROUPS_UPDATE);
+            return $role->permissions->contains('id', Permission::SESSIONS_UPDATE);
         }
     }
 
@@ -71,13 +71,13 @@ class GroupPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Group  $group
+     * @param  \App\Models\Session  $session
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Group $group)
+    public function delete(User $user, Session $session)
     {
         foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::GROUPS_DELETE);
+            return $role->permissions->contains('id', Permission::SESSIONS_DELETE);
         }
     }
 
@@ -85,10 +85,10 @@ class GroupPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Group  $group
+     * @param  \App\Models\Session  $session
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Group $group)
+    public function restore(User $user, Session $session)
     {
         //
     }
@@ -97,10 +97,10 @@ class GroupPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Group  $group
+     * @param  \App\Models\Session  $session
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Group $group)
+    public function forceDelete(User $user, Session $session)
     {
         //
     }

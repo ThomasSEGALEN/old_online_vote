@@ -30,11 +30,11 @@
                         {{ __('Groupes') }}
                     </x-nav-link>
                     @endcan
-                    {{-- @can ('viewAny', \App\Models\Session::class)
+                    @can ('viewAny', \App\Models\Session::class)
                     <x-nav-link :href="route('sessions.index')" :active="request()->routeIs('sessions.*')">
                         {{ __('Séances') }}
                     </x-nav-link>
-                    @endcan --}}
+                    @endcan
                 </div>
             </div>
 

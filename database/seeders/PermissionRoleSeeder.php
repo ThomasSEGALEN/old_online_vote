@@ -79,6 +79,26 @@ class PermissionRoleSeeder extends Seeder
                 'role_id' => Role::ADMIN,
             ],
             [
+                'permission_id' => Permission::SESSIONS_VIEW_ANY,
+                'role_id' => Role::ADMIN,
+            ],
+            [
+                'permission_id' => Permission::SESSIONS_VIEW,
+                'role_id' => Role::ADMIN,
+            ],
+            [
+                'permission_id' => Permission::SESSIONS_CREATE,
+                'role_id' => Role::ADMIN,
+            ],
+            [
+                'permission_id' => Permission::SESSIONS_UPDATE,
+                'role_id' => Role::ADMIN,
+            ],
+            [
+                'permission_id' => Permission::SESSIONS_DELETE,
+                'role_id' => Role::ADMIN,
+            ],
+            [
                 'permission_id' => Permission::USERS_VIEW_ANY,
                 'role_id' => Role::USER,
             ],
@@ -88,6 +108,10 @@ class PermissionRoleSeeder extends Seeder
             ],
             [
                 'permission_id' => Permission::GROUPS_VIEW_ANY,
+                'role_id' => Role::USER,
+            ],
+            [
+                'permission_id' => Permission::SESSIONS_VIEW_ANY,
                 'role_id' => Role::USER,
             ],
         ]);

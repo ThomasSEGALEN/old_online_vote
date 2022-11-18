@@ -16,7 +16,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
+        $this->authorize('viewAny', Role::class);
+
+        $roles = Role::getRoles();
 
         return view('roles.index', compact('roles'));
     }
@@ -132,7 +134,7 @@ class RoleController extends Controller
 
         $this->authorize('delete', $role);
 
-        $role->permissions()->detach($role->permissions()->get()->pluck('id')->toArray());
+        $role->permissions()->detach($role->permissions()->pluck('id')->toArray());
         $role->delete();
 
         return redirect()->route('roles.index')->with('roleDeleteSuccess', 'Le rôle a été supprimé avec succès');

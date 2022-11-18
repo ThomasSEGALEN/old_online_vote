@@ -30,6 +30,7 @@ class StoreUserRequest extends FormRequest
             'password' => ['required', 'min:6',],
             'avatar' =>  ['nullable', 'image'],
             'role_id' => ['required', 'max:1'],
+            'group_id' => ['nullable'],
         ];
     }
 

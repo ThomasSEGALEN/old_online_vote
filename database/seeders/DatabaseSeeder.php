@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,6 +24,7 @@ class DatabaseSeeder extends Seeder
 
         // Primary tables
         // $this->call([
+        //     SessionSeeder::class,
         //     GroupSeeder::class,
         //     PermissionSeeder::class,
         //     RoleSeeder::class,
@@ -35,6 +37,8 @@ class DatabaseSeeder extends Seeder
         //     PermissionRoleSeeder::class,
         //     RoleUserSeeder::class,
         //     GroupUserSeeder::class,
+        //     GroupSessionSeeder::class,
+        //     SessionUserSeeder::class,
         // ]);
     }
 }

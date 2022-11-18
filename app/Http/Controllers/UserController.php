@@ -87,7 +87,7 @@ class UserController extends Controller
         $this->authorize('view', $user);
 
         $groups = Group::getGroups();
-        $roles = Role::all();
+        $roles = Role::getRoles();
         $titles = Title::getTitles();
 
         return view('users.show', compact('user', 'groups', 'roles', 'titles'));
@@ -106,7 +106,7 @@ class UserController extends Controller
         $this->authorize('update', $user);
 
         $groups = Group::getGroups();
-        $roles = Role::all();
+        $roles = Role::getRoles();
         $titles = Title::getTitles();
 
         return view('users.edit', compact('user', 'groups', 'roles', 'titles'));
@@ -160,8 +160,8 @@ class UserController extends Controller
 
         $this->authorize('delete', $user);
 
-        $user->groups()->detach($user->groups()->get()->pluck('id')->toArray());
-        $user->roles()->detach($user->roles()->get()->pluck('id')->toArray());
+        $user->groups()->detach($user->groups()->pluck('id')->toArray());
+        $user->roles()->detach($user->roles()->pluck('id')->toArray());
         $user->delete();
 
         return redirect()->route('users.index')->with('userDeleteSuccess', "L'utilisateur a été supprimé avec succès");

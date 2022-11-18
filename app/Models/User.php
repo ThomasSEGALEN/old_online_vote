@@ -60,6 +60,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
+    public function sessions()
+    {
+        return $this->belongsToMany(Session::class);
+    }
+
     public function title()
     {
         return $this->belongsTo(Title::class);

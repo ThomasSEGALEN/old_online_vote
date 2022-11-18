@@ -45,7 +45,6 @@ class UpdateUserRequest extends FormRequest
             'avatar.image' => 'Doit être une image',
             'role_id.required' => 'Une valeur minimum',
             'role_id.max' => 'Une valeur maximum',
-            // 'group_id.required' => 'Une valeur minimum',
         ];
     }
 }

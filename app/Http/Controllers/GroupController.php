@@ -16,6 +16,8 @@ class GroupController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Group::class);
+
         $groups = Group::getGroups();
 
         return view('groups.index', compact('groups'));
@@ -66,7 +68,11 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        $users = User::all();
+        if (!$group) return back()->with('groupViewFailure', "Ce groupe n'existe pas");
+
+        $this->authorize('view', $group);
+
+        $users = User::getUsers();
 
         return view('groups.show', compact('group', 'users'));
     }
@@ -128,7 +134,7 @@ class GroupController extends Controller
 
         $this->authorize('delete', $group);
 
-        $group->users()->detach($group->users()->get()->pluck('id')->toArray());
+        $group->users()->detach($group->users()->pluck('id')->toArray());
         $group->delete();
 
         return redirect()->route('groups.index')->with('groupDeleteSuccess', 'Le groupe a été supprimé avec succès');

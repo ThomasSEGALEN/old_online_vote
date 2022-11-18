@@ -26,6 +26,11 @@ class Permission extends Model
     public const GROUPS_CREATE = 13;
     public const GROUPS_UPDATE = 14;
     public const GROUPS_DELETE = 15;
+    public const SESSIONS_VIEW_ANY = 16;
+    public const SESSIONS_VIEW = 17;
+    public const SESSIONS_CREATE = 18;
+    public const SESSIONS_UPDATE = 19;
+    public const SESSIONS_DELETE = 20;
 
     public function scopeGetPermissions()
     {

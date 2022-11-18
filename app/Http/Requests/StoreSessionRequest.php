@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreGroupRequest extends FormRequest
+class StoreSessionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,16 +24,21 @@ class StoreGroupRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required'],
-            'user_id' => ['required'],
+            'title' => ['required'],
+            'description' => ['nullable'],
+            'start_date' => ['required'],
+            'end_date' => ['required'],
+            'group_id' => ['required'],
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'Champ requis',
-            'user_id.required' => 'Une valeur minimum',
+            'title.required' => 'Champ requis',
+            'start_date.required' => 'Champ requis',
+            'end_date.required' => 'Champ requis',
+            'group_id.required' => 'Une valeur minimum',
         ];
     }
 }
