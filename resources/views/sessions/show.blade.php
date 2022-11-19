@@ -32,7 +32,7 @@
                             <div>
                                 <span>Groupes :</span>
                                 @foreach ($session->groups->sortBy('name') as $group)
-                                @if (auth()->user()->can('view', $session))
+                                @if (auth()->user()->can('view', $group))
                                 <li><a href="{{ route('groups.show', $group) }}">{{ $group->name }}</a></li>
                                 @else
                                 <li>{{ $group->name }}</li>
