@@ -18,9 +18,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::USERS_VIEW_ANY);
-        }
+        return $user->permissions->contains('id', Permission::USERS_VIEW_ANY);
     }
 
     /**
@@ -34,9 +32,7 @@ class UserPolicy
     {
         if ($user->id === $model->id) return true;
 
-        foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::USERS_VIEW);
-        }
+            return $user->permissions->contains('id', Permission::USERS_VIEW);
     }
 
     /**
@@ -47,9 +43,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::USERS_CREATE);
-        }
+        return $user->permissions->contains('id', Permission::USERS_CREATE);
     }
 
     /**
@@ -63,9 +57,7 @@ class UserPolicy
     {
         if ($user->id === $model->id) return true;
 
-        foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::USERS_UPDATE);
-        }
+        return $user->permissions->contains('id', Permission::USERS_UPDATE);
     }
 
     /**
@@ -77,9 +69,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::USERS_DELETE);
-        }
+        return $user->permissions->contains('id', Permission::USERS_DELETE);
     }
 
     /**

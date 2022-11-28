@@ -19,9 +19,7 @@ class GroupPolicy
      */
     public function viewAny(User $user)
     {
-        foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::GROUPS_VIEW_ANY);
-        }
+        return $user->permissions->contains('id', Permission::GROUPS_VIEW_ANY);
     }
 
     /**
@@ -35,9 +33,7 @@ class GroupPolicy
     {
         if ($user->groups->contains('id', $group->id)) return true;
 
-        foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::GROUPS_VIEW);
-        }
+        return $user->permissions->contains('id', Permission::GROUPS_VIEW);
     }
 
     /**
@@ -48,9 +44,7 @@ class GroupPolicy
      */
     public function create(User $user)
     {
-        foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::GROUPS_CREATE);
-        }
+        return $user->permissions->contains('id', Permission::GROUPS_CREATE);
     }
 
     /**
@@ -62,9 +56,7 @@ class GroupPolicy
      */
     public function update(User $user, Group $group)
     {
-        foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::GROUPS_UPDATE);
-        }
+        return $user->permissions->contains('id', Permission::GROUPS_UPDATE);
     }
 
     /**
@@ -76,9 +68,7 @@ class GroupPolicy
      */
     public function delete(User $user, Group $group)
     {
-        foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::GROUPS_DELETE);
-        }
+        return $user->permissions->contains('id', Permission::GROUPS_DELETE);
     }
 
     /**

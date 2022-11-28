@@ -55,9 +55,14 @@
                                         Groupes :
                                     </label>
                                     @endif
-                                    <div class="@error ('role_id') is-invalid @enderror form-check flex flex-row">
+                                    @if ($key === \App\Models\Permission::SESSIONS_VIEW_ANY - 1)
+                                    <label class="block uppercase tracking-wide text-xs font-bold mb-2">
+                                        Sessions :
+                                    </label>
+                                    @endif
+                                    <div class="@error ('permission_id') is-invalid @enderror form-check flex flex-row">
                                         <input class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                                        id="permissionInput-{{ $permission->id }}" type="checkbox" name="permission_id[]" value="{{ $permission->id }}" @if ($permission->id === \App\Models\Permission::USERS_VIEW_ANY || $permission->id === \App\Models\Permission::ROLES_VIEW_ANY || $permission->id === \App\Models\Permission::GROUPS_VIEW_ANY) checked @endif>
+                                        id="permissionInput-{{ $permission->id }}" type="checkbox" name="permission_id[]" value="{{ $permission->id }}" @if ($permission->id === \App\Models\Permission::USERS_VIEW_ANY || $permission->id === \App\Models\Permission::ROLES_VIEW_ANY || $permission->id === \App\Models\Permission::GROUPS_VIEW_ANY || $permission->id === \App\Models\Permission::SESSIONS_VIEW_ANY) checked @endif>
                                         <label class="form-check-label inline-block text-gray-800" for="permissionInput-{{ $permission->id }}">
                                             {{ $permission->name }}
                                         </label>

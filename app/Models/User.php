@@ -23,6 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'avatar',
+        'role_id',
         'title_id',
     ];
 
@@ -55,9 +56,14 @@ class User extends Authenticatable
         return $this->belongsToMany(Group::class);
     }
 
-    public function roles()
+    public function permissions()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Permission::class);
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 
     public function sessions()

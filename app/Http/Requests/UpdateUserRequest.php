@@ -29,6 +29,7 @@ class UpdateUserRequest extends FormRequest
             'email' => ['required'],
             'password' => ['nullable', 'min:6',],
             'avatar' =>  ['nullable', 'image'],
+            'title_id' => ['required', 'max:1'],
             'role_id' => ['required', 'max:1'],
             'group_id' => ['nullable'],
         ];
@@ -43,6 +44,8 @@ class UpdateUserRequest extends FormRequest
             'password.required' => 'Champ requis',
             'password.min' => '6 caractères minimum',
             'avatar.image' => 'Doit être une image',
+            'title_id.required' => 'Une valeur minimum',
+            'title_id.max' => 'Une valeur maximum',
             'role_id.required' => 'Une valeur minimum',
             'role_id.max' => 'Une valeur maximum',
         ];

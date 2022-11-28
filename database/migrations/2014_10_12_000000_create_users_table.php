@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('avatar')->nullable();
             $table->rememberToken();
+            $table->foreignId('role_id')->constrained('roles');
             $table->foreignId('title_id')->constrained('titles');
             $table->timestamps();
         });
@@ -36,6 +37,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table)
         {
+            $table->dropConstrainedForeignId('role_id');
             $table->dropConstrainedForeignId('title_id');
         });
         Schema::dropIfExists('users');

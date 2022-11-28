@@ -41,14 +41,12 @@
                             @endif
                         </div>
                         <div>
-                            <span>Rôles :</span>
-                            @foreach ($user->roles->sortBy('name') as $role)
-                            @if (auth()->user()->can('view', $role))
-                            <li><a href={{ route('roles.show', $role) }}>{{ $role->name }}</a></li>
+                            <span>Rôle :</span>
+                            @if (auth()->user()->can('view', $user->role))
+                            <li><a href={{ route('roles.show', $user->role) }}>{{ $user->role->name }}</a></li>
                             @else
-                            <li>{{ $role->name }}</li>
+                            <li>{{ $user->role->name }}</li>
                             @endif
-                            @endforeach
                         </div>
                     </div>
                 </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Group;
+use App\Models\Permission;
 use App\Models\Role;
 use App\Models\Title;
 use App\Models\User;
@@ -37,10 +38,11 @@ class UserController extends Controller
         $this->authorize('create', User::class);
 
         $groups = Group::getGroups();
+        $permissions = Permission::getPermissions();
         $roles = Role::getRoles();
         $titles = Title::getTitles();
 
-        return view('users.create', compact('groups', 'roles', 'titles'));
+        return view('users.create', compact('groups', 'permissions', 'roles', 'titles'));
     }
 
     /**
@@ -63,13 +65,24 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'avatar' => null,
+            'role_id' => intval($request->role_id),
             'title_id' => intval($request->title_id),
         ]);
 
         if ($request->group_id) $user->groups()->attach(array_map('intval', $request->group_id));
         else $user->groups()->attach([]);
 
-        $user->roles()->attach(array_map('intval', $request->role_id));
+        $role = Role::where('id', intval($request->role_id))->first();
+        $permissions_id = array();
+
+        foreach ($role->permissions as $permission) {
+            array_push($permissions_id, $permission->id);
+        }
+
+        // if ($request->permission_id) array_merge($permissions_id, $request->permission_id);
+        dd(array_map('intval', $request->permission_id));
+
+        $user->permissions()->attach(array_map('intval', $permissions_id));
 
         return back()->with('userCreateSuccess', "L'utilisateur a été créé avec succès");
     }
@@ -137,13 +150,21 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'avatar' => null,
+            'role_id' => intval($request->role_id),
             'title_id' => intval($request->title_id),
         ]);
 
         if ($request->group_id) $user->groups()->sync(array_map('intval', $request->group_id));
         else $user->groups()->sync([]);
 
-        $user->roles()->sync(array_map('intval', $request->role_id));
+        $role = Role::where('id', intval($request->role_id))->first();
+        $permissions_id = array();
+
+        foreach ($role->permissions as $permission) {
+            array_push($permissions_id, $permission->id);
+        }
+
+        $user->permissions()->sync(array_map('intval', $permissions_id));
 
         return back()->with('userUpdateSuccess', "L'utilisateur a été modifié avec succès");
     }

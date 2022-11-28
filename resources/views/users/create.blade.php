@@ -26,13 +26,16 @@
                                     <label class="block uppercase tracking-wide text-xs font-bold mb-2">
                                         Civilité
                                     </label>
-                                    <div class="flex flex-col md:flex-row">
+                                    <div class="@error ('title_id') is-invalid @enderror flex flex-col md:flex-row">
                                     @foreach ($titles as $title)
                                     <div>
-                                        <input id="titleInput-{{ $title->id }}" type="radio" name="title_id" value="{{ $title->id }}" @if ($title->id === App\Models\Title::MAN) checked @endif />
+                                        <input class="form-check-input appearance-none h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" id="titleInput-{{ $title->id }}" type="radio" name="title_id" value="{{ $title->id }}" @if ($title->id === App\Models\Title::MAN) checked @endif />
                                         <label for="titleInput-{{ $title->id }}" class="mr-5">{{ $title->long_name }}</label>
                                     </div>
                                     @endforeach
+                                    @error ('title_id')
+                                    <span class="text-red-600">{{ $message }}</span>
+                                    @enderror
                                     </div>
                                 </div>
                                 <div class="w-full px-3 mb-3">
@@ -105,8 +108,8 @@
                                     <div class="h-48 px-1 overflow-y-auto">
                                         @foreach ($roles as $role)
                                         <div class="@error ('role_id') is-invalid @enderror form-check flex flex-row">
-                                            <input class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                                            id="roleInput-{{ $role->id }}" type="checkbox" name="role_id[]" value="{{ $role->id }}" @if ($role->id === \App\Models\Role::USER ) checked @endif>
+                                            <input class="form-check-input appearance-none h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                            id="roleInput-{{ $role->id }}" type="radio" name="role_id" value="{{ $role->id }}" @if ($role->id === \App\Models\Role::USER ) checked @endif>
                                             <label class="form-check-label inline-block text-gray-800" for="roleInput-{{ $role->id }}">
                                                 {{ $role->name }}
                                             </label>

@@ -19,9 +19,7 @@ class SessionPolicy
      */
     public function viewAny(User $user)
     {
-        foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::SESSIONS_VIEW_ANY);
-        }
+        return $user->permissions->contains('id', Permission::SESSIONS_VIEW_ANY);
     }
 
     /**
@@ -35,9 +33,7 @@ class SessionPolicy
     {
         if ($user->sessions->contains('id', $session->id)) return true;
 
-        foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::SESSIONS_VIEW);
-        }
+        return $user->permissions->contains('id', Permission::SESSIONS_VIEW);
     }
 
     /**
@@ -48,9 +44,7 @@ class SessionPolicy
      */
     public function create(User $user)
     {
-        foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::SESSIONS_CREATE);
-        }
+        return $user->permissions->contains('id', Permission::SESSIONS_CREATE);
     }
 
     /**
@@ -62,9 +56,7 @@ class SessionPolicy
      */
     public function update(User $user, Session $session)
     {
-        foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::SESSIONS_UPDATE);
-        }
+        return $user->permissions->contains('id', Permission::SESSIONS_UPDATE);
     }
 
     /**
@@ -76,9 +68,7 @@ class SessionPolicy
      */
     public function delete(User $user, Session $session)
     {
-        foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::SESSIONS_DELETE);
-        }
+        return $user->permissions->contains('id', Permission::SESSIONS_DELETE);
     }
 
     /**

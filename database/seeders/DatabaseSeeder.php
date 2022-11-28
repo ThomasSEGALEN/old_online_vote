@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Permission;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -35,7 +36,7 @@ class DatabaseSeeder extends Seeder
         // Pivot tables
         // $this->call([
         //     PermissionRoleSeeder::class,
-        //     RoleUserSeeder::class,
+        //     PermissionUserSeeder::class,
         //     GroupUserSeeder::class,
         //     GroupSessionSeeder::class,
         //     SessionUserSeeder::class,

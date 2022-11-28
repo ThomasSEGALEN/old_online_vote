@@ -19,9 +19,7 @@ class RolePolicy
      */
     public function viewAny(User $user)
     {
-        foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::ROLES_VIEW_ANY);
-        }
+        return $user->permissions->contains('id', Permission::ROLES_VIEW_ANY);
     }
 
     /**
@@ -33,9 +31,7 @@ class RolePolicy
      */
     public function view(User $user, Role $role)
     {
-        foreach ($user->roles as $userRole) {
-            return $userRole->permissions->contains('id', Permission::ROLES_VIEW);
-        }
+        return $user->permissions->contains('id', Permission::ROLES_VIEW);
     }
 
     /**
@@ -46,9 +42,7 @@ class RolePolicy
      */
     public function create(User $user)
     {
-        foreach ($user->roles as $role) {
-            return $role->permissions->contains('id', Permission::ROLES_CREATE);
-        }
+        return $user->permissions->contains('id', Permission::ROLES_CREATE);
     }
 
     /**
@@ -60,9 +54,7 @@ class RolePolicy
      */
     public function update(User $user, Role $role)
     {
-        foreach ($user->roles as $userRole) {
-            return $userRole->permissions->contains('id', Permission::ROLES_UPDATE);
-        }
+        return $user->permissions->contains('id', Permission::ROLES_UPDATE);
     }
 
     /**
@@ -74,9 +66,7 @@ class RolePolicy
      */
     public function delete(User $user, Role $role)
     {
-        foreach ($user->roles as $userRole) {
-            return $userRole->permissions->contains('id', Permission::ROLES_DELETE);
-        }
+        return $user->permissions->contains('id', Permission::ROLES_DELETE);
     }
 
     /**

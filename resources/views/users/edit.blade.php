@@ -27,13 +27,16 @@
                                     <label class="block uppercase tracking-wide text-xs font-bold mb-2">
                                         Civilité
                                     </label>
-                                    <div class="flex flex-col md:flex-row">
+                                    <div class="@error ('title_id') is-invalid @enderror flex flex-col md:flex-row">
                                         @foreach ($titles as $title)
                                         <div>
                                             <input id="titleInput-{{ $title->id }}" type="radio" name="title_id" value="{{ $title->id }}" @if ($user->title_id === $title->id) checked @endif />
                                             <label for="titleInput-{{ $title->id }}" class="mr-5">{{ $title->long_name }}</label>
                                         </div>
                                         @endforeach
+                                        @error ('title_id')
+                                        <span class="text-red-600">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="w-full px-3 mb-3">
@@ -107,16 +110,16 @@
                                         @foreach ($roles as $role)
                                         <div class="@error ('role_id') is-invalid @enderror form-check flex flex-row">
                                             <input class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                                            id="roleInput-{{ $role->id }}" type="checkbox" name="role_id[]" value="{{ $role->id }}" @if ($user->roles->contains('id', $role->id)) checked @endif>
+                                            id="roleInput-{{ $role->id }}" type="checkbox" name="role_id" value="{{ $role->id }}" @if ($user->role->id === $role->id) checked @endif>
                                             <label class="form-check-label inline-block text-gray-800" for="roleInput-{{ $role->id }}">
                                                 {{ $role->name }}
                                             </label>
                                         </div>
                                         @endforeach
+                                        @error ('role_id')
+                                        <span class="text-red-600">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    @error ('role_id')
-                                    <span class="text-red-600">{{ $message }}</span>
-                                    @enderror
                                 </div>
                                 <div class="w-full px-3 mb-3">
                                     <label class="block uppercase tracking-wide text-xs font-bold mb-2">
@@ -124,7 +127,7 @@
                                     </label>
                                     <div class="h-48 px-1 overflow-y-auto">
                                         @foreach ($groups as $group)
-                                        <div class="@error ('group_id') is-invalid @enderror form-check flex flex-row">
+                                        <div class="form-check flex flex-row">
                                             <input class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                             id="groupInput-{{ $group->id }}" type="checkbox" name="group_id[]" value="{{ $group->id }}" @if ($user->groups->contains('id', $group->id)) checked @endif>
                                             <label class="form-check-label inline-block text-gray-800" for="groupInput-{{ $group->id }}">
@@ -133,9 +136,6 @@
                                         </div>
                                         @endforeach
                                     </div>
-                                    @error ('group_id')
-                                    <span class="text-red-600">{{ $message }}</span>
-                                    @enderror
                                 </div>
                             </div>
                         </div>
