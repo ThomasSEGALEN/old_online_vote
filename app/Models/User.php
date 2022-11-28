@@ -73,6 +73,6 @@ class User extends Authenticatable
 
     public function title()
     {
-        return $this->belongsTo(Title::class);
+        return $this->belongsTo(UserTitle::class);
     }
 }

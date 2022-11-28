@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Role;
-use App\Models\Title;
+use App\Models\UserTitle;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('thomas'),
                 'avatar' => null,
                 'role_id' => Role::ADMIN,
-                'title_id' => Title::MAN,
+                'title_id' => UserTitle::MAN,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -37,7 +37,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('marie'),
                 'avatar' => null,
                 'role_id' => Role::USER,
-                'title_id' => Title::WOMAN,
+                'title_id' => UserTitle::WOMAN,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -48,7 +48,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('jerome'),
                 'avatar' => null,
                 'role_id' => Role::USER,
-                'title_id' => Title::MAN,
+                'title_id' => UserTitle::MAN,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],

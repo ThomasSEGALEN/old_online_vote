@@ -7,7 +7,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\Group;
 use App\Models\Permission;
 use App\Models\Role;
-use App\Models\Title;
+use App\Models\UserTitle;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -40,7 +40,7 @@ class UserController extends Controller
         $groups = Group::getGroups();
         $permissions = Permission::getPermissions();
         $roles = Role::getRoles();
-        $titles = Title::getTitles();
+        $titles = UserTitle::getUserTitle();
 
         return view('users.create', compact('groups', 'permissions', 'roles', 'titles'));
     }
@@ -98,7 +98,7 @@ class UserController extends Controller
 
         $groups = Group::getGroups();
         $roles = Role::getRoles();
-        $titles = Title::getTitles();
+        $titles = UserTitle::getUserTitle();
 
         return view('users.show', compact('user', 'groups', 'roles', 'titles'));
     }
@@ -117,7 +117,7 @@ class UserController extends Controller
 
         $groups = Group::getGroups();
         $roles = Role::getRoles();
-        $titles = Title::getTitles();
+        $titles = UserTitle::getUserTitle();
 
         return view('users.edit', compact('user', 'groups', 'roles', 'titles'));
     }

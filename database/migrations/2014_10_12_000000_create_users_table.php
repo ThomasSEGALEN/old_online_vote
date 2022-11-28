@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('avatar')->nullable();
             $table->rememberToken();
             $table->foreignId('role_id')->constrained('roles');
-            $table->foreignId('title_id')->constrained('titles');
+            $table->foreignId('title_id')->constrained('user_titles');
             $table->timestamps();
         });
     }

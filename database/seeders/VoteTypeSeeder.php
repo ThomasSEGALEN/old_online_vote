@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class TitleSeeder extends Seeder
+class VoteTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,16 +15,14 @@ class TitleSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('titles')->insert([
+        DB::table('vote_types')->insert([
             [
-                'short_name' => 'M.',
-                'long_name' => 'Monsieur',
+                'name' => 'Public',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'short_name' => 'Mme',
-                'long_name' => 'Madame',
+                'short_name' => 'Secret',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],

@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('titles', function (Blueprint $table) {
+        Schema::create('vote_types', function (Blueprint $table) {
             $table->id();
-            $table->string('short_name');
-            $table->string('long_name');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('titles');
+        Schema::dropIfExists('vote_types');
     }
 };

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Title extends Model
+class UserTitle extends Model
 {
     use HasFactory;
 
@@ -14,9 +14,9 @@ class Title extends Model
     public const MAN = 1;
     public const WOMAN = 2;
 
-    public function scopeGetTitles()
+    public function scopeGetUserTitles()
     {
-        return Title::all();
+        return UserTitle::all();
     }
 
     public function users()

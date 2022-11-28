@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreSessionRequest;
 use App\Models\Group;
 use App\Models\Session;
+use App\Models\Vote;
 use Illuminate\Http\Request;
 
 class SessionController extends Controller

@@ -39,7 +39,20 @@
                                 @endif
                                 @endforeach
                             </div>
+                            <div>
+                                <span>Utilisateurs :</span>
+                                @foreach ($session->users->sortBy('last_name') as $user)
+                                @if (auth()->user()->can('view', $user))
+                                <li><a href="{{ route('users.show', $user) }}">{{ $user->last_name }} {{ $user->first_name }}</a></li>
+                                @else
+                                <li>{{ $user->last_name }} {{ $user->first_name }}</li>
+                                @endif
+                                @endforeach
+                            </div>
                             @endif
+                            @foreach ($session->votes->sortBy('title') as $vote)
+                            <div>{{ $vote->description }}</div>
+                            @endforeach
                         </div>
                     </div>
                 </div>

@@ -30,4 +30,9 @@ class Session extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
 }

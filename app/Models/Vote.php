@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Vote extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'description',
+        'status',
+        'session_id',
+        'type_id',
+    ];
+
+    public function scopeGetVotes()
+    {
+        return Vote::all();
+    }
+
+    public function session()
+    {
+        return $this->belongsTo(Group::class);
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(VoteType::class);
+    }
+}
