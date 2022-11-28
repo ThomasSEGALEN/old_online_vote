@@ -79,9 +79,6 @@ class UserController extends Controller
             array_push($permissions_id, $permission->id);
         }
 
-        // if ($request->permission_id) array_merge($permissions_id, $request->permission_id);
-        dd(array_map('intval', $request->permission_id));
-
         $user->permissions()->attach(array_map('intval', $permissions_id));
 
         return back()->with('userCreateSuccess', "L'utilisateur a été créé avec succès");
@@ -182,7 +179,7 @@ class UserController extends Controller
         $this->authorize('delete', $user);
 
         $user->groups()->detach($user->groups()->pluck('id')->toArray());
-        $user->roles()->detach($user->roles()->pluck('id')->toArray());
+        $user->permissions()->detach($user->permissions()->pluck('id')->toArray());
         $user->delete();
 
         return redirect()->route('users.index')->with('userDeleteSuccess', "L'utilisateur a été supprimé avec succès");
