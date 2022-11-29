@@ -29,7 +29,7 @@
                                     <div class="@error ('title_id') is-invalid @enderror flex flex-col md:flex-row">
                                     @foreach ($titles as $title)
                                     <div>
-                                        <input class="form-check-input appearance-none h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" id="titleInput-{{ $title->id }}" type="radio" name="title_id" value="{{ $title->id }}" @if ($title->id === App\Models\Title::MAN) checked @endif />
+                                        <input class="form-check-input appearance-none h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" id="titleInput-{{ $title->id }}" type="radio" name="title_id" value="{{ $title->id }}" @if ($title->id === App\Models\UserTitle::MAN) checked @endif />
                                         <label for="titleInput-{{ $title->id }}" class="mr-5">{{ $title->long_name }}</label>
                                     </div>
                                     @endforeach

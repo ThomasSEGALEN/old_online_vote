@@ -24,7 +24,7 @@ class Vote extends Model
 
     public function session()
     {
-        return $this->belongsTo(Group::class);
+        return $this->belongsTo(Session::class);
     }
 
     public function type()

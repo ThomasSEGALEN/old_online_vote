@@ -40,7 +40,7 @@ class UserController extends Controller
         $groups = Group::getGroups();
         $permissions = Permission::getPermissions();
         $roles = Role::getRoles();
-        $titles = UserTitle::getUserTitle();
+        $titles = UserTitle::getUserTitles();
 
         return view('users.create', compact('groups', 'permissions', 'roles', 'titles'));
     }
@@ -98,7 +98,7 @@ class UserController extends Controller
 
         $groups = Group::getGroups();
         $roles = Role::getRoles();
-        $titles = UserTitle::getUserTitle();
+        $titles = UserTitle::getUserTitles();
 
         return view('users.show', compact('user', 'groups', 'roles', 'titles'));
     }
@@ -117,7 +117,7 @@ class UserController extends Controller
 
         $groups = Group::getGroups();
         $roles = Role::getRoles();
-        $titles = UserTitle::getUserTitle();
+        $titles = UserTitle::getUserTitles();
 
         return view('users.edit', compact('user', 'groups', 'roles', 'titles'));
     }

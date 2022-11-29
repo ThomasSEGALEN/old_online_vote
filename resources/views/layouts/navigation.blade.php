@@ -31,7 +31,7 @@
                     </x-nav-link>
                     @endcan
                     @can ('viewAny', \App\Models\Session::class)
-                    <x-nav-link :href="route('sessions.index')" :active="request()->routeIs('sessions.*')">
+                    <x-nav-link :href="route('sessions.index')" :active="request()->routeIs('sessions.*', 'votes.*')">
                         {{ __('Séances') }}
                     </x-nav-link>
                     @endcan

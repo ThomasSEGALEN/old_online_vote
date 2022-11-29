@@ -1,5 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
+        <a href="{{ route('sessions.index') }}" class="inline-flex justify-center items-center mr-2">
+            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+        </a>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __($session->title) }}
         </h2>
@@ -26,34 +29,57 @@
                         @endcan
                     </div>
                     <div>
-                        <div class="flex flex-col">
-                            <span class="mb-4">{{ $session->title }}</span>
-                            @if ($session->groups->first())
-                            <div>
-                                <span>Groupes :</span>
-                                @foreach ($session->groups->sortBy('name') as $group)
-                                @if (auth()->user()->can('view', $group))
-                                <li><a href="{{ route('groups.show', $group) }}">{{ $group->name }}</a></li>
-                                @else
-                                <li>{{ $group->name }}</li>
-                                @endif
-                                @endforeach
-                            </div>
-                            <div>
-                                <span>Utilisateurs :</span>
-                                @foreach ($session->users->sortBy('last_name') as $user)
-                                @if (auth()->user()->can('view', $user))
-                                <li><a href="{{ route('users.show', $user) }}">{{ $user->last_name }} {{ $user->first_name }}</a></li>
-                                @else
-                                <li>{{ $user->last_name }} {{ $user->first_name }}</li>
-                                @endif
-                                @endforeach
-                            </div>
+                    @if (session('voteViewFailure'))
+                    <div class="bg-red-100 text-red-700 py-2 px-4 rounded mb-2" role="alert">
+                        <span class="block sm:inline">{{ session('voteViewFailure') }}</span>
+                    </div>
+                    @endif
+                    @if (session('voteDeleteSuccess'))
+                    <div class="bg-green-100 text-green-700 py-2 px-4 rounded mb-2" role="alert">
+                        <span class="block sm:inline">{{ session('voteDeleteSuccess') }}</span>
+                    </div>
+                    @endif
+                    @if (session('voteDeleteFailure'))
+                    <div class="bg-red-100 text-red-700 py-2 px-4 rounded mb-2" role="alert">
+                        <span class="block sm:inline">{{ session('voteDeleteFailure') }}</span>
+                    </div>
+                    @endif
+                        @can ('create', \App\Models\Session::class)
+                        <a href="{{ route('votes.create', $session) }}" class="inline-flex justify-center items-center p-2 text-base font-medium text-gray-500 bg-gray-50 rounded-lg hover:text-gray-900 hover:bg-gray-100">
+                            <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+                            <span>Créer un vote</span>
+                        </a>
+                        @endcan
+                        @if ($session->groups->first())
+                        <div>
+                            <span>Groupes :</span>
+                            @foreach ($session->groups->sortBy('name') as $group)
+                            @if (auth()->user()->can('view', $group))
+                            <li><a href="{{ route('groups.show', $group) }}">{{ $group->name }}</a></li>
+                            @else
+                            <li>{{ $group->name }}</li>
                             @endif
-                            @foreach ($session->votes->sortBy('title') as $vote)
-                            <div>{{ $vote->description }}</div>
                             @endforeach
                         </div>
+                        <div>
+                            <span>Utilisateurs :</span>
+                            @foreach ($session->users->sortBy('last_name') as $user)
+                            @if (auth()->user()->can('view', $user))
+                            <li><a href="{{ route('users.show', $user) }}">{{ $user->last_name }} {{ $user->first_name }}</a></li>
+                            @else
+                            <li>{{ $user->last_name }} {{ $user->first_name }}</li>
+                            @endif
+                            @endforeach
+                        </div>
+                        @endif
+                        <span>Votes :</span>
+                        @foreach ($session->votes->sortBy('title') as $vote)
+                        @if (auth()->user()->can('view', $vote))
+                        <li><a href="{{ route('votes.show', [$session, $vote]) }}">{{ $vote->title }}</a></li>
+                        @else
+                        <li>{{ $vote->title }}</li>
+                        @endif
+                        @endforeach
                     </div>
                 </div>
             </div>

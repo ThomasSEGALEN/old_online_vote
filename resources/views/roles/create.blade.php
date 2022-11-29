@@ -36,27 +36,27 @@
                             </div>
                             <div class="flex flex-col w-2/3 h-full -mx-3">
                                 <div class="w-full px-3 mb-3 md:mb-6">
-                                    <label class="block uppercase tracking-wide text-xs font-bold mb-2">
+                                    <label class="block uppercase tracking-wide text-xs font-bold">
                                         Permissions
                                     </label>
                                     @foreach ($permissions as $key => $permission)
                                     @if ($key === \App\Models\Permission::USERS_VIEW_ANY - 1)
-                                    <label class="block uppercase tracking-wide text-xs font-bold mb-2">
+                                    <label class="block uppercase tracking-wide text-xs font-bold my-2">
                                         Utilisateurs :
                                     </label>
                                     @endif
                                     @if ($key === \App\Models\Permission::ROLES_VIEW_ANY - 1)
-                                    <label class="block uppercase tracking-wide text-xs font-bold mb-2">
+                                    <label class="block uppercase tracking-wide text-xs font-bold my-2">
                                         Rôles :
                                     </label>
                                     @endif
                                     @if ($key === \App\Models\Permission::GROUPS_VIEW_ANY - 1)
-                                    <label class="block uppercase tracking-wide text-xs font-bold mb-2">
+                                    <label class="block uppercase tracking-wide text-xs font-bold my-2">
                                         Groupes :
                                     </label>
                                     @endif
                                     @if ($key === \App\Models\Permission::SESSIONS_VIEW_ANY - 1)
-                                    <label class="block uppercase tracking-wide text-xs font-bold mb-2">
+                                    <label class="block uppercase tracking-wide text-xs font-bold my-2">
                                         Sessions :
                                     </label>
                                     @endif

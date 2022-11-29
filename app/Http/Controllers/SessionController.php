@@ -49,7 +49,7 @@ class SessionController extends Controller
         $this->authorize('create', Session::class);
 
         $titleAlreadyUsed = Session::where('title', $request->title)->first();
-            
+
         if ($titleAlreadyUsed) return back()->with('sessionCreateFailure', 'Ce titre est déjà utilisé');
 
         $session = Session::create([
