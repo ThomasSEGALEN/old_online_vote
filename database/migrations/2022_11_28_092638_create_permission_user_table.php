@@ -31,5 +31,6 @@ return new class extends Migration
             $table->dropConstrainedForeignId('permission_id');
             $table->dropConstrainedForeignId('user_id');
         });
-        Schema::dropIfExists('permission_user');    }
+        Schema::dropIfExists('permission_user');
+    }
 };

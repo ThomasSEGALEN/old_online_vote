@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->longText('description')->nullable();
-            $table->boolean('status');
+            $table->boolean('status')->default(1);
             $table->foreignId('session_id')->constrained('sessions');
             $table->foreignId('type_id')->constrained('vote_types');
             $table->timestamps();
@@ -36,5 +36,6 @@ return new class extends Migration
             $table->dropConstrainedForeignId('session_id');
             $table->dropConstrainedForeignId('type_id');
         });
-        Schema::dropIfExists('users');    }
+        Schema::dropIfExists('users');
+    }
 };

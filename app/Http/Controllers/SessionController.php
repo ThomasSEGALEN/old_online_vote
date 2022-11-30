@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSessionRequest;
+use App\Http\Requests\UpdateSessionRequest;
 use App\Models\Group;
 use App\Models\Session;
 use App\Models\Vote;
@@ -86,9 +87,7 @@ class SessionController extends Controller
 
         $this->authorize('view', $session);
 
-        $groups = Group::getGroups();
-
-        return view('sessions.show', compact('session', 'groups'));
+        return view('sessions.show', compact('session'));
     }
 
     /**
@@ -115,7 +114,7 @@ class SessionController extends Controller
      * @param  \App\Models\Session  $session
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Session $session)
+    public function update(UpdateSessionRequest $request, Session $session)
     {
         if (!$session) return back()->with('sessionUpdateFailure', "Cette séance n'existe pas");
 
@@ -128,7 +127,10 @@ class SessionController extends Controller
         }
 
         $session->update([
-            'name' => $request->name,
+            'title' => $request->title,
+            'description' => $request->description,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
         ]);
 
         $session->groups()->sync(array_map('intval', $request->group_id));

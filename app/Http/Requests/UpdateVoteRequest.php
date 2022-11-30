@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreVoteRequest extends FormRequest
+class UpdateVoteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +26,6 @@ class StoreVoteRequest extends FormRequest
         return [
             'title' => ['required'],
             'description' => ['nullable'],
-            'answer_one' => ['required'],
-            'answer_two' => ['required'],
             'type_id' => ['required', 'max:1'],
         ];
     }
@@ -36,8 +34,6 @@ class StoreVoteRequest extends FormRequest
     {
         return [
             'title.required' => 'Champ requis',
-            'answer_one.required' => 'Champ requis',
-            'answer_two.required' => 'Champ requis',
             'type_id.required' => 'Une valeur minimum',
             'type_id.max' => 'Une valeur maximum',
         ];

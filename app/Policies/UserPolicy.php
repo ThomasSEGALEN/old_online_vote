@@ -32,7 +32,7 @@ class UserPolicy
     {
         if ($user->id === $model->id) return true;
 
-            return $user->permissions->contains('id', Permission::USERS_VIEW);
+        return $user->permissions->contains('id', Permission::USERS_VIEW);
     }
 
     /**

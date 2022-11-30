@@ -22,6 +22,11 @@ class Vote extends Model
         return Vote::all();
     }
 
+    public function answers()
+    {
+        return $this->hasMany(VoteAnswer::class);
+    }
+
     public function session()
     {
         return $this->belongsTo(Session::class);

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreVoteRequest;
+use App\Http\Requests\UpdateVoteRequest;
 use App\Models\Session;
 use App\Models\Vote;
+use App\Models\VoteAnswer;
 use App\Models\VoteType;
 use Illuminate\Http\Request;
 
@@ -17,7 +19,7 @@ class VoteController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny', Session::class);
+        $this->authorize('viewAny', Vote::class);
 
         return 'Vote index';
     }
@@ -29,7 +31,7 @@ class VoteController extends Controller
      */
     public function create(Session $session)
     {
-        $this->authorize('create', Session::class);
+        $this->authorize('create', Vote::class);
 
         $types = VoteType::getVoteTypes();
 
@@ -44,19 +46,29 @@ class VoteController extends Controller
      */
     public function store(StoreVoteRequest $request, Session $session)
     {
-        $this->authorize('create', Session::class);
+        $this->authorize('create', Vote::class);
 
         $titleAlreadyUsed = Vote::where('title', $request->title)->where('session_id', $session->id)->first();
 
         if ($titleAlreadyUsed) return back()->with('voteCreateFailure', 'Ce titre est déjà utilisé');
 
-        Vote::create([
+        $vote = Vote::create([
             'title' => $request->title,
             'description' => $request->description,
-            'status' => true,
             'session_id' => $session->id,
             'type_id' => intval($request->type_id),
         ]);
+
+        $answers = array();
+        array_push($answers, $request->answer_one, $request->answer_two, $request->answer_three, $request->answer_four);
+
+        foreach ($answers as $answer) {
+            if ($answer)
+                VoteAnswer::create([
+                    'name' => $answer,
+                    'vote_id' => $vote->id,
+                ]);
+        }
 
         return back()->with('voteCreateSuccess', 'Le vote a été créé avec succès');
     }
@@ -73,7 +85,7 @@ class VoteController extends Controller
 
         $this->authorize('view', $vote);
 
-        return view('votes.show', compact('vote'));
+        return view('votes.show', compact('session', 'vote'));
     }
 
     /**
@@ -82,9 +94,15 @@ class VoteController extends Controller
      * @param  \App\Models\Vote  $vote
      * @return \Illuminate\Http\Response
      */
-    public function edit(Vote $vote)
+    public function edit(Session $session, Vote $vote)
     {
-        //
+        if (!$vote) return back()->with('voteUpdateFailure', "Ce vote n'existe pas");
+
+        $this->authorize('update', $vote);
+
+        $types = VoteType::getVoteTypes();
+
+        return view('votes.edit', compact('session', 'vote', 'types'));
     }
 
     /**
@@ -94,9 +112,25 @@ class VoteController extends Controller
      * @param  \App\Models\Vote  $vote
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vote $vote)
+    public function update(UpdateVoteRequest $request, Session $session, Vote $vote)
     {
-        //
+        if (!$vote) return back()->with('voteUpdateFailure', "Ce vote n'existe pas");
+
+        $this->authorize('update', $vote);
+
+        if ($request->title !== $vote->title) {
+            $titleAlreadyUsed = Vote::where('title', $request->title)->where('session_id', $session->id)->first();
+
+            if ($titleAlreadyUsed) return back()->with('voteCreateFailure', 'Ce titre est déjà utilisé');
+        }
+
+        $vote->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'type_id' => intval($request->type_id),
+        ]);
+
+        return back()->with('voteUpdateSuccess', 'Le vote a été modifié avec succès');
     }
 
     /**
@@ -105,8 +139,14 @@ class VoteController extends Controller
      * @param  \App\Models\Vote  $vote
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Vote $vote)
+    public function destroy(Session $session, Vote $vote)
     {
-        //
+        if (!$vote) return redirect()->route('sessions.show', $session)->with('voteDeleteFailure', "Ce vote n'existe pas");
+
+        $this->authorize('delete', $vote);
+
+        $vote->delete();
+
+        return redirect()->route('sessions.show', $session)->with('voteDeleteSuccess', 'Le vote a été supprimé avec succès');
     }
 }

@@ -72,9 +72,7 @@ class GroupController extends Controller
 
         $this->authorize('view', $group);
 
-        $users = User::getUsers();
-
-        return view('groups.show', compact('group', 'users'));
+        return view('groups.show', compact('group'));
     }
 
     /**

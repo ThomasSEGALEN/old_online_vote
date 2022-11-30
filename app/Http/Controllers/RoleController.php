@@ -72,9 +72,7 @@ class RoleController extends Controller
 
         $this->authorize('view', $role);
 
-        $permissions = Permission::getPermissions();
-
-        return view('roles.show', compact('role', 'permissions'));
+        return view('roles.show', compact('role'));
     }
 
     /**

@@ -96,11 +96,7 @@ class UserController extends Controller
 
         $this->authorize('view', $user);
 
-        $groups = Group::getGroups();
-        $roles = Role::getRoles();
-        $titles = UserTitle::getUserTitles();
-
-        return view('users.show', compact('user', 'groups', 'roles', 'titles'));
+        return view('users.show', compact('user'));
     }
 
     /**

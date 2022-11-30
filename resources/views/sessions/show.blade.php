@@ -73,7 +73,7 @@
                         </div>
                         @endif
                         <span>Votes :</span>
-                        @foreach ($session->votes->sortBy('title') as $vote)
+                        @foreach ($session->votes->sortByDesc('created_at') as $vote)
                         @if (auth()->user()->can('view', $vote))
                         <li><a href="{{ route('votes.show', [$session, $vote]) }}">{{ $vote->title }}</a></li>
                         @else

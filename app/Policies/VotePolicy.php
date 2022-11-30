@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Permission;
 use App\Models\User;
 use App\Models\Vote;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -18,7 +19,7 @@ class VotePolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        return Permission::SESSIONS_VIEW_ANY;
     }
 
     /**
@@ -30,7 +31,7 @@ class VotePolicy
      */
     public function view(User $user, Vote $vote)
     {
-        if (in_array($user->id, $vote->session->users->pluck('id')->toArray()) && $vote->status) return true;
+        return Permission::SESSIONS_VIEW || in_array($user->id, $vote->session->users->pluck('id')->toArray()) && $vote->status;
     }
 
     /**
@@ -41,7 +42,7 @@ class VotePolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->permissions->contains('id', Permission::SESSIONS_CREATE);
     }
 
     /**
@@ -53,7 +54,7 @@ class VotePolicy
      */
     public function update(User $user, Vote $vote)
     {
-        //
+        return $user->permissions->contains('id', Permission::SESSIONS_UPDATE);
     }
 
     /**
@@ -65,7 +66,7 @@ class VotePolicy
      */
     public function delete(User $user, Vote $vote)
     {
-        //
+        return $user->permissions->contains('id', Permission::SESSIONS_DELETE);
     }
 
     /**
