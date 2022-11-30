@@ -34,10 +34,6 @@ class SessionUserSeeder extends Seeder
             ],
             [
                 'session_id' => 3,
-                'user_id' => 1,
-            ],
-            [
-                'session_id' => 3,
                 'user_id' => 3,
             ],
         ]);

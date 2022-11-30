@@ -23,24 +23,21 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         // Primary tables
-        // $this->call([
-        //     SessionSeeder::class,
-        //     VoteTypeSeeder::class,
-        //     VoteSeeder::class,
-        //     GroupSeeder::class,
-        //     PermissionSeeder::class,
-        //     RoleSeeder::class,
-        //     UserTitleSeeder::class,
-        //     UserSeeder::class,
-        // ]);
-
-        // Pivot tables
-        // $this->call([
-        //     PermissionRoleSeeder::class,
-        //     PermissionUserSeeder::class,
-        //     GroupUserSeeder::class,
-        //     GroupSessionSeeder::class,
-        //     SessionUserSeeder::class,
-        // ]);
+        $this->call([
+            SessionSeeder::class,
+            VoteTypeSeeder::class,
+            VoteSeeder::class,
+            VoteAnswerSeeder::class,
+            GroupSeeder::class,
+            PermissionSeeder::class,
+            RoleSeeder::class,
+            UserTitleSeeder::class,
+            UserSeeder::class,
+            PermissionRoleSeeder::class,
+            PermissionUserSeeder::class,
+            GroupUserSeeder::class,
+            GroupSessionSeeder::class,
+            SessionUserSeeder::class,
+        ]);
     }
 }

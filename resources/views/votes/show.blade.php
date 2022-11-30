@@ -29,7 +29,10 @@
                         @endcan
                     </div>
                     <div>
-                        {{ $vote->created_at }}
+                        <span>Réponses :</span>
+                        @foreach ($vote->answers as $answer)
+                        <li>{{ $answer->name }} : {{ $answer->result }}</li>
+                        @endforeach
                     </div>
                 </div>
             </div>
