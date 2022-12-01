@@ -176,6 +176,7 @@ class UserController extends Controller
 
         $user->groups()->detach($user->groups()->pluck('id')->toArray());
         $user->permissions()->detach($user->permissions()->pluck('id')->toArray());
+        $user->sessions()->detach($user->sessions()->pluck('id')->toArray());
         $user->delete();
 
         return redirect()->route('users.index')->with('userDeleteSuccess', "L'utilisateur a été supprimé avec succès");

@@ -61,6 +61,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Permission::class);
     }
 
+    public function results()
+    {
+        return $this->hasMany(VoteResult::class);
+    }
+
     public function role()
     {
         return $this->belongsTo(Role::class);

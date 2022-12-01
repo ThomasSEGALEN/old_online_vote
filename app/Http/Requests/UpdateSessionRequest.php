@@ -28,7 +28,8 @@ class UpdateSessionRequest extends FormRequest
             'description' => ['nullable'],
             'start_date' => ['required'],
             'end_date' => ['required'],
-            'group_id' => ['required'],
+            // 'group_id' => ['required'],
+            'user_id' => ['required'],
         ];
     }
 
@@ -38,7 +39,8 @@ class UpdateSessionRequest extends FormRequest
             'title.required' => 'Champ requis',
             'start_date.required' => 'Champ requis',
             'end_date.required' => 'Champ requis',
-            'group_id.required' => 'Une valeur minimum',
+            // 'group_id.required' => 'Une valeur minimum',
+            'user_id.required' => 'Une valeur minimum',
         ];
     }
 }

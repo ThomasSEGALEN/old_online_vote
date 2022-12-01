@@ -50,7 +50,7 @@
                             <span>Créer un vote</span>
                         </a>
                         @endcan
-                        @if ($session->groups->first())
+                        {{-- @if ($session->groups->first())
                         <div>
                             <span>Groupes :</span>
                             @foreach ($session->groups->sortBy('name') as $group)
@@ -60,7 +60,9 @@
                             <li>{{ $group->name }}</li>
                             @endif
                             @endforeach
-                        </div>
+                        </div> 
+                        @endif --}}
+                        @if ($session->users->first())
                         <div>
                             <span>Utilisateurs :</span>
                             @foreach ($session->users->sortBy('last_name') as $user)
@@ -72,14 +74,18 @@
                             @endforeach
                         </div>
                         @endif
-                        <span>Votes :</span>
-                        @foreach ($session->votes->sortByDesc('created_at') as $vote)
-                        @if (auth()->user()->can('view', $vote))
-                        <li><a href="{{ route('votes.show', [$session, $vote]) }}">{{ $vote->title }}</a></li>
-                        @else
-                        <li>{{ $vote->title }}</li>
+                        @if ($session->votes->first())
+                        <div>
+                            <span>Votes :</span>
+                            @foreach ($session->votes->sortByDesc('created_at') as $vote)
+                            @if (auth()->user()->can('view', $vote))
+                            <li><a href="{{ route('votes.show', [$session, $vote]) }}">{{ $vote->title }}</a></li>
+                            @else
+                            <li>{{ $vote->title }}</li>
+                            @endif
+                            @endforeach
+                        </div>
                         @endif
-                        @endforeach
                     </div>
                 </div>
             </div>

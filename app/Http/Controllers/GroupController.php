@@ -117,9 +117,8 @@ class GroupController extends Controller
 
         $group->users()->sync(array_map('intval', $request->user_id));
 
-        $sessions = $group->sessions()->get();
-
-        foreach ($sessions as $session) $session->users()->sync(array_map('intval', $request->user_id));
+        // $sessions = $group->sessions()->get();
+        // foreach ($sessions as $session) $session->users()->sync(array_map('intval', $request->user_id));
 
         return back()->with('groupUpdateSuccess', 'Le groupe a été modifié avec succès');
     }
@@ -136,11 +135,10 @@ class GroupController extends Controller
 
         $this->authorize('delete', $group);
 
-        $sessions = $group->sessions()->get();
-
-        foreach ($sessions as $session) {
-            $session->users()->detach($session->users()->pluck('id')->toArray());
-        }
+        // $sessions = $group->sessions()->get();
+        // foreach ($sessions as $session) {
+        //     $session->users()->detach($session->users()->pluck('id')->toArray());
+        // }
 
         $group->sessions()->detach($group->sessions()->pluck('id')->toArray());
         $group->users()->detach($group->users()->pluck('id')->toArray());

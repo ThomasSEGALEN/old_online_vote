@@ -19,7 +19,7 @@ class VotePolicy
      */
     public function viewAny(User $user)
     {
-        return Permission::SESSIONS_VIEW_ANY;
+        return $user->permissions->contains('id', Permission::SESSIONS_VIEW_ANY);
     }
 
     /**
@@ -31,7 +31,7 @@ class VotePolicy
      */
     public function view(User $user, Vote $vote)
     {
-        return Permission::SESSIONS_VIEW || in_array($user->id, $vote->session->users->pluck('id')->toArray()) && $vote->status;
+        if ($user->permissions->contains('id', Permission::SESSIONS_VIEW) || count(array_intersect($user->groups->pluck('id')->toArray(), $vote->session->groups->pluck('id')->toArray())) > 0 && $vote->status) return true;
     }
 
     /**

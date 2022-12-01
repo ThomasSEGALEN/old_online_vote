@@ -31,8 +31,13 @@
                     <div>
                         <span>Réponses :</span>
                         @foreach ($vote->answers as $answer)
-                        <li>{{ $answer->name }} : {{ $answer->result }}</li>
+                        <li>{{ $answer->name }} </li>
+                        {{-- : {{ $vote->results->where('answer_id', $answer->id)->count() }}</li> --}}
                         @endforeach
+                    </div>
+                    <div>
+                        {{-- {{ dd($vote->results->where('answer_id', 1)) }} --}}
+                        {{-- {{ auth()->user()->results->where('vote_id', $vote->id)->first()->influence > 1 ? auth()->user()->results->where('vote_id', $vote->id)->first()->influence * auth()->user()->results->where('vote_id', $vote->id)->count() : auth()->user()->results->where('vote_id', $vote->id)->count() }} --}}
                     </div>
                 </div>
             </div>

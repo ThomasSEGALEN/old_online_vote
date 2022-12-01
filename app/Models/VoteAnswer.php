@@ -9,11 +9,16 @@ class VoteAnswer extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'result', 'vote_id'];
+    protected $fillable = ['name', 'vote_id'];
 
     public function scopeGetVoteAnswers()
     {
         return VoteAnswer::all();
+    }
+
+    public function results()
+    {
+        return $this->hasMany(VoteResult::class);
     }
 
     public function votes()

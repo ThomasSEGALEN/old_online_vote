@@ -132,6 +132,8 @@ class RoleController extends Controller
 
         $this->authorize('delete', $role);
 
+        if ($role->users()->first()) return redirect()->route('roles.index')->with('roleDeleteFailure', "Ce rôle ne peut pas être supprimé");
+
         $role->permissions()->detach($role->permissions()->pluck('id')->toArray());
         $role->delete();
 

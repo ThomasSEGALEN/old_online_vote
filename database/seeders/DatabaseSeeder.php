@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\VoteResult;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,7 +23,6 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        // Primary tables
         $this->call([
             SessionSeeder::class,
             VoteTypeSeeder::class,
@@ -36,8 +36,9 @@ class DatabaseSeeder extends Seeder
             PermissionRoleSeeder::class,
             PermissionUserSeeder::class,
             GroupUserSeeder::class,
-            GroupSessionSeeder::class,
+            // GroupSessionSeeder::class,
             SessionUserSeeder::class,
+            VoteResultSeeder::class,
         ]);
     }
 }

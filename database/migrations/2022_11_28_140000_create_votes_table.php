@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->longText('description')->nullable();
             $table->boolean('status')->default(1);
-            $table->foreignId('session_id')->constrained('sessions');
+            $table->foreignId('session_id')->constrained('sessions')->onDelete('cascade');
             $table->foreignId('type_id')->constrained('vote_types');
             $table->timestamps();
         });

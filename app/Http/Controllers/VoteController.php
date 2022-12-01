@@ -145,6 +145,10 @@ class VoteController extends Controller
 
         $this->authorize('delete', $vote);
 
+        // $vote->answers->delete();
+        // $vote->results->delete();
+        $vote->answers()->delete();
+
         $vote->delete();
 
         return redirect()->route('sessions.show', $session)->with('voteDeleteSuccess', 'Le vote a été supprimé avec succès');
