@@ -14,11 +14,6 @@ class VoteType extends Model
     public const PUBLIC = 1;
     public const SECRET = 2;
 
-    public function scopeGetVoteTypes()
-    {
-        return VoteType::all();
-    }
-
     public function votes()
     {
         return $this->hasMany(Vote::class);

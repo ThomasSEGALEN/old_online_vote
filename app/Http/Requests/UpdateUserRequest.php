@@ -24,30 +24,29 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'last_name' => ['required'],
-            'first_name' => ['required'],
+            'lastName' => ['required'],
+            'firstName' => ['required'],
             'email' => ['required'],
             'password' => ['nullable', 'min:6',],
             'avatar' =>  ['nullable', 'image'],
-            'title_id' => ['required', 'max:1'],
-            'role_id' => ['required', 'max:1'],
-            'group_id' => ['nullable'],
+            'title' => ['required', 'max:1'],
+            'role' => ['required', 'max:1'],
         ];
     }
 
     public function messages()
     {
         return [
-            'last_name.required' => 'Champ requis',
-            'first_name.required' => 'Champ requis',
+            'lastName.required' => 'Champ requis',
+            'firstName.required' => 'Champ requis',
             'email.required' => 'Champ requis',
             'password.required' => 'Champ requis',
             'password.min' => '6 caractères minimum',
             'avatar.image' => 'Doit être une image',
-            'title_id.required' => 'Une valeur minimum',
-            'title_id.max' => 'Une valeur maximum',
-            'role_id.required' => 'Une valeur minimum',
-            'role_id.max' => 'Une valeur maximum',
+            'title.required' => 'Une valeur minimum',
+            'title.max' => 'Une valeur maximum',
+            'role.required' => 'Une valeur minimum',
+            'role.max' => 'Une valeur maximum',
         ];
     }
 }

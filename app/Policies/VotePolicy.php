@@ -31,7 +31,8 @@ class VotePolicy
      */
     public function view(User $user, Vote $vote)
     {
-        if ($user->permissions->contains('id', Permission::SESSIONS_VIEW) || count(array_intersect($user->groups->pluck('id')->toArray(), $vote->session->groups->pluck('id')->toArray())) > 0 && $vote->status) return true;
+        return $user->permissions->contains('id', Permission::SESSIONS_VIEW) || $user->sessions->contains('id', $vote->session->id) && $vote->status;
+        // return $user->permissions->contains('id', Permission::SESSIONS_VIEW) || count(array_intersect($user->groups->pluck('id')->toArray(), $vote->session->groups->pluck('id')->toArray())) > 0 && $vote->status;
     }
 
     /**

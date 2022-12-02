@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateVoteRequest;
 use App\Models\Session;
 use App\Models\Vote;
 use App\Models\VoteAnswer;
+use App\Models\VoteResult;
 use App\Models\VoteType;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,7 @@ class VoteController extends Controller
     {
         $this->authorize('viewAny', Vote::class);
 
-        return 'Vote index';
+        return back();
     }
 
     /**
@@ -33,7 +34,7 @@ class VoteController extends Controller
     {
         $this->authorize('create', Vote::class);
 
-        $types = VoteType::getVoteTypes();
+        $types = VoteType::all();
 
         return view('votes.create', compact('session', 'types'));
     }
@@ -56,7 +57,7 @@ class VoteController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'session_id' => $session->id,
-            'type_id' => intval($request->type_id),
+            'type_id' => intval($request->type),
         ]);
 
         $answers = array();
@@ -85,7 +86,9 @@ class VoteController extends Controller
 
         $this->authorize('view', $vote);
 
-        return view('votes.show', compact('session', 'vote'));
+        $answers = VoteAnswer::where('vote_id', $vote->id)->get();
+
+        return view('votes.show', compact('session', 'vote', 'answers'));
     }
 
     /**
@@ -100,7 +103,7 @@ class VoteController extends Controller
 
         $this->authorize('update', $vote);
 
-        $types = VoteType::getVoteTypes();
+        $types = VoteType::all();
 
         return view('votes.edit', compact('session', 'vote', 'types'));
     }
@@ -127,7 +130,7 @@ class VoteController extends Controller
         $vote->update([
             'title' => $request->title,
             'description' => $request->description,
-            'type_id' => intval($request->type_id),
+            'type_id' => intval($request->type),
         ]);
 
         return back()->with('voteUpdateSuccess', 'Le vote a été modifié avec succès');
@@ -145,12 +148,19 @@ class VoteController extends Controller
 
         $this->authorize('delete', $vote);
 
-        // $vote->answers->delete();
-        // $vote->results->delete();
-        $vote->answers()->delete();
-
         $vote->delete();
 
         return redirect()->route('sessions.show', $session)->with('voteDeleteSuccess', 'Le vote a été supprimé avec succès');
+    }
+
+    public function vote(Session $session, Vote $vote, VoteAnswer $answer)
+    {
+        VoteResult::create([
+            'answer_id' => $answer->id,
+            'user_id' => auth()->user()->id,
+            'vote_id' => $vote->id,
+        ]);
+
+        return back()->with('answerCreateSuccess', 'Vous avez voté');
     }
 }

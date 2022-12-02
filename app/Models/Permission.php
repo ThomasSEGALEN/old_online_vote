@@ -32,11 +32,6 @@ class Permission extends Model
     public const SESSIONS_UPDATE = 19;
     public const SESSIONS_DELETE = 20;
 
-    public function scopeGetPermissions()
-    {
-        return Permission::all();
-    }
-
     public function roles()
     {
         return $this->belongsToMany(Role::class);

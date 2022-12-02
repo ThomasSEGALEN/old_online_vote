@@ -23,7 +23,7 @@ class UserController extends Controller
     {
         $this->authorize('viewAny', User::class);
 
-        $users = User::getUsers();
+        $users = User::all();
 
         return view('users.index', compact('users'));
     }
@@ -37,10 +37,10 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
 
-        $groups = Group::getGroups();
-        $permissions = Permission::getPermissions();
-        $roles = Role::getRoles();
-        $titles = UserTitle::getUserTitles();
+        $groups = Group::all();
+        $permissions = Permission::all();
+        $roles = Role::all();
+        $titles = UserTitle::all();
 
         return view('users.create', compact('groups', 'permissions', 'roles', 'titles'));
     }
@@ -60,26 +60,23 @@ class UserController extends Controller
         if ($mailAlreadyUsed) return back()->with('userCreateFailure', 'Cette adresse mail est déjà utilisée');
 
         $user = User::create([
-            'last_name' => $request->last_name,
-            'first_name' => $request->first_name,
+            'last_name' => $request->lastName,
+            'first_name' => $request->firstName,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'avatar' => null,
-            'role_id' => intval($request->role_id),
-            'title_id' => intval($request->title_id),
+            'avatar' => $request->avatar,
+            'role_id' => intval($request->role),
+            'title_id' => intval($request->title),
         ]);
 
-        if ($request->group_id) $user->groups()->attach(array_map('intval', $request->group_id));
-        else $user->groups()->attach([]);
+        if ($request->groups) $user->groups()->attach(array_map('intval', $request->groups));
 
-        $role = Role::where('id', intval($request->role_id))->first();
-        $permissions_id = array();
+        $role = Role::where('id', intval($request->role))->first();
+        $permissions = array();
 
-        foreach ($role->permissions as $permission) {
-            array_push($permissions_id, $permission->id);
-        }
+        foreach ($role->permissions as $permission) array_push($permissions, $permission->id);
 
-        $user->permissions()->attach(array_map('intval', $permissions_id));
+        $user->permissions()->attach(array_map('intval', $permissions));
 
         return back()->with('userCreateSuccess', "L'utilisateur a été créé avec succès");
     }
@@ -111,9 +108,9 @@ class UserController extends Controller
 
         $this->authorize('update', $user);
 
-        $groups = Group::getGroups();
-        $roles = Role::getRoles();
-        $titles = UserTitle::getUserTitles();
+        $groups = Group::all();
+        $roles = Role::all();
+        $titles = UserTitle::all();
 
         return view('users.edit', compact('user', 'groups', 'roles', 'titles'));
     }
@@ -138,26 +135,24 @@ class UserController extends Controller
         }
 
         $user->update([
-            'last_name' => $request->last_name,
-            'first_name' => $request->first_name,
+            'last_name' => $request->lastName,
+            'first_name' => $request->firstName,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'avatar' => null,
-            'role_id' => intval($request->role_id),
-            'title_id' => intval($request->title_id),
+            'avatar' => $request->avatar,
+            'role_id' => intval($request->role),
+            'title_id' => intval($request->title),
         ]);
 
-        if ($request->group_id) $user->groups()->sync(array_map('intval', $request->group_id));
+        if ($request->groups) $user->groups()->sync(array_map('intval', $request->groups));
         else $user->groups()->sync([]);
 
-        $role = Role::where('id', intval($request->role_id))->first();
-        $permissions_id = array();
+        $role = Role::where('id', intval($request->role))->first();
+        $permissions = array();
 
-        foreach ($role->permissions as $permission) {
-            array_push($permissions_id, $permission->id);
-        }
+        foreach ($role->permissions as $permission) array_push($permissions, $permission->id);
 
-        $user->permissions()->sync(array_map('intval', $permissions_id));
+        $user->permissions()->sync(array_map('intval', $permissions));
 
         return back()->with('userUpdateSuccess', "L'utilisateur a été modifié avec succès");
     }

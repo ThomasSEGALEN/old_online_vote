@@ -26,7 +26,7 @@ class UpdateVoteRequest extends FormRequest
         return [
             'title' => ['required'],
             'description' => ['nullable'],
-            'type_id' => ['required', 'max:1'],
+            'type' => ['required', 'max:1'],
         ];
     }
 
@@ -34,8 +34,8 @@ class UpdateVoteRequest extends FormRequest
     {
         return [
             'title.required' => 'Champ requis',
-            'type_id.required' => 'Une valeur minimum',
-            'type_id.max' => 'Une valeur maximum',
+            'type.required' => 'Une valeur minimum',
+            'type.max' => 'Une valeur maximum',
         ];
     }
 }

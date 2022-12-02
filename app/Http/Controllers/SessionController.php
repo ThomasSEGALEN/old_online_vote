@@ -21,7 +21,7 @@ class SessionController extends Controller
     {
         $this->authorize('viewAny', Session::class);
 
-        $sessions = Session::getSessions();
+        $sessions = Session::all();
 
         return view('sessions.index', compact('sessions'));
     }
@@ -35,10 +35,10 @@ class SessionController extends Controller
     {
         $this->authorize('create', Session::class);
 
-        // $groups = Group::getGroups();
-        $users = User::getUsers();
+        $groups = Group::all();
+        $users = User::all();
 
-        return view('sessions.create', compact('users'));
+        return view('sessions.create', compact('groups', 'users'));
     }
 
     /**
@@ -62,17 +62,7 @@ class SessionController extends Controller
             'end_date' => $request->end_date,
         ]);
 
-        // $session->groups()->attach(array_map('intval', $request->group_id));
-
-        $session->users()->attach(array_map('intval', $request->user_id));
-
-        // $groups = Group::whereIn('id', array_map('intval', $request->group_id))->get();
-        // $user_id = array();
-        // foreach ($groups as $group) {
-        //     if (!$user_id) $user_id = $group->users->pluck('id')->toArray();
-        //     else $user_id = array_merge($user_id, $group->users->pluck('id')->toArray());
-        // }
-        // $session->users()->sync($user_id);
+        $session->users()->attach(array_map('intval', $request->users));
 
         return back()->with('sessionCreateSuccess', 'La séance a été créée avec succès');
     }
@@ -104,10 +94,10 @@ class SessionController extends Controller
 
         $this->authorize('update', $session);
 
-        // $groups = Group::getGroups();
-        $users = User::getUsers();
+        $groups = Group::all();
+        $users = User::all();
 
-        return view('sessions.edit', compact('session', 'users'));
+        return view('sessions.edit', compact('session', 'groups', 'users'));
     }
 
     /**
@@ -136,17 +126,7 @@ class SessionController extends Controller
             'end_date' => $request->end_date,
         ]);
 
-        // $session->groups()->sync(array_map('intval', $request->group_id));
-
-        $session->users()->sync(array_map('intval', $request->user_id));
-        
-        // $groups = Group::whereIn('id', array_map('intval', $request->group_id))->get();
-        // $user_id = array();
-        // foreach ($groups as $group) {
-        //     if (!$user_id) $user_id = $group->users->pluck('id')->toArray();
-        //     else $user_id = array_merge($user_id, $group->users->pluck('id')->toArray());
-        // }
-        // $session->users()->sync($user_id);
+        $session->users()->sync(array_map('intval', $request->users));
 
         return back()->with('sessionUpdateSuccess', 'La séance a été modifiée avec succès');
     }
@@ -163,7 +143,6 @@ class SessionController extends Controller
 
         $this->authorize('delete', $session);
 
-        // $session->groups()->detach($session->groups()->pluck('id')->toArray());
         $session->users()->detach($session->users()->pluck('id')->toArray());
         $session->delete();
 

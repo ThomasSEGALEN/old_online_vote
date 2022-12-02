@@ -30,9 +30,7 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        if ($user->id === $model->id) return true;
-
-        return $user->permissions->contains('id', Permission::USERS_VIEW);
+        return $user->permissions->contains('id', Permission::USERS_VIEW) || $user->id === $model->id;
     }
 
     /**
@@ -55,8 +53,6 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        if ($user->id === $model->id) return true;
-
         return $user->permissions->contains('id', Permission::USERS_UPDATE);
     }
 

@@ -16,16 +16,6 @@ class Session extends Model
         'end_date',
     ];
 
-    public function scopeGetSessions()
-    {
-        return Session::all();
-    }
-
-    public function groups()
-    {
-        return $this->belongsToMany(Group::class);
-    }
-
     public function users()
     {
         return $this->belongsToMany(User::class);

@@ -45,6 +45,8 @@ Route::group(['middleware' => 'auth'], function () {
                 'destroy' => 'votes.destroy'
             ]
     ]);
+
+    Route::get('/sessions/{session}/votes/{vote}/answers/{answer}', [VoteController::class, 'vote'])->middleware('has_voted')->name('votes.vote');
 });
 
 Route::get('/', function () {

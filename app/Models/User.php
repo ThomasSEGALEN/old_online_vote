@@ -46,11 +46,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function scopeGetUsers()
-    {
-        return User::all();
-    }
-
     public function groups()
     {
         return $this->belongsToMany(Group::class);

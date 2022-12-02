@@ -25,7 +25,7 @@ class UpdateGroupRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'user_id' => ['required'],
+            'users' => ['required'],
         ];
     }
 
@@ -33,7 +33,7 @@ class UpdateGroupRequest extends FormRequest
     {
         return [
             'name.required' => 'Champ requis',
-            'user_id.required' => 'Une valeur minimum',
+            'users.required' => 'Une valeur minimum',
         ];
     }
 }

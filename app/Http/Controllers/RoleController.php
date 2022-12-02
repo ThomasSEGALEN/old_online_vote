@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRoleRequest;
+use App\Http\Requests\UpdateRoleRequest;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class RoleController extends Controller
     {
         $this->authorize('viewAny', Role::class);
 
-        $roles = Role::getRoles();
+        $roles = Role::all();
 
         return view('roles.index', compact('roles'));
     }
@@ -32,7 +33,7 @@ class RoleController extends Controller
     {
         $this->authorize('create', Role::class);
 
-        $permissions = Permission::getPermissions();
+        $permissions = Permission::all();
 
         return view('roles.create', compact('permissions'));
     }
@@ -55,7 +56,7 @@ class RoleController extends Controller
             'name' => $request->name,
         ]);
 
-        $role->permissions()->attach(array_map('intval', $request->permission_id));
+        $role->permissions()->attach(array_map('intval', $request->permissions));
 
         return back()->with('roleCreateSuccess', 'Le rôle a été créé avec succès');
     }
@@ -87,7 +88,7 @@ class RoleController extends Controller
 
         $this->authorize('update', $role);
 
-        $permissions = Permission::getPermissions();
+        $permissions = Permission::all();
 
         return view('roles.edit', compact('role', 'permissions'));
     }
@@ -99,7 +100,7 @@ class RoleController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(UpdateRoleRequest $request, Role $role)
     {
         if (!$role) return back()->with('roleUpdateFailure', "Ce rôle n'existe pas");
 
@@ -115,7 +116,7 @@ class RoleController extends Controller
             'name' => $request->name,
         ]);
 
-        $role->permissions()->sync(array_map('intval', $request->permission_id));
+        $role->permissions()->sync(array_map('intval', $request->permissions));
 
         return back()->with('roleUpdateSuccess', 'Le rôle a été modifié avec succès');
     }

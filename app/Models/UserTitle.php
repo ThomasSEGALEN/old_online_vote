@@ -14,11 +14,6 @@ class UserTitle extends Model
     public const MAN = 1;
     public const WOMAN = 2;
 
-    public function scopegetUserTitles()
-    {
-        return UserTitle::all();
-    }
-
     public function users()
     {
         return $this->hasMany(User::class);

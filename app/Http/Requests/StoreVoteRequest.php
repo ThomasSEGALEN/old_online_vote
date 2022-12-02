@@ -28,7 +28,7 @@ class StoreVoteRequest extends FormRequest
             'description' => ['nullable'],
             'answer_one' => ['required'],
             'answer_two' => ['required'],
-            'type_id' => ['required', 'max:1'],
+            'type' => ['required', 'max:1'],
         ];
     }
 
@@ -38,8 +38,8 @@ class StoreVoteRequest extends FormRequest
             'title.required' => 'Champ requis',
             'answer_one.required' => 'Champ requis',
             'answer_two.required' => 'Champ requis',
-            'type_id.required' => 'Une valeur minimum',
-            'type_id.max' => 'Une valeur maximum',
+            'type.required' => 'Une valeur minimum',
+            'type.max' => 'Une valeur maximum',
         ];
     }
 }

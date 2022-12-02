@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreGroupRequest;
+use App\Http\Requests\UpdateGroupRequest;
 use App\Models\Group;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class GroupController extends Controller
     {
         $this->authorize('viewAny', Group::class);
 
-        $groups = Group::getGroups();
+        $groups = Group::all();
 
         return view('groups.index', compact('groups'));
     }
@@ -32,7 +33,7 @@ class GroupController extends Controller
     {
         $this->authorize('create', Group::class);
 
-        $users = User::getUsers();
+        $users = User::all();
 
         return view('groups.create', compact('users'));
     }
@@ -55,7 +56,7 @@ class GroupController extends Controller
             'name' => $request->name,
         ]);
 
-        $group->users()->attach(array_map('intval', $request->user_id));
+        $group->users()->attach(array_map('intval', $request->users));
 
         return back()->with('groupCreateSuccess', 'Le groupe a été créé avec succès');
     }
@@ -87,7 +88,7 @@ class GroupController extends Controller
 
         $this->authorize('update', $group);
 
-        $users = User::getUsers();
+        $users = User::all();
 
         return view('groups.edit', compact('group', 'users'));
     }
@@ -99,7 +100,7 @@ class GroupController extends Controller
      * @param  \App\Models\Group  $group
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Group $group)
+    public function update(UpdateGroupRequest $request, Group $group)
     {
         if (!$group) return back()->with('groupUpdateFailure', "Ce groupe n'existe pas");
 
@@ -115,10 +116,7 @@ class GroupController extends Controller
             'name' => $request->name,
         ]);
 
-        $group->users()->sync(array_map('intval', $request->user_id));
-
-        // $sessions = $group->sessions()->get();
-        // foreach ($sessions as $session) $session->users()->sync(array_map('intval', $request->user_id));
+        $group->users()->sync(array_map('intval', $request->users));
 
         return back()->with('groupUpdateSuccess', 'Le groupe a été modifié avec succès');
     }
@@ -135,12 +133,6 @@ class GroupController extends Controller
 
         $this->authorize('delete', $group);
 
-        // $sessions = $group->sessions()->get();
-        // foreach ($sessions as $session) {
-        //     $session->users()->detach($session->users()->pluck('id')->toArray());
-        // }
-
-        $group->sessions()->detach($group->sessions()->pluck('id')->toArray());
         $group->users()->detach($group->users()->pluck('id')->toArray());
         $group->delete();
 

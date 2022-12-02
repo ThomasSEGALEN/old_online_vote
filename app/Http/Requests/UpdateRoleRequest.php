@@ -25,7 +25,6 @@ class UpdateRoleRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'permission_id' => ['required'],
         ];
     }
 
@@ -33,7 +32,6 @@ class UpdateRoleRequest extends FormRequest
     {
         return [
             'name.required' => 'Champ requis',
-            'permission_id.required' => 'Une valeur minimum',
         ];
     }
 }

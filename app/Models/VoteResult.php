@@ -10,12 +10,7 @@ class VoteResult extends Model
     use HasFactory;
 
     protected $fillable = ['influence', 'answer_id', 'user_id', 'vote_id'];
-
-    public function scopeGetVoteResults()
-    {
-        return VoteResult::all();
-    }
-
+    
     public function answer()
     {
         return $this->belongsTo(VoteAnswer::class);

@@ -11,11 +11,6 @@ class VoteAnswer extends Model
 
     protected $fillable = ['name', 'vote_id'];
 
-    public function scopeGetVoteAnswers()
-    {
-        return VoteAnswer::all();
-    }
-
     public function results()
     {
         return $this->hasMany(VoteResult::class);

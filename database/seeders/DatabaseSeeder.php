@@ -36,7 +36,6 @@ class DatabaseSeeder extends Seeder
             PermissionRoleSeeder::class,
             PermissionUserSeeder::class,
             GroupUserSeeder::class,
-            // GroupSessionSeeder::class,
             SessionUserSeeder::class,
             VoteResultSeeder::class,
         ]);

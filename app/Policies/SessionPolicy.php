@@ -31,13 +31,7 @@ class SessionPolicy
      */
     public function view(User $user, Session $session)
     {
-        // foreach ($session->groups as $group) {
-        //     if ($user->groups->contains('id', $group->id)) return true;
-        // }
-
-        if ($user->sessions->contains('id', $session->id)) return true;
-
-        return $user->permissions->contains('id', Permission::SESSIONS_VIEW);
+        return $user->permissions->contains('id', Permission::SESSIONS_VIEW) || $user->sessions->contains('id', $session->id);
     }
 
     /**

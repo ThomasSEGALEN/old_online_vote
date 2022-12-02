@@ -17,11 +17,6 @@ class Vote extends Model
         'type_id',
     ];
 
-    public function scopeGetVotes()
-    {
-        return Vote::all();
-    }
-
     public function answers()
     {
         return $this->hasMany(VoteAnswer::class);
