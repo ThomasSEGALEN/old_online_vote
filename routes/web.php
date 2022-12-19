@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
@@ -64,10 +68,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/votes/{vote}', [VoteController::class, 'update'])->name('votes.update');
     Route::delete('/votes/{vote}', [VoteController::class, 'destroy'])->name('votes.destroy');
     Route::get('/votes/{vote}/{answer}', [VoteController::class, 'vote'])->middleware('has_voted')->name('votes.vote');
-});
-
-Route::get('/', function () {
-    return view('welcome');
 });
 
 require __DIR__.'/auth.php';
