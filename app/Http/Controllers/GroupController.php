@@ -6,10 +6,18 @@ use App\Http\Requests\StoreGroupRequest;
 use App\Http\Requests\UpdateGroupRequest;
 use App\Models\Group;
 use App\Models\User;
+use App\Services\GroupService;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
 {
+    private GroupService $groupService;
+
+    public function __construct(GroupService $groupService)
+    {
+        $this->groupService = $groupService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -47,16 +55,10 @@ class GroupController extends Controller
     public function store(StoreGroupRequest $request)
     {
         $this->authorize('create', Group::class);
-
-        $nameAlreadyUsed = Group::where('name', $request->name)->first();
             
-        if ($nameAlreadyUsed) return back()->with('groupCreateFailure', 'Ce nom est déjà utilisé');
+        if ($this->groupService->checkName($request->name)) return back()->with('groupCreateFailure', 'Ce nom est déjà utilisé');
 
-        $group = Group::create([
-            'name' => $request->name,
-        ]);
-
-        $group->users()->attach(array_map('intval', $request->users));
+        $this->groupService->store($request);
 
         return back()->with('groupCreateSuccess', 'Le groupe a été créé avec succès');
     }
@@ -106,17 +108,7 @@ class GroupController extends Controller
 
         $this->authorize('update', $group);
 
-        if ($request->name !== $group->name) {
-            $nameAlreadyUsed = Group::where('name', $request->name)->first();
-            
-            if ($nameAlreadyUsed) return back()->with('groupUpdateFailure', 'Ce nom est déjà utilisé');
-        }
-
-        $group->update([
-            'name' => $request->name,
-        ]);
-
-        $group->users()->sync(array_map('intval', $request->users));
+        $this->groupService->update($group, $request);
 
         return back()->with('groupUpdateSuccess', 'Le groupe a été modifié avec succès');
     }
@@ -133,8 +125,7 @@ class GroupController extends Controller
 
         $this->authorize('delete', $group);
 
-        $group->users()->detach($group->users()->pluck('id')->toArray());
-        $group->delete();
+        $this->groupService->destroy($group);
 
         return redirect()->route('groups.index')->with('groupDeleteSuccess', 'Le groupe a été supprimé avec succès');
     }
