@@ -9,11 +9,19 @@ use App\Models\Permission;
 use App\Models\Role;
 use App\Models\UserTitle;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    private UserService $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -55,30 +63,13 @@ class UserController extends Controller
     {
         $this->authorize('create', User::class);
 
-        $mailAlreadyUsed = User::where('email', $request->email)->first();
-            
-        if ($mailAlreadyUsed) return back()->with('userCreateFailure', 'Cette adresse mail est déjà utilisée');
+        $mailAlreadyUsed = $this->userService->checkMail($request->email);
+        
+        if ($mailAlreadyUsed) return back()->withInput()->withErrors(['userCreateFailure' => 'Cette adresse mail est déjà utilisée']);
 
-        $user = User::create([
-            'last_name' => $request->lastName,
-            'first_name' => $request->firstName,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'avatar' => $request->avatar,
-            'role_id' => intval($request->role),
-            'title_id' => intval($request->title),
-        ]);
+        $this->userService->store($request);
 
-        if ($request->groups) $user->groups()->attach(array_map('intval', $request->groups));
-
-        $role = Role::where('id', intval($request->role))->first();
-        $permissions = array();
-
-        foreach ($role->permissions as $permission) array_push($permissions, $permission->id);
-
-        $user->permissions()->attach(array_map('intval', $permissions));
-
-        return back()->with('userCreateSuccess', "L'utilisateur a été créé avec succès");
+        return back()->withErrors(['userCreateSuccess' => "L'utilisateur a été créé avec succès"]);
     }
 
     /**
@@ -89,7 +80,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        if (!$user) return back()->with('userViewFailure', "Cet utilisateur n'existe pas");
+        if (!$user) return back()->withErrors(['userViewFailure' => "Cet utilisateur n'existe pas"]);
 
         $this->authorize('view', $user);
 
@@ -104,7 +95,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        if (!$user) return back()->with('userUpdateFailure', "Cet utilisateur n'existe pas");
+        if (!$user) return back()->withErrors(['userUpdateFailure' => "Cet utilisateur n'existe pas"]);
 
         $this->authorize('update', $user);
 
@@ -124,37 +115,17 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        if (!$user) return back()->with('userUpdateFailure', "Cet utilisateur n'existe pas");
+        if (!$user) return back()->withErrors(['userUpdateFailure' => "Cet utilisateur n'existe pas"]);
 
         $this->authorize('update', $user);
 
         if ($request->email !== $user->email) {
-            $mailAlreadyUsed = User::where('email', $request->email)->first();
-            
-            if ($mailAlreadyUsed) return back()->with('userUpdateFailure', 'Cette adresse mail est déjà utilisée');
+            if ($this->userService->checkMail($request->email)) return back()->withErrors(['userUpdateFailure' => 'Cette adresse mail est déjà utilisée']);
         }
 
-        $user->update([
-            'last_name' => $request->lastName,
-            'first_name' => $request->firstName,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'avatar' => $request->avatar,
-            'role_id' => intval($request->role),
-            'title_id' => intval($request->title),
-        ]);
+        $this->userService->update($user, $request);
 
-        if ($request->groups) $user->groups()->sync(array_map('intval', $request->groups));
-        else $user->groups()->sync([]);
-
-        $role = Role::where('id', intval($request->role))->first();
-        $permissions = array();
-
-        foreach ($role->permissions as $permission) array_push($permissions, $permission->id);
-
-        $user->permissions()->sync(array_map('intval', $permissions));
-
-        return back()->with('userUpdateSuccess', "L'utilisateur a été modifié avec succès");
+        return back()->withErrors(['userUpdateSuccess' => "L'utilisateur a été modifié avec succès"]);
     }
 
     /**
@@ -165,15 +136,12 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if (!$user) return redirect()->route('users.index')->with('userDeleteFailure', "Cet utilisateur n'existe pas");
+        if (!$user) return redirect()->route('users.index')->withErrors(['userDeleteFailure' => "Cet utilisateur n'existe pas"]);
 
         $this->authorize('delete', $user);
 
-        $user->groups()->detach($user->groups()->pluck('id')->toArray());
-        $user->permissions()->detach($user->permissions()->pluck('id')->toArray());
-        $user->sessions()->detach($user->sessions()->pluck('id')->toArray());
-        $user->delete();
+        $this->userService->destroy($user);
 
-        return redirect()->route('users.index')->with('userDeleteSuccess', "L'utilisateur a été supprimé avec succès");
+        return redirect()->route('users.index')->withErrors(['userDeleteSuccess' => "L'utilisateur a été supprimé avec succès"]);
     }
 }
