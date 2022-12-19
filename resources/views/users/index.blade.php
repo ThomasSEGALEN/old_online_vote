@@ -8,30 +8,30 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    @error ('userViewFailure')
+                    @if (session('userViewFailure'))
                     <div
                         class="bg-red-100 text-red-700 py-2 px-4 rounded mb-2"
                         role="alert"
                     >
-                        <span class="block sm:inline">{{ $message }}</span>
+                        <span class="block sm:inline">{{ session('userViewFailure') }}</span>
                     </div>
-                    @enderror
-                    @error ('userDeleteSuccess')
+                    @endif
+                    @if (session('userDeleteSuccess'))
                     <div
                         class="bg-green-100 text-green-700 py-2 px-4 rounded mb-2"
                         role="alert"
                     >
-                        <span class="block sm:inline">{{ $message }}</span>
+                        <span class="block sm:inline">{{ session('userDeleteSuccess') }}</span>
                     </div>
-                    @enderror
-                    @error ('userDeleteFailure')
+                    @endif
+                    @if (session('userDeleteFailure'))
                     <div
                         class="bg-red-100 text-red-700 py-2 px-4 rounded mb-2"
                         role="alert"
                     >
-                        <span class="block sm:inline">{{ $message }}</span>
+                        <span class="block sm:inline">{{ session('userDeleteFailure') }}</span>
                     </div>
-                    @enderror
+                    @endif
                     @can ('create', \App\Models\User::class)
                     <a
                         href="{{ route('users.create') }}"

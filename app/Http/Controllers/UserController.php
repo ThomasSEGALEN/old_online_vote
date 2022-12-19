@@ -65,11 +65,11 @@ class UserController extends Controller
 
         $mailAlreadyUsed = $this->userService->checkMail($request->email);
         
-        if ($mailAlreadyUsed) return back()->withInput()->withErrors(['userCreateFailure' => 'Cette adresse mail est déjà utilisée']);
+        if ($mailAlreadyUsed) return back()->withInput()->with('userCreateFailure', 'Cette adresse mail est déjà utilisée');
 
         $this->userService->store($request);
 
-        return back()->withErrors(['userCreateSuccess' => "L'utilisateur a été créé avec succès"]);
+        return back()->with('userCreateSuccess', "L'utilisateur a été créé avec succès");
     }
 
     /**
@@ -80,7 +80,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        if (!$user) return back()->withErrors(['userViewFailure' => "Cet utilisateur n'existe pas"]);
+        if (!$user) return back()->with('userViewFailure', "Cet utilisateur n'existe pas");
 
         $this->authorize('view', $user);
 
@@ -95,7 +95,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        if (!$user) return back()->withErrors(['userUpdateFailure' => "Cet utilisateur n'existe pas"]);
+        if (!$user) return back()->with('userUpdateFailure', "Cet utilisateur n'existe pas");
 
         $this->authorize('update', $user);
 
@@ -115,17 +115,17 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        if (!$user) return back()->withErrors(['userUpdateFailure' => "Cet utilisateur n'existe pas"]);
+        if (!$user) return back()->with('userUpdateFailure', "Cet utilisateur n'existe pas");
 
         $this->authorize('update', $user);
 
         if ($request->email !== $user->email) {
-            if ($this->userService->checkMail($request->email)) return back()->withErrors(['userUpdateFailure' => 'Cette adresse mail est déjà utilisée']);
+            if ($this->userService->checkMail($request->email)) return back()->with('userUpdateFailure', 'Cette adresse mail est déjà utilisée');
         }
 
         $this->userService->update($user, $request);
 
-        return back()->withErrors(['userUpdateSuccess' => "L'utilisateur a été modifié avec succès"]);
+        return back()->with('userUpdateSuccess', "L'utilisateur a été modifié avec succès");
     }
 
     /**
@@ -136,12 +136,12 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if (!$user) return redirect()->route('users.index')->withErrors(['userDeleteFailure' => "Cet utilisateur n'existe pas"]);
+        if (!$user) return redirect()->route('users.index')->with('userDeleteFailure', "Cet utilisateur n'existe pas");
 
         $this->authorize('delete', $user);
 
         $this->userService->destroy($user);
 
-        return redirect()->route('users.index')->withErrors(['userDeleteSuccess' => "L'utilisateur a été supprimé avec succès"]);
+        return redirect()->route('users.index')->with('userDeleteSuccess', "L'utilisateur a été supprimé avec succès");
     }
 }
