@@ -56,7 +56,7 @@ class RoleController extends Controller
     {
         $this->authorize('create', Role::class);
             
-        if ($this->roleService->checkName($request->name)) return back()->with('roleCreateFailure', 'Ce nom est déjà utilisé');
+        if ($this->roleService->checkName($request->name)) return back()->withInput()->with('roleCreateFailure', 'Ce nom est déjà utilisé');
 
         $this->roleService->store($request);
 

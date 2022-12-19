@@ -58,7 +58,7 @@ class SessionController extends Controller
     {
         $this->authorize('create', Session::class);
 
-        if ($this->sessionService->checkTitle($request->title)) return back()->with('sessionCreateFailure', 'Ce titre est déjà utilisé');
+        if ($this->sessionService->checkTitle($request->title)) return back()->withInput()->with('sessionCreateFailure', 'Ce titre est déjà utilisé');
 
         $this->sessionService->store($request);
 

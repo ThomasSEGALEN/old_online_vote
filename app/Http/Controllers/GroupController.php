@@ -56,7 +56,7 @@ class GroupController extends Controller
     {
         $this->authorize('create', Group::class);
             
-        if ($this->groupService->checkName($request->name)) return back()->with('groupCreateFailure', 'Ce nom est déjà utilisé');
+        if ($this->groupService->checkName($request->name)) return back()->withInput()->with('groupCreateFailure', 'Ce nom est déjà utilisé');
 
         $this->groupService->store($request);
 
