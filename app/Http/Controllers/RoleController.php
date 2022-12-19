@@ -6,10 +6,18 @@ use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Models\Permission;
 use App\Models\Role;
+use App\Services\RoleService;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
+    private RoleService $roleService;
+
+    public function __construct(RoleService $roleService)
+    {
+        $this->roleService = $roleService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -47,16 +55,10 @@ class RoleController extends Controller
     public function store(StoreRoleRequest $request)
     {
         $this->authorize('create', Role::class);
-
-        $nameAlreadyUsed = Role::where('name', $request->name)->first();
             
-        if ($nameAlreadyUsed) return back()->with('roleCreateFailure', 'Ce nom est déjà utilisé');
+        if ($this->roleService->checkName($request->name)) return back()->with('roleCreateFailure', 'Ce nom est déjà utilisé');
 
-        $role = Role::create([
-            'name' => $request->name,
-        ]);
-
-        $role->permissions()->attach(array_map('intval', $request->permissions));
+        $this->roleService->store($request);
 
         return back()->with('roleCreateSuccess', 'Le rôle a été créé avec succès');
     }
@@ -106,17 +108,9 @@ class RoleController extends Controller
 
         $this->authorize('update', $role);
 
-        if ($request->name !== $role->name) {
-            $nameAlreadyUsed = Role::where('name', $request->name)->first();
-            
-            if ($nameAlreadyUsed) return back()->with('roleUpdateFailure', 'Ce nom est déjà utilisé');
+        if ($request->name !== $role->name) {            
+            if ($this->roleService->checkName($request->name)) return back()->with('roleUpdateFailure', 'Ce nom est déjà utilisé');
         }
-
-        $role->update([
-            'name' => $request->name,
-        ]);
-
-        $role->permissions()->sync(array_map('intval', $request->permissions));
 
         return back()->with('roleUpdateSuccess', 'Le rôle a été modifié avec succès');
     }
@@ -134,9 +128,6 @@ class RoleController extends Controller
         $this->authorize('delete', $role);
 
         if ($role->users()->first()) return redirect()->route('roles.index')->with('roleDeleteFailure', "Ce rôle ne peut pas être supprimé");
-
-        $role->permissions()->detach($role->permissions()->pluck('id')->toArray());
-        $role->delete();
 
         return redirect()->route('roles.index')->with('roleDeleteSuccess', 'Le rôle a été supprimé avec succès');
     }
