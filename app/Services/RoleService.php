@@ -8,7 +8,7 @@ class RoleService
 {
     public function checkName($name)
     {
-        Role::where('name', $name)->first();
+        return Role::where('name', $name)->first();
     }
 
     public function store($data)
