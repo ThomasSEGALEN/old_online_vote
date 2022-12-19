@@ -164,13 +164,13 @@
                             >
                                 Envoyer
                             </button>
-                            <button
+                            <a
                                 class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
                                 type="submit" 
-                                onclick="window.location='{{ route('sessions.index') }}'"
+                                href="{{ route('sessions.index') }}"
                             >
                                 Annuler
-                            </button>
+                            </a>
                         </div>
                     </form>
                 </div>
@@ -178,16 +178,3 @@
         </div>
     </div>
 </x-app-layout>
-
-<script>
-    function selectAll(id) {
-        console.log(id);
-        // const checkAll = document.getElementById(`#groupInput-${groupId}`);
-
-        // const check = document.getElementById(`#userInput-${groupId}`);
-
-        // Array.from(check).map((c) => {
-        //     c.checked = checkAll.checked;
-        // })
-    }
-</script>

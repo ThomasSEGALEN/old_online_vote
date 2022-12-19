@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <a
-            href="{{ route('votes.show', [$session, $vote]) }}"
+            href="{{ route('votes.show', $vote) }}"
             class="inline-flex justify-center items-center mr-2"
         >
             <svg
@@ -38,7 +38,7 @@
                     @endif
                     <form
                         id="voteForm"
-                        action="{{ route('votes.update', [$session, $vote]) }}"
+                        action="{{ route('votes.update', $vote) }}"
                         method="POST"
                         enctype="multipart/form-data"
                     >
@@ -120,7 +120,7 @@
                             <button
                                 class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
                                 type="submit"
-                                onclick="window.location='{{ route('votes.show', [$session, $vote]) }}'"
+                                onclick="window.location='{{ route('votes.show', $vote) }}'"
                             >
                                 Annuler
                             </button>

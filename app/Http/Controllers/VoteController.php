@@ -38,11 +38,12 @@ class VoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Session $session)
+    public function create(Request $request, $sessionId)
     {
         $this->authorize('create', Vote::class);
 
         $types = VoteType::all();
+        $session = Session::where('id', $sessionId)->first();
 
         return view('votes.create', compact('session', 'types'));
     }
@@ -70,7 +71,7 @@ class VoteController extends Controller
      * @param  \App\Models\Vote  $vote
      * @return \Illuminate\Http\Response
      */
-    public function show(Session $session, Vote $vote)
+    public function show(Vote $vote)
     {
         if (!$vote) return back()->with('voteViewFailure', "Ce vote n'existe pas");
 
@@ -78,7 +79,7 @@ class VoteController extends Controller
 
         $answers = VoteAnswer::where('vote_id', $vote->id)->get();
 
-        return view('votes.show', compact('session', 'vote', 'answers'));
+        return view('votes.show', compact('vote', 'answers'));
     }
 
     /**
@@ -87,7 +88,7 @@ class VoteController extends Controller
      * @param  \App\Models\Vote  $vote
      * @return \Illuminate\Http\Response
      */
-    public function edit(Session $session, Vote $vote)
+    public function edit(Vote $vote)
     {
         if (!$vote) return back()->with('voteUpdateFailure', "Ce vote n'existe pas");
 
@@ -95,7 +96,7 @@ class VoteController extends Controller
 
         $types = VoteType::all();
 
-        return view('votes.edit', compact('session', 'vote', 'types'));
+        return view('votes.edit', compact('vote', 'types'));
     }
 
     /**
@@ -105,14 +106,14 @@ class VoteController extends Controller
      * @param  \App\Models\Vote  $vote
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateVoteRequest $request, Session $session, Vote $vote)
+    public function update(UpdateVoteRequest $request, Vote $vote)
     {
         if (!$vote) return back()->with('voteUpdateFailure', "Ce vote n'existe pas");
 
         $this->authorize('update', $vote);
 
         if ($request->title !== $vote->title) {
-            if ($this->voteService->checkTitle($request->title, $session->id)) return back()->with('voteCreateFailure', 'Ce titre est déjà utilisé');
+            if ($this->voteService->checkTitle($request->title, $vote->session_id)) return back()->with('voteCreateFailure', 'Ce titre est déjà utilisé');
         }
 
         $this->voteService->update($vote, $request);
@@ -137,7 +138,7 @@ class VoteController extends Controller
         return redirect()->route('sessions.show', $session)->with('voteDeleteSuccess', 'Le vote a été supprimé avec succès');
     }
 
-    public function vote(Session $session, Vote $vote, VoteAnswer $answer)
+    public function vote(Vote $vote, VoteAnswer $answer)
     {
         $this->voteService->vote($answer->id, auth()->user()->id, $vote->id);
 

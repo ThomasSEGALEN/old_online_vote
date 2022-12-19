@@ -23,7 +23,7 @@
                     <div class="absolute top-4 right-4">
                         @can ('update', $vote)
                         <a
-                            href="{{ route('votes.edit', [$session, $vote]) }}"
+                            href="{{ route('votes.edit', $vote) }}"
                             class="inline-flex justify-center items-center p-2 text-base font-medium text-gray-500 bg-gray-50 rounded-lg hover:text-gray-900 hover:bg-gray-100"
                         >
                             <svg
@@ -39,7 +39,7 @@
                         <form
                             class="inline-flex justify-center items-center p-2 text-base font-medium text-gray-500 bg-gray-50 rounded-lg hover:text-gray-900 hover:bg-gray-100"
                             id="voteForm"
-                            action="{{ route('votes.destroy', [$session, $vote]) }}"
+                            action="{{ route('votes.destroy', $vote) }}"
                             method="POST"
                             enctype="multipart/form-data"
                         >
@@ -70,7 +70,7 @@
                     <form
                         class="inline-flex"
                         id="voteForm-{{ $answer->id }}"    
-                        action="{{ route('votes.vote', [$session, $vote, $answer]) }}"
+                        action="{{ route('votes.vote', [$vote, $answer]) }}"
                         method="GET"
                         enctype="multipart/form-data"
                     >
