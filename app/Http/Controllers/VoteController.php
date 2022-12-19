@@ -9,10 +9,18 @@ use App\Models\Vote;
 use App\Models\VoteAnswer;
 use App\Models\VoteResult;
 use App\Models\VoteType;
+use App\Services\VoteService;
 use Illuminate\Http\Request;
 
 class VoteController extends Controller
 {
+    private VoteService $voteService;
+
+    public function __construct(VoteService $voteService)
+    {
+        $this->voteService = $voteService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -49,27 +57,9 @@ class VoteController extends Controller
     {
         $this->authorize('create', Vote::class);
 
-        $titleAlreadyUsed = Vote::where('title', $request->title)->where('session_id', $session->id)->first();
+        if ($this->voteService->checkTitle($request->title, $session->id)) return back()->withInput()->with('voteCreateFailure', 'Ce titre est déjà utilisé');
 
-        if ($titleAlreadyUsed) return back()->with('voteCreateFailure', 'Ce titre est déjà utilisé');
-
-        $vote = Vote::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'session_id' => $session->id,
-            'type_id' => intval($request->type),
-        ]);
-
-        $answers = array();
-        array_push($answers, $request->answer_one, $request->answer_two, $request->answer_three, $request->answer_four);
-
-        foreach ($answers as $answer) {
-            if ($answer)
-                VoteAnswer::create([
-                    'name' => $answer,
-                    'vote_id' => $vote->id,
-                ]);
-        }
+        $this->voteService->store($request, $session->id);
 
         return back()->with('voteCreateSuccess', 'Le vote a été créé avec succès');
     }
@@ -122,16 +112,10 @@ class VoteController extends Controller
         $this->authorize('update', $vote);
 
         if ($request->title !== $vote->title) {
-            $titleAlreadyUsed = Vote::where('title', $request->title)->where('session_id', $session->id)->first();
-
-            if ($titleAlreadyUsed) return back()->with('voteCreateFailure', 'Ce titre est déjà utilisé');
+            if ($this->voteService->checkTitle($request->title, $session->id)) return back()->with('voteCreateFailure', 'Ce titre est déjà utilisé');
         }
 
-        $vote->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            'type_id' => intval($request->type),
-        ]);
+        $this->voteService->update($vote, $request);
 
         return back()->with('voteUpdateSuccess', 'Le vote a été modifié avec succès');
     }
@@ -148,18 +132,14 @@ class VoteController extends Controller
 
         $this->authorize('delete', $vote);
 
-        $vote->delete();
+        $this->voteService->destroy($vote);
 
         return redirect()->route('sessions.show', $session)->with('voteDeleteSuccess', 'Le vote a été supprimé avec succès');
     }
 
     public function vote(Session $session, Vote $vote, VoteAnswer $answer)
     {
-        VoteResult::create([
-            'answer_id' => $answer->id,
-            'user_id' => auth()->user()->id,
-            'vote_id' => $vote->id,
-        ]);
+        $this->voteService->vote($answer->id, auth()->user()->id, $vote->id);
 
         return back()->with('answerCreateSuccess', 'Vous avez voté');
     }
