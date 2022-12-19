@@ -7,11 +7,18 @@ use App\Http\Requests\UpdateSessionRequest;
 use App\Models\Group;
 use App\Models\Session;
 use App\Models\User;
-use App\Models\Vote;
+use App\Services\SessionService;
 use Illuminate\Http\Request;
 
 class SessionController extends Controller
 {
+    private SessionService $sessionService;
+
+    public function __construct(SessionService $sessionService)
+    {
+        $this->sessionService = $sessionService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -51,18 +58,9 @@ class SessionController extends Controller
     {
         $this->authorize('create', Session::class);
 
-        $titleAlreadyUsed = Session::where('title', $request->title)->first();
+        if ($this->sessionService->checkTitle($request->title)) return back()->with('sessionCreateFailure', 'Ce titre est déjà utilisé');
 
-        if ($titleAlreadyUsed) return back()->with('sessionCreateFailure', 'Ce titre est déjà utilisé');
-
-        $session = Session::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
-        ]);
-
-        $session->users()->attach(array_map('intval', $request->users));
+        $this->sessionService->store($request);
 
         return back()->with('sessionCreateSuccess', 'La séance a été créée avec succès');
     }
@@ -114,19 +112,10 @@ class SessionController extends Controller
         $this->authorize('update', $session);
 
         if ($request->title !== $session->title) {
-            $titleAlreadyUsed = Session::where('title', $request->title)->first();
-            
-            if ($titleAlreadyUsed) return back()->with('sessionUpdateFailure', 'Ce titre est déjà utilisé');
+            if ($this->sessionService->checkTitle($request->title)) return back()->with('sessionUpdateFailure', 'Ce titre est déjà utilisé');
         }
 
-        $session->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
-        ]);
-
-        $session->users()->sync(array_map('intval', $request->users));
+        $this->sessionService->update($session, $request);
 
         return back()->with('sessionUpdateSuccess', 'La séance a été modifiée avec succès');
     }
@@ -143,8 +132,7 @@ class SessionController extends Controller
 
         $this->authorize('delete', $session);
 
-        $session->users()->detach($session->users()->pluck('id')->toArray());
-        $session->delete();
+        $this->sessionService->destroy($session);
 
         return redirect()->route('sessions.index')->with('sessionDeleteSuccess', 'La séance a été supprimée avec succès');
     }
