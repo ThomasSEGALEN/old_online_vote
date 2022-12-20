@@ -10,6 +10,7 @@ use App\Models\VoteAnswer;
 use App\Models\VoteResult;
 use App\Models\VoteType;
 use App\Services\VoteService;
+use ArielMejiaDev\LarapexCharts\LarapexChart;
 use Illuminate\Http\Request;
 use PDF;
 
@@ -79,8 +80,18 @@ class VoteController extends Controller
         $this->authorize('view', $vote);
 
         $answers = VoteAnswer::where('vote_id', $vote->id)->get();
+        $results = VoteResult::where('vote_id', $vote->id)->selectRaw('count(answer_id) as amount')
+        ->groupBy('answer_id')
+        ->orderBy('amount', 'DESC')
+        ->get();
+    
+        $chart = (new LarapexChart)->donutChart()
+            ->setTitle('Résultats - ' . $vote->title)
+            ->setSubtitle($vote->created_at)
+            ->setDataset($results->pluck('amount')->toArray())
+            ->setLabels($answers->pluck('name')->toArray());
 
-        return view('votes.show', compact('vote', 'answers'));
+        return view('votes.show', compact('vote', 'answers', 'chart'));
     }
 
     /**
@@ -164,10 +175,22 @@ class VoteController extends Controller
         // $a = VoteResult::join('vote_answers', 'vote_answers.id', 'vote_results.answer_id')->where('vote_results.vote_id', $vote->id)->get();
         // dd($a);
 
+        $r = VoteResult::where('vote_id', $vote->id)->selectRaw('count(answer_id) as amount')
+        ->groupBy('answer_id')
+        ->orderBy('amount', 'DESC')
+        ->get();
+    
+        $chart = (new LarapexChart)->donutChart()
+            ->setTitle('Résultats - ' . $vote->title)
+            ->setSubtitle($vote->created_at)
+            ->setDataset($r->pluck('amount')->toArray())
+            ->setLabels($answers->pluck('name')->toArray());
+
         $data = [
             'vote' => $vote,
             'answers' => $answers,
             'results' => $results,
+            'chart' => $chart,
         ];
         $pdf = PDF::loadView('pdf.votes', $data);
         return $pdf->download('votes.pdf');
