@@ -62,6 +62,27 @@
                         </form>
                         @endcan
                     </div>
+                    <a
+                        class="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded"
+                        href="{{ route('votes.export', $vote) }}"
+                    >
+                        Export PDF
+                    </a>
+                    <form
+                        id="voteForm"    
+                        action="{{ route('votes.status', $vote) }}"
+                        method="GET"
+                        enctype="multipart/form-data"
+                    >
+                        @csrf
+                        <span>Statut : @if ($vote->status === \App\Models\Vote::CLOSE) Fermé @else Ouvert @endif</span>
+                        <button
+                            class="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded"
+                            type="submit"
+                        >
+                            @if ($vote->status === \App\Models\Vote::OPEN) Fermer @else Ouvrir @endif
+                        </button>
+                    </form>
                     <span>Réponses :</span>
                     @foreach ($vote->answers as $answer)
                     <li>{{ $answer->name }} : {{ $vote->results->where('answer_id', $answer->id)->count() }}</li>
@@ -70,7 +91,7 @@
                     <form
                         class="inline-flex"
                         id="voteForm-{{ $answer->id }}"    
-                        action="{{ route('votes.vote', [$vote, $answer]) }}"
+                        action="{{ route('votes.answer', [$vote, $answer]) }}"
                         method="GET"
                         enctype="multipart/form-data"
                     >

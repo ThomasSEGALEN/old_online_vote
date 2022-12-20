@@ -67,7 +67,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/votes/{vote}/edit', [VoteController::class, 'edit'])->name('votes.edit');
     Route::put('/votes/{vote}', [VoteController::class, 'update'])->name('votes.update');
     Route::delete('/votes/{vote}', [VoteController::class, 'destroy'])->name('votes.destroy');
-    Route::get('/votes/{vote}/{answer}', [VoteController::class, 'vote'])->middleware('has_voted')->name('votes.vote');
+
+    Route::get('/votes/{vote}/{answer}', [VoteController::class, 'selectAnswer'])->middleware('has_voted')->name('votes.answer');
+    Route::get('/votes-status/{vote}', [VoteController::class, 'changeStatus'])->name('votes.status');
+    Route::get('/votes-export/{vote}', [VoteController::class, 'exportResults'])->name('votes.export');
 });
 
 require __DIR__.'/auth.php';

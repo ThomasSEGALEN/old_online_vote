@@ -11,6 +11,7 @@ use App\Models\VoteResult;
 use App\Models\VoteType;
 use App\Services\VoteService;
 use Illuminate\Http\Request;
+use PDF;
 
 class VoteController extends Controller
 {
@@ -138,10 +139,37 @@ class VoteController extends Controller
         return redirect()->route('sessions.show', $session)->with('voteDeleteSuccess', 'Le vote a été supprimé avec succès');
     }
 
-    public function vote(Vote $vote, VoteAnswer $answer)
+    public function selectAnswer(Vote $vote, VoteAnswer $answer)
     {
         $this->voteService->vote($answer->id, auth()->user()->id, $vote->id);
 
         return back()->with('answerCreateSuccess', 'Vous avez voté');
+    }
+
+    public function changeStatus(Vote $vote)
+    {
+        if ($vote->status) $vote->update(['status' => Vote::CLOSE]);
+        else $vote->update(['status' => Vote::OPEN]);
+
+        return redirect()->route('sessions.show', $vote->session);
+    }
+
+    public function exportResults(Vote $vote)
+    {
+        // dd($vote->results->where('vote_id', $vote->id));
+
+        $results = VoteResult::where('vote_id', $vote->id)->get();
+        $answers = VoteAnswer::where('vote_id', $vote->id)->get();
+
+        // $a = VoteResult::join('vote_answers', 'vote_answers.id', 'vote_results.answer_id')->where('vote_results.vote_id', $vote->id)->get();
+        // dd($a);
+
+        $data = [
+            'vote' => $vote,
+            'answers' => $answers,
+            'results' => $results,
+        ];
+        $pdf = PDF::loadView('pdf.votes', $data);
+        return $pdf->download('votes.pdf');
     }
 }

@@ -9,6 +9,9 @@ class Vote extends Model
 {
     use HasFactory;
 
+    public const CLOSE = 0;
+    public const OPEN = 1;
+
     protected $fillable = [
         'title',
         'description',
