@@ -12,7 +12,7 @@ use App\Models\VoteType;
 use App\Services\VoteService;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 use Illuminate\Http\Request;
-use PDF;
+use Barryvdh\DomPDF\PDF;
 
 class VoteController extends Controller
 {
