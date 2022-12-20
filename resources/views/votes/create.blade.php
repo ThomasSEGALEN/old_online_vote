@@ -190,7 +190,7 @@
                             <button
                                 class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
                                 type="button"
-                                onclick="window.location='{{ route('sessions.index') }}'"
+                                onclick="window.location='{{ route('sessions.show', $session) }}'"
                             >
                                 Annuler
                             </button>

@@ -62,7 +62,7 @@ Route::group(['middleware' => 'auth'], function () {
     
     Route::get('/votes', [VoteController::class, 'index'])->name('votes.index');
     Route::get('/votes/create/{sessionId}', [VoteController::class, 'create'])->name('votes.create');
-    Route::post('/votes', [VoteController::class, 'store'])->name('votes.store');
+    Route::post('/votes/{sessionId}', [VoteController::class, 'store'])->name('votes.store');
     Route::get('//votes/{vote}', [VoteController::class, 'show'])->name('votes.show');
     Route::get('/votes/{vote}/edit', [VoteController::class, 'edit'])->name('votes.edit');
     Route::put('/votes/{vote}', [VoteController::class, 'update'])->name('votes.update');

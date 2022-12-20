@@ -12,7 +12,7 @@ use App\Models\VoteType;
 use App\Services\VoteService;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class VoteController extends Controller
 {
@@ -56,13 +56,13 @@ class VoteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreVoteRequest $request, Session $session)
+    public function store(StoreVoteRequest $request, $sessionId)
     {
         $this->authorize('create', Vote::class);
 
-        if ($this->voteService->checkTitle($request->title, $session->id)) return back()->withInput()->with('voteCreateFailure', 'Ce titre est déjà utilisé');
+        if ($this->voteService->checkTitle($request->title, $sessionId)) return back()->withInput()->with('voteCreateFailure', 'Ce titre est déjà utilisé');
 
-        $this->voteService->store($request, $session->id);
+        $this->voteService->store($request, $sessionId);
 
         return back()->with('voteCreateSuccess', 'Le vote a été créé avec succès');
     }
@@ -139,15 +139,15 @@ class VoteController extends Controller
      * @param  \App\Models\Vote  $vote
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Session $session, Vote $vote)
+    public function destroy(Vote $vote)
     {
-        if (!$vote) return redirect()->route('sessions.show', $session)->with('voteDeleteFailure', "Ce vote n'existe pas");
+        if (!$vote) return redirect()->route('sessions.show', $vote->session)->with('voteDeleteFailure', "Ce vote n'existe pas");
 
         $this->authorize('delete', $vote);
 
         $this->voteService->destroy($vote);
 
-        return redirect()->route('sessions.show', $session)->with('voteDeleteSuccess', 'Le vote a été supprimé avec succès');
+        return redirect()->route('sessions.show', $vote->session)->with('voteDeleteSuccess', 'Le vote a été supprimé avec succès');
     }
 
     public function selectAnswer(Vote $vote, VoteAnswer $answer)
@@ -192,7 +192,7 @@ class VoteController extends Controller
             'results' => $results,
             'chart' => $chart,
         ];
-        $pdf = PDF::loadView('pdf.votes', $data);
+        $pdf = Pdf::loadView('pdf.votes', $data);
         return $pdf->download('votes.pdf');
     }
 }
