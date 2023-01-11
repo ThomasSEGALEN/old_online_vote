@@ -27,13 +27,15 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('viewAny', User::class);
 
-        $users = User::all();
+        $data = $this->userService->index($request);
+        $users = $data['users'];
+        $pagination = $data['pagination'];
 
-        return view('users.index', compact('users'));
+        return view('users.index', compact('users', 'pagination'));
     }
 
     /**
@@ -140,8 +142,10 @@ class UserController extends Controller
 
         $this->authorize('delete', $user);
 
+        $username = $user->last_name . ' ' . $user->first_name;
+
         $this->userService->destroy($user);
 
-        return redirect()->route('users.index')->with('userDeleteSuccess', "L'utilisateur a été supprimé avec succès");
+        return redirect()->route('users.index')->with('userDeleteSuccess', "L'utilisateur " . $username . " a été supprimé avec succès");
     }
 }
