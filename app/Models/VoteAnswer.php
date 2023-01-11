@@ -9,7 +9,7 @@ class VoteAnswer extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'vote_id'];
+    protected $fillable = ['name', 'color', 'vote_id'];
 
     public function results()
     {
