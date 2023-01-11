@@ -22,11 +22,8 @@ class VoteService
             'type_id' => intval($data->type),
         ]);
 
-        $answers = array();
-        array_push($answers, $data->answer_one, $data->answer_two, $data->answer_three, $data->answer_four);
-
-        foreach ($answers as $answer) {
-            if ($answer) VoteAnswer::create(['name' => $answer, 'vote_id' => $vote->id]);
+        foreach ($data->answers as $key => $answer) {
+            if ($answer) VoteAnswer::create(['name' => $answer, 'color' => $data->colors[$key], 'vote_id' => $vote->id]);
         }
     }
 
