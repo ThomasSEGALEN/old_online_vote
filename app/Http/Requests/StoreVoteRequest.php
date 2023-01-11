@@ -26,8 +26,7 @@ class StoreVoteRequest extends FormRequest
         return [
             'title' => ['required'],
             'description' => ['nullable'],
-            'answer_one' => ['required'],
-            'answer_two' => ['required'],
+            'answers' => ['required'],
             'type' => ['required', 'max:1'],
         ];
     }
@@ -36,8 +35,7 @@ class StoreVoteRequest extends FormRequest
     {
         return [
             'title.required' => 'Champ requis',
-            'answer_one.required' => 'Champ requis',
-            'answer_two.required' => 'Champ requis',
+            'answers.required' => 'Champ requis',
             'type.required' => 'Une valeur minimum',
             'type.max' => 'Une valeur maximum',
         ];
