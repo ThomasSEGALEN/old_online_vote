@@ -9,14 +9,14 @@
 <body>
     <h1>Résultats du vote : {{ $vote->title }}</h1>
     <table>
-        @foreach ($answers as $answer)
+        @foreach ($answers as $key => $answer)
         <tr>
             <th>Réponse</th>
             <th>Montant</th>
         </tr>
         <tr>
             <td>{{ $answer->name }}</td>
-            <td>{{ $results->where('answer_id', $answer->id)->count() }}</td>
+            <td>{{ $results[$key]->amount }}</td>
         </tr>
         @endforeach
     </table>
