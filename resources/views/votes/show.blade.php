@@ -120,15 +120,9 @@
                         <span class="block sm:inline">{{ session('answerCreateFailure') }}</span>
                     </div>
                     @endif
+                    <div>{!! $chart->container() !!}</div>
                 </div>
             </div>
-        </div>
-        <div class="container px-4 mx-auto">
-
-            <div class="p-6 m-20 bg-white rounded shadow">
-                {!! $chart->container() !!}
-            </div>
-        
         </div>
     </div>
 </x-app-layout>

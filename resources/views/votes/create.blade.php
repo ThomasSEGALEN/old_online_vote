@@ -80,74 +80,40 @@
                                     <span class="text-red-600">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="flex flex-col md:flex-row">
+                                <div class="flex flex-col mb-3" id="dynamic_field">
                                     <div class="w-full md:w-1/2 px-3 md:mb-6">
                                         <label
                                             class="block uppercase tracking-wide text-xs font-bold mb-2"
-                                            for="answerOneInput"
+                                            for="answerInput-1"
                                         >
                                             Réponse 1
                                         </label>
-                                        <input
-                                            class="@error ('answer_one') is-invalid @enderror appearance-none block w-full bg-gray-100 rounded py-3 px-4 mb-3 md:mb-0"
-                                            id="answerOneInput"
-                                            type="text"
-                                            name="answer_one"
-                                            value="{{ old('answer_one') }}"
-                                        >
-                                        @error('answer_one')
+                                        <div class="flex flex-row mb-3 md:mb-0">
+                                            <input
+                                                class="@error ('answers') is-invalid @enderror appearance-none block w-full bg-gray-100 rounded py-3 px-4"
+                                                id="answerInput-1"
+                                                type="text"
+                                                name="answers[]"
+                                                value="{{ old('answers')[0] ?? '' }}"
+                                            >
+                                            <input
+                                                id="colorInput-1"
+                                                type="color"
+                                                name="colors[]"
+                                            >
+                                            <button type="button" name="add" id="add" class="inline-flex justify-center items-center p-2">
+                                                <svg
+                                                    class="w-5 h-5 mr-2"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 448 512"
+                                                >
+                                                    <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        @error('answers')
                                         <span class="text-red-600">{{ $message }}</span>
                                         @enderror
-                                    </div>
-                                    <div class="w-full md:w-1/2 px-3 md:mb-6">
-                                        <label
-                                            class="block uppercase tracking-wide text-xs font-bold mb-2"
-                                            for="answerTwoInput"
-                                        >
-                                            Réponse 2
-                                        </label>
-                                        <input
-                                            class="@error ('answer_two') is-invalid @enderror appearance-none block w-full bg-gray-100 rounded py-3 px-4 mb-3 md:mb-0"
-                                            id="answerTwoInput"
-                                            type="text"
-                                            name="answer_two"
-                                            value="{{ old('answer_two') }}"
-                                        >
-                                        @error('answer_two')
-                                        <span class="text-red-600">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="flex flex-col md:flex-row">
-                                    <div class="w-full md:w-1/2 px-3 md:mb-6">
-                                        <label
-                                            class="block uppercase tracking-wide text-xs font-bold mb-2"
-                                            for="answerInput"
-                                        >
-                                            Réponse 3
-                                        </label>
-                                        <input
-                                            class="appearance-none block w-full bg-gray-100 rounded py-3 px-4 mb-3 md:mb-0"
-                                            id="answerInput"
-                                            type="text"
-                                            name="answer_three"
-                                            value="{{ old('answer_three') }}"
-                                        >
-                                    </div>
-                                    <div class="w-full md:w-1/2 px-3 md:mb-6">
-                                        <label
-                                            class="block uppercase tracking-wide text-xs font-bold mb-2"
-                                            for="answerInput"
-                                        >
-                                            Réponse 4
-                                        </label>
-                                        <input
-                                            class="appearance-none block w-full bg-gray-100 rounded py-3 px-4 mb-3 md:mb-0"
-                                            id="answerInput"
-                                            type="text"
-                                            name="answer_four"
-                                            value="{{ old('answer_four') }}"
-                                        >
                                     </div>
                                 </div>
                             </div>
@@ -201,3 +167,55 @@
         </div>
     </div>
 </x-app-layout>
+
+
+<script type="module">
+    $(document).ready(function(){      
+      var postURL = "<?php echo url('addmore'); ?>";
+      var i=1;  
+
+
+      $('#add').click(function(){  
+           i++;  
+           $('#dynamic_field').append('<div id="input'+i+'" class="w-full md:w-1/2 px-3 md:mb-6"><label class="block uppercase tracking-wide text-xs font-bold mb-2" for="answerInput-1">Réponse '+i+'</label><div class="flex flex-row mb-3 md:mb-0"><input class="appearance-none block w-full bg-gray-100 rounded py-3 px-4" id="answerInput-1" type="text" name="answers[]" value="{{ old('answers')['+i+'] ?? '' }}" required><input id="colorInput-1" type="color" name="colors[]"><button type="button" name="remove" id="'+i+'" class="inline-flex justify-center items-center p-2 remove"><svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/></svg></button></div></div>');
+      });  
+
+
+      $(document).on('click', '.remove', function(){  
+           var button_id = $(this).attr("id");   
+           $('#input'+button_id+'').remove();
+           i--;
+      });  
+
+
+      $.ajaxSetup({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
+
+
+      $('#submit').click(function(){            
+           $.ajax({  
+                url:postURL,  
+                method:"POST",  
+                data:$('#voteForm').serialize(),
+                type:'json',
+                success:function(data)  
+                {
+                    if(data.error){
+                        printErrorMsg(data.error);
+                    }else{
+                        i=1;
+                        $('.dynamic-added').remove();
+                        $('#voteForm')[0].reset();
+                        $(".print-success-msg").find("ul").html('');
+                        $(".print-success-msg").css('display','block');
+                        $(".print-error-msg").css('display','none');
+                        $(".print-success-msg").find("ul").append('<li>Record Inserted Successfully.</li>');
+                    }
+                }  
+           });  
+      });  
+    });  
+</script>
