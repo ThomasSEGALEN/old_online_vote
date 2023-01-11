@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\User;
 use App\Models\VoteResult;
 use Illuminate\Database\Seeder;
 
@@ -39,5 +40,7 @@ class DatabaseSeeder extends Seeder
             SessionUserSeeder::class,
             VoteResultSeeder::class,
         ]);
+
+        User::factory()->count(50)->create();
     }
 }

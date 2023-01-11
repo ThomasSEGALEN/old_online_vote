@@ -18,36 +18,42 @@ class VoteAnswerSeeder extends Seeder
         DB::table('vote_answers')->insert([
             [
                 'name' => 'Oui',
+                'color' => '#0000ff',
                 'vote_id' => 1,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'Non',
+                'color' => '#ff0000',
                 'vote_id' => 1,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'Pour',
+                'color' => '#0000ff',
                 'vote_id' => 2,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'Contre',
+                'color' => '#ff0000',
                 'vote_id' => 2,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'Favorable',
+                'color' => '#0000ff',
                 'vote_id' => 3,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'Défavorable',
+                'color' => '#ff0000',
                 'vote_id' => 3,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
