@@ -6,11 +6,29 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
+use function PHPUnit\Framework\isEmpty;
+
 class UserService
 {
     public function checkMail($mail)
     {
         return User::where('email', $mail)->first();
+    }
+
+    public function index($data)
+    {  
+        $usersByEmail = User::where('email', 'like', '%' . $data->search . '%')->get();
+        $usersByLastname = User::where('last_name', 'like', '%' . $data->search . '%')->get();
+        $usersByFirstname = User::where('first_name', 'like', '%' . $data->search . '%')->get();
+        $users = $usersByEmail->merge($usersByLastname->merge($usersByFirstname));
+        $pagination = false;
+
+        if (!$data->search || !$users->first()) {
+            $users = User::paginate(25);
+            $pagination = true;
+        }
+
+        return ['users' => $users, 'pagination' => $pagination]; 
     }
 
     public function store($data)
