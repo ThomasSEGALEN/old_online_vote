@@ -82,11 +82,11 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        if (!$user) return back()->with('userViewFailure', "Cet utilisateur n'existe pas");
+        // if (!$user) return back()->with('userViewFailure', "Cet utilisateur n'existe pas");
 
-        $this->authorize('view', $user);
+        // $this->authorize('view', $user);
 
-        return view('users.show', compact('user'));
+        // return view('users.show', compact('user'));
     }
 
     /**
@@ -147,5 +147,12 @@ class UserController extends Controller
         $this->userService->destroy($user);
 
         return redirect()->route('users.index')->with('userDeleteSuccess', "L'utilisateur " . $username . " a été supprimé avec succès");
+    }
+
+    public function profile()
+    {
+        $user = auth()->user();
+
+        return view('users.profile', compact('user'));
     }
 }

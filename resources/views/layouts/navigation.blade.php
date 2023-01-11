@@ -48,7 +48,7 @@
                     <x-slot name="content">
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <x-dropdown-link :href="route('users.show', auth()->user())">
+                            <x-dropdown-link :href="route('users.profile')">
                                 {{ __('Profil') }}
                             </x-dropdown-link>
                             <x-dropdown-link :href="route('logout')"
