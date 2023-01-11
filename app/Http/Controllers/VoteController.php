@@ -89,6 +89,7 @@ class VoteController extends Controller
             ->setTitle('Résultats - ' . $vote->title)
             ->setSubtitle($vote->created_at)
             ->setDataset($results->pluck('amount')->toArray())
+            ->setColors($answers->pluck('color')->toArray())
             ->setLabels($answers->pluck('name')->toArray());
 
         return view('votes.show', compact('vote', 'answers', 'chart'));
@@ -162,28 +163,23 @@ class VoteController extends Controller
         if ($vote->status) $vote->update(['status' => Vote::CLOSE]);
         else $vote->update(['status' => Vote::OPEN]);
 
-        return redirect()->route('sessions.show', $vote->session);
+        return redirect()->route('votes.show', $vote);
     }
 
     public function exportResults(Vote $vote)
     {
-        // dd($vote->results->where('vote_id', $vote->id));
-
-        $results = VoteResult::where('vote_id', $vote->id)->get();
+        // $results = VoteResult::where('vote_id', $vote->id)->get();
         $answers = VoteAnswer::where('vote_id', $vote->id)->get();
 
-        // $a = VoteResult::join('vote_answers', 'vote_answers.id', 'vote_results.answer_id')->where('vote_results.vote_id', $vote->id)->get();
-        // dd($a);
-
-        $r = VoteResult::where('vote_id', $vote->id)->selectRaw('count(answer_id) as amount')
+        $results = VoteResult::where('vote_id', $vote->id)->selectRaw('count(answer_id) as amount')
         ->groupBy('answer_id')
         ->orderBy('amount', 'DESC')
         ->get();
-    
+
         $chart = (new LarapexChart)->donutChart()
             ->setTitle('Résultats - ' . $vote->title)
             ->setSubtitle($vote->created_at)
-            ->setDataset($r->pluck('amount')->toArray())
+            ->setDataset($results->pluck('amount')->toArray())
             ->setLabels($answers->pluck('name')->toArray());
 
         $data = [
