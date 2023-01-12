@@ -32,11 +32,13 @@
                 </div>
                 @endif
                 <div class="flex flex-wrap flex-row items-center justify-between">
-                    @can ('create', \App\Models\User::class)
-                    <x-primary-button class="flex items-center my-2" onclick="window.location='{{ route('users.create') }}'">
-                        {{ __('Créer un utilisateur') }}
-                    </x-primary-button>
-                    @endcan
+                    <div>
+                        @can ('create', \App\Models\User::class)
+                        <x-primary-button class="flex items-center my-2" onclick="window.location='{{ route('users.create') }}'">
+                            {{ __('Créer un utilisateur') }}
+                        </x-primary-button>
+                        @endcan
+                    </div>
                     <form
                         class="flex items-center my-2"
                         action="{{ route('users.index') }}"
@@ -70,21 +72,21 @@
                         <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
                             <div class="overflow-hidden">
                                 <table class="min-w-full">
-                                    <thead class="bg-white border-b">
+                                    <thead class="bg-gray-100 border-b">
                                         <tr>
                                             <th scope="col" class="text-md font-bold text-gray-900 px-6 py-4 text-left">
                                                 {{ __('#') }}
                                             </th>
-                                            <th scope="col" class="text-md font-semibold text-gray-900 px-6 py-4 text-left">
+                                            <th scope="col" class="text-md font-bold text-gray-900 px-6 py-4 text-left">
                                                 {{ __('Adresse mail') }}
                                             </th>
-                                            <th scope="col" class="text-md font-semibold text-gray-900 px-6 py-4 text-left">
+                                            <th scope="col" class="text-md font-bold text-gray-900 px-6 py-4 text-left">
                                                 {{ __('Nom') }}
                                             </th>
-                                            <th scope="col" class="text-md font-semibold text-gray-900 px-6 py-4 text-left">
+                                            <th scope="col" class="text-md font-bold text-gray-900 px-6 py-4 text-left">
                                                 {{ __('Prénom') }}
                                             </th>
-                                            <th scope="col" class="text-md font-semibold text-gray-900 px-6 py-4 text-left">
+                                            <th scope="col" class="text-md font-bold text-gray-900 px-6 py-4 text-left">
                                                 {{ __('Actions') }}
                                             </th>
                                         </tr>
@@ -169,6 +171,7 @@
                                                     </span>
                                                     <li>{{ $user->role->name }}</li>
                                                 </div>
+                                                @if ($user->groups->first())
                                                 <div class="mb-2">
                                                     <span class="block font-bold">
                                                         {{ __('Groupe') }}
@@ -177,6 +180,7 @@
                                                     <li>{{ $group->name }}</li>
                                                     @endforeach
                                                 </div>
+                                                @endif
                                                 <div class="mt-6 flex justify-end space-x-4">
                                                     <x-secondary-button
                                                         type="button"
