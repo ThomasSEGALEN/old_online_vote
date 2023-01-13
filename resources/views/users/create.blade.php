@@ -95,7 +95,7 @@
                                     class="font-bold mb-2"
                                     for="firstNameInput"
                                 >
-                                    {{ __('Nom') }}
+                                    {{ __('Prénom') }}
                                 </x-input-label>
                                 <x-text-input
                                     class="@error ('firstName') is-invalid @enderror block w-full"
@@ -197,7 +197,7 @@
                                 <span class="block font-bold mb-2">
                                     {{ __('Rôles') }}
                                 </span>
-                                <div class="h-auto px-1 overflow-auto">
+                                <div class="h-48 px-1 overflow-auto">
                                     @foreach ($roles as $role)
                                     <div class="@error ('role') is-invalid @enderror form-check flex flex-row">
                                         <x-radio-input
@@ -225,7 +225,7 @@
                                 <span class="block font-bold mb-2">
                                     {{ __('Groupes') }}
                                 </span>
-                                <div class="h-auto px-1 overflow-auto">
+                                <div class="h-48 px-1 overflow-auto">
                                     @foreach ($groups as $group)
                                     <div class="form-check flex flex-row">
                                         <x-checkbox-input

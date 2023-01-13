@@ -20,7 +20,7 @@
             <div class="p-6 bg-white border-b border-gray-200">
                 @if (session('userUpdateSuccess'))
                 <div
-                    class="bg-green-100 text-green-700 py-2 px-4 rounded mb-2"
+                    class="inline-block bg-green-100 text-green-700 py-2 px-4 rounded mb-2"
                     role="alert"
                 >
                     <span class="block sm:inline">{{ session('userUpdateSuccess') }}</span>
@@ -28,7 +28,7 @@
                 @endif
                 @if (session('userUpdateFailure'))
                 <div
-                    class="bg-red-100 text-red-700 py-2 px-4 rounded mb-2"
+                    class="inline-block bg-red-100 text-red-700 py-2 px-4 rounded mb-2"
                     role="alert"
                 >
                     <span class="block sm:inline">{{ session('userUpdateFailure') }}</span>
@@ -102,7 +102,7 @@
                                     class="@error ('firstName') is-invalid @enderror block w-full"
                                     id="firstNameInput"
                                     type="text"
-                                    name="firstname"
+                                    name="firstName"
                                     value="{{ $user->first_name }}"
                                     required
                                 />
@@ -146,7 +146,6 @@
                                         name="password"
                                         value="{{ old('password') }}"
                                         ::type="show ? 'password' : 'text'"
-                                        required
                                     />
                                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
                                         <svg
@@ -198,7 +197,7 @@
                                 <span class="block font-bold mb-2">
                                     {{ __('Rôles') }}
                                 </span>
-                                <div class="h-auto px-1 overflow-auto">
+                                <div class="h-48 px-1 overflow-auto">
                                     @foreach ($roles as $role)
                                     <div class="@error ('role') is-invalid @enderror form-check flex flex-row">
                                         <x-radio-input
@@ -226,7 +225,7 @@
                                 <span class="block font-bold mb-2">
                                     {{ __('Groupes') }}
                                 </span>
-                                <div class="h-auto px-1 overflow-auto">
+                                <div class="h-48 px-1 overflow-auto">
                                     @foreach ($groups as $group)
                                     <div class="form-check flex flex-row">
                                         <x-checkbox-input
