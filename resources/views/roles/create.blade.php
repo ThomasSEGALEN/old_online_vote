@@ -21,7 +21,7 @@
             <div class="p-6 bg-white border-b border-gray-200">
                 @if (session('roleCreateSuccess'))
                 <div
-                    class="bg-green-100 text-green-700 py-2 px-4 rounded mb-2"
+                    class="inline-block bg-green-100 text-green-700 py-2 px-4 rounded mb-2"
                     role="alert"
                 >
                     <span class="block sm:inline">{{ session('roleCreateSuccess') }}</span>
@@ -29,7 +29,7 @@
                 @endif
                 @if (session('roleCreateFailure'))
                 <div
-                    class="bg-red-100 text-red-700 py-2 px-4 rounded mb-2"
+                    class="inline-block bg-red-100 text-red-700 py-2 px-4 rounded mb-2"
                     role="alert"
                 >
                     <span class="block sm:inline">{{ session('roleCreateFailure') }}</span>
