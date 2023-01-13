@@ -6,8 +6,6 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-use function PHPUnit\Framework\isEmpty;
-
 class UserService
 {
     public function checkMail($mail)

@@ -11,7 +11,6 @@ use App\Models\UserTitle;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -96,7 +95,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(User $user)
-    {
+    {     
         if (!$user) return back()->with('userUpdateFailure', "Cet utilisateur n'existe pas");
 
         $this->authorize('update', $user);
