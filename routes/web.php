@@ -19,16 +19,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', function () {
+        return redirect()->route('sessions.index');
+    });
+
+    Route::get('/profile', [UserController::class, 'profile'])->name('users.profile');
+
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-
-    Route::get('/profile', [UserController::class, 'profile'])->name('users.profile');
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
