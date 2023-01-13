@@ -11,6 +11,19 @@ class RoleService
         return Role::where('name', $name)->first();
     }
 
+    public function index($data)
+    {
+        $roles = Role::where('name', 'like', '%' . $data->search . '%')->get();
+        $pagination = false;
+
+        if (!$data->search || !$roles->first()) {
+            $roles = Role::paginate(25);
+            $pagination = true;
+        }
+
+        return ['roles' => $roles, 'pagination' => $pagination]; 
+    }
+
     public function store($data)
     {
         $role = Role::create([
@@ -26,7 +39,11 @@ class RoleService
             'name' => $data->name,
         ]);
 
-        $role->permissions()->sync(array_map('intval', $data->permissions));
+        if ($data->permissions) {
+            $role->permissions()->sync(array_map('intval', $data->permissions));
+        } else {
+            $role->permissions()->sync([]);
+        }
     }
 
     public function destroy($role)

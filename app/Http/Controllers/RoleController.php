@@ -23,13 +23,15 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('viewAny', Role::class);
 
-        $roles = Role::all();
+        $data = $this->roleService->index($request);
+        $roles = $data['roles'];
+        $pagination = $data['pagination'];
 
-        return view('roles.index', compact('roles'));
+        return view('roles.index', compact('roles', 'pagination'));
     }
 
     /**
@@ -111,6 +113,8 @@ class RoleController extends Controller
         if ($request->name !== $role->name) {            
             if ($this->roleService->checkName($request->name)) return back()->with('roleUpdateFailure', 'Ce nom est déjà utilisé');
         }
+
+        $this->roleService->update($role, $request);
 
         return back()->with('roleUpdateSuccess', 'Le rôle a été modifié avec succès');
     }
