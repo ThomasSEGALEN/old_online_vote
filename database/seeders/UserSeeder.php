@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'last_name' => 'SÉGALEN',
+                'last_name' => 'Ségalen',
                 'first_name' => 'Thomas',
                 'email' => 'thomas@vote.fr',
                 'password' => Hash::make('thomas'),
@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'last_name' => 'SÉGALEN',
+                'last_name' => 'Ségalen',
                 'first_name' => 'Marie',
                 'email' => 'marie@vote.fr',
                 'password' => Hash::make('marie'),
@@ -42,7 +42,7 @@ class UserSeeder extends Seeder
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'last_name' => 'SÉGALEN',
+                'last_name' => 'Ségalen',
                 'first_name' => 'Jérôme',
                 'email' => 'jerome@vote.fr',
                 'password' => Hash::make('jerome'),
