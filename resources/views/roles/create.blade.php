@@ -16,117 +16,284 @@
             {{ __('Créer un rôle') }}
         </h2>
     </x-slot>
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    @if (session('roleCreateSuccess'))
-                    <div
-                        class="bg-green-100 text-green-700 py-2 px-4 rounded mb-2"
-                        role="alert"
-                    >
-                        <span class="block sm:inline">{{ session('roleCreateSuccess') }}</span>
-                    </div>
-                    @endif
-                    @if (session('roleCreateFailure'))
-                    <div
-                        class="bg-red-100 text-red-700 py-2 px-4 rounded mb-2"
-                        role="alert"
-                    >
-                        <span class="block sm:inline">{{ session('roleCreateFailure') }}</span>
-                    </div>
-                    @endif
-                    <form
-                        id="roleForm"
-                        action="{{ route('roles.store') }}"
-                        method="POST"
-                        enctype="multipart/form-data"
-                    >
-                        @csrf
-                        <div class="w-full flex flex-row justify-between">
-                            <div class="flex flex-col w-1/3 -mx-3">
-                                <div class="w-full px-3 mb-3 md:mb-6">
-                                    <label
-                                        class="block uppercase tracking-wide text-xs font-bold mb-2"
-                                        for="nameInput"
-                                    >
-                                        Nom
-                                    </label>
-                                    <input
-                                        class="@error ('name') is-invalid @enderror appearance-none block w-full bg-gray-100 rounded py-3 px-4 md:mb-0"
-                                        id="nameInput"
-                                        type="text"
-                                        name="name"
-                                        value="{{ old('name') }}"
-                                    >
-                                    @error ('name')
-                                    <span class="text-red-600">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="flex flex-col w-2/3 h-full -mx-3">
-                                <div class="w-full px-3 mb-3 md:mb-6">
-                                    <span class="block uppercase tracking-wide text-xs font-bold">
-                                        Permissions
-                                    </span>
-                                    @foreach ($permissions as $key => $permission)
-                                    @if ($key === \App\Models\Permission::USERS_VIEW_ANY - 1)
-                                    <span class="block uppercase tracking-wide text-xs font-bold my-2">
-                                        Utilisateurs :
-                                    </span>
-                                    @endif
-                                    @if ($key === \App\Models\Permission::ROLES_VIEW_ANY - 1)
-                                    <span class="block uppercase tracking-wide text-xs font-bold my-2">
-                                        Rôles :
-                                    </span>
-                                    @endif
-                                    @if ($key === \App\Models\Permission::GROUPS_VIEW_ANY - 1)
-                                    <span class="block uppercase tracking-wide text-xs font-bold my-2">
-                                        Groupes :
-                                    </span>
-                                    @endif
-                                    @if ($key === \App\Models\Permission::SESSIONS_VIEW_ANY - 1)
-                                    <span class="block uppercase tracking-wide text-xs font-bold my-2">
-                                        Sessions :
-                                    </span>
-                                    @endif
-                                    <div class="form-check flex flex-row">
-                                        <input
-                                            class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                                            id="permissionInput-{{ $permission->id }}"
-                                            type="checkbox"
-                                            name="permissions[]"
-                                            value="{{ $permission->id }}"
-                                            @if ($permission->id === \App\Models\Permission::USERS_VIEW_ANY || $permission->id === \App\Models\Permission::ROLES_VIEW_ANY || $permission->id === \App\Models\Permission::GROUPS_VIEW_ANY || $permission->id === \App\Models\Permission::SESSIONS_VIEW_ANY) checked @endif
-                                        >
-                                        <label
-                                            class="form-check-label inline-block text-gray-800"
-                                            for="permissionInput-{{ $permission->id }}"
-                                        >
-                                            {{ $permission->name }}
-                                        </label>
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-2 space-x-2">
-                            <button
-                                class="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded"
-                                type="submit"
-                            >
-                                Envoyer
-                            </button>
-                            <button
-                                class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
-                                type="button"    
-                                onclick="window.location='{{ route('roles.index') }}'"
-                            >
-                                Annuler
-                            </button>
-                        </div>
-                    </form>
+    <div class="max-w-7xl mx-auto py-12 px-8">
+        <div class="bg-white overflow-hidden shadow-sm rounded-lg">
+            <div class="p-6 bg-white border-b border-gray-200">
+                @if (session('roleCreateSuccess'))
+                <div
+                    class="bg-green-100 text-green-700 py-2 px-4 rounded mb-2"
+                    role="alert"
+                >
+                    <span class="block sm:inline">{{ session('roleCreateSuccess') }}</span>
                 </div>
+                @endif
+                @if (session('roleCreateFailure'))
+                <div
+                    class="bg-red-100 text-red-700 py-2 px-4 rounded mb-2"
+                    role="alert"
+                >
+                    <span class="block sm:inline">{{ session('roleCreateFailure') }}</span>
+                </div>
+                @endif
+                <form
+                    id="roleForm"
+                    action="{{ route('roles.store') }}"
+                    method="POST"
+                    enctype="multipart/form-data"
+                >
+                    @csrf
+                    <div class="w-full flex flex-row justify-between">
+                        <div class="flex flex-col md:w-1/3 w-full -mx-3">
+                            <div class="w-full px-3 mb-3">
+                                <x-input-label
+                                    class="font-bold mb-2"
+                                    for="nameInput"
+                                >
+                                    {{ __('Nom') }}
+                                </x-input-label>
+                                <x-text-input
+                                    class="@error ('name') is-invalid @enderror block w-full"
+                                    id="nameInput"
+                                    type="text"
+                                    name="name"
+                                    value="{{ old('name') }}"
+                                    required
+                                />
+                                @error ('name')
+                                <x-input-error :messages="$message" />
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full mb-3">
+                        <span class="block font-bold mb-2">
+                            {{ __('Permissions') }}
+                        </span>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full">
+                                <thead class="bg-white border-b">
+                                    <tr class="border-b bg-gray-100">
+                                        <th scope="col" class="text-md font-bold text-gray-900 px-6 py-4 text-left">
+                                            {{ __('Nom') }}
+                                        </th>
+                                        <th scope="col" class="text-md font-bold text-gray-900 px-6 py-4 text-left">
+                                            {{ __('Lister') }}
+                                        </th>
+                                        <th scope="col" class="text-md font-bold text-gray-900 px-6 py-4 text-left">
+                                            {{ __('Consulter') }}
+                                        </th>
+                                        <th scope="col" class="text-md font-bold text-gray-900 px-6 py-4 text-left">
+                                            {{ __('Créer') }}
+                                        </th>
+                                        <th scope="col" class="text-md font-bold text-gray-900 px-6 py-4 text-left">
+                                            {{ __('Modifier') }}
+                                        </th>
+                                        <th scope="col" class="text-md font-bold text-gray-900 px-6 py-4 text-left">
+                                            {{ __('Supprimer') }}
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="bg-white border-b">
+                                        <td class="text-md text-gray-900 font-bold px-6 py-4">
+                                            {{ __('Utilisateurs') }}
+                                        </td>
+                                        <td class="text-md text-gray-900 font-semibold px-6 py-4">
+                                            <x-checkbox-input
+                                                id="permissionInput-{{ \App\Models\Permission::USERS_VIEW_ANY }}"
+                                                type="checkbox"
+                                                name="permissions[]"
+                                                value="{{ \App\Models\Permission::USERS_VIEW_ANY }}"
+                                            ></x-checkbox-input>
+                                        </td>
+                                        <td class="text-md text-gray-900 font-semibold px-6 py-4">
+                                            <x-checkbox-input
+                                                id="permissionInput-{{ \App\Models\Permission::USERS_VIEW }}"
+                                                type="checkbox"
+                                                name="permissions[]"
+                                                value="{{ \App\Models\Permission::USERS_VIEW }}"
+                                            ></x-checkbox-input>
+                                        </td>
+                                        <td class="text-md text-gray-900 font-semibold px-6 py-4">
+                                            <x-checkbox-input
+                                                id="permissionInput-{{ \App\Models\Permission::USERS_CREATE }}"
+                                                type="checkbox"
+                                                name="permissions[]"
+                                                value="{{ \App\Models\Permission::USERS_CREATE }}"
+                                            ></x-checkbox-input>
+                                        </td>
+                                        <td class="text-md text-gray-900 font-semibold px-6 py-4">
+                                            <x-checkbox-input
+                                                id="permissionInput-{{ \App\Models\Permission::USERS_UPDATE }}"
+                                                type="checkbox"
+                                                name="permissions[]"
+                                                value="{{ \App\Models\Permission::USERS_UPDATE }}"
+                                            ></x-checkbox-input>
+                                        </td>
+                                        <td class="text-md text-gray-900 font-semibold px-6 py-4">
+                                            <x-checkbox-input
+                                                id="permissionInput-{{ \App\Models\Permission::USERS_DELETE }}"
+                                                type="checkbox"
+                                                name="permissions[]"
+                                                value="{{ \App\Models\Permission::USERS_DELETE }}"
+                                            ></x-checkbox-input>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b bg-gray-100">
+                                        <td class="text-md text-gray-900 font-bold px-6 py-4">
+                                            {{ __('Rôles') }}
+                                        </td>
+                                        <td class="text-md text-gray-900 font-semibold px-6 py-4">
+                                            <x-checkbox-input
+                                                id="permissionInput-{{ \App\Models\Permission::ROLES_VIEW_ANY }}"
+                                                type="checkbox"
+                                                name="permissions[]"
+                                                value="{{ \App\Models\Permission::ROLES_VIEW_ANY }}"
+                                            ></x-checkbox-input>
+                                        </td>
+                                        <td class="text-md text-gray-900 font-semibold px-6 py-4">
+                                            <x-checkbox-input
+                                                id="permissionInput-{{ \App\Models\Permission::ROLES_VIEW }}"
+                                                type="checkbox"
+                                                name="permissions[]"
+                                                value="{{ \App\Models\Permission::ROLES_VIEW }}"
+                                            ></x-checkbox-input>
+                                        </td>
+                                        <td class="text-md text-gray-900 font-semibold px-6 py-4">
+                                            <x-checkbox-input
+                                                id="permissionInput-{{ \App\Models\Permission::ROLES_CREATE }}"
+                                                type="checkbox"
+                                                name="permissions[]"
+                                                value="{{ \App\Models\Permission::ROLES_CREATE }}"
+                                            ></x-checkbox-input>
+                                        </td>
+                                        <td class="text-md text-gray-900 font-semibold px-6 py-4">
+                                            <x-checkbox-input
+                                                id="permissionInput-{{ \App\Models\Permission::ROLES_UPDATE }}"
+                                                type="checkbox"
+                                                name="permissions[]"
+                                                value="{{ \App\Models\Permission::ROLES_UPDATE }}"
+                                            ></x-checkbox-input>
+                                        </td>
+                                        <td class="text-md text-gray-900 font-semibold px-6 py-4">
+                                            <x-checkbox-input
+                                                id="permissionInput-{{ \App\Models\Permission::ROLES_DELETE }}"
+                                                type="checkbox"
+                                                name="permissions[]"
+                                                value="{{ \App\Models\Permission::ROLES_DELETE }}"
+                                            ></x-checkbox-input>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b bg-white">
+                                        <td class="text-md text-gray-900 font-bold px-6 py-4">
+                                            {{ __('Groupes') }}
+                                        </td>
+                                        <td class="text-md text-gray-900 font-semibold px-6 py-4">
+                                            <x-checkbox-input
+                                                id="permissionInput-{{ \App\Models\Permission::GROUPS_VIEW_ANY }}"
+                                                type="checkbox"
+                                                name="permissions[]"
+                                                value="{{ \App\Models\Permission::GROUPS_VIEW_ANY }}"
+                                            ></x-checkbox-input>
+                                        </td>
+                                        <td class="text-md text-gray-900 font-semibold px-6 py-4">
+                                            <x-checkbox-input
+                                                id="permissionInput-{{ \App\Models\Permission::GROUPS_VIEW }}"
+                                                type="checkbox"
+                                                name="permissions[]"
+                                                value="{{ \App\Models\Permission::GROUPS_VIEW }}"
+                                            ></x-checkbox-input>
+                                        </td>
+                                        <td class="text-md text-gray-900 font-semibold px-6 py-4">
+                                            <x-checkbox-input
+                                                id="permissionInput-{{ \App\Models\Permission::GROUPS_CREATE }}"
+                                                type="checkbox"
+                                                name="permissions[]"
+                                                value="{{ \App\Models\Permission::GROUPS_CREATE }}"
+                                            ></x-checkbox-input>
+                                        </td>
+                                        <td class="text-md text-gray-900 font-semibold px-6 py-4">
+                                            <x-checkbox-input
+                                                id="permissionInput-{{ \App\Models\Permission::GROUPS_UPDATE }}"
+                                                type="checkbox"
+                                                name="permissions[]"
+                                                value="{{ \App\Models\Permission::GROUPS_UPDATE }}"
+                                            ></x-checkbox-input>
+                                        </td>
+                                        <td class="text-md text-gray-900 font-semibold px-6 py-4">
+                                            <x-checkbox-input
+                                                id="permissionInput-{{ \App\Models\Permission::GROUPS_DELETE }}"
+                                                type="checkbox"
+                                                name="permissions[]"
+                                                value="{{ \App\Models\Permission::GROUPS_DELETE }}"
+                                            ></x-checkbox-input>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b bg-gray-100">
+                                        <td class="text-md text-gray-900 font-bold px-6 py-4">
+                                            {{ __('Groupes') }}
+                                        </td>
+                                        <td class="text-md text-gray-900 font-semibold px-6 py-4">
+                                            <x-checkbox-input
+                                                id="permissionInput-{{ \App\Models\Permission::SESSIONS_VIEW_ANY }}"
+                                                type="checkbox"
+                                                name="permissions[]"
+                                                value="{{ \App\Models\Permission::SESSIONS_VIEW_ANY }}"
+                                            ></x-checkbox-input>
+                                        </td>
+                                        <td class="text-md text-gray-900 font-semibold px-6 py-4">
+                                            <x-checkbox-input
+                                                id="permissionInput-{{ \App\Models\Permission::SESSIONS_VIEW }}"
+                                                type="checkbox"
+                                                name="permissions[]"
+                                                value="{{ \App\Models\Permission::SESSIONS_VIEW }}"
+                                            ></x-checkbox-input>
+                                        </td>
+                                        <td class="text-md text-gray-900 font-semibold px-6 py-4">
+                                            <x-checkbox-input
+                                                id="permissionInput-{{ \App\Models\Permission::SESSIONS_CREATE }}"
+                                                type="checkbox"
+                                                name="permissions[]"
+                                                value="{{ \App\Models\Permission::SESSIONS_CREATE }}"
+                                            ></x-checkbox-input>
+                                        </td>
+                                        <td class="text-md text-gray-900 font-semibold px-6 py-4">
+                                            <x-checkbox-input
+                                                id="permissionInput-{{ \App\Models\Permission::SESSIONS_UPDATE }}"
+                                                type="checkbox"
+                                                name="permissions[]"
+                                                value="{{ \App\Models\Permission::SESSIONS_UPDATE }}"
+                                            ></x-checkbox-input>
+                                        </td>
+                                        <td class="text-md text-gray-900 font-semibold px-6 py-4">
+                                            <x-checkbox-input
+                                                id="permissionInput-{{ \App\Models\Permission::SESSIONS_DELETE }}"
+                                                type="checkbox"
+                                                name="permissions[]"
+                                                value="{{ \App\Models\Permission::SESSIONS_DELETE }}"
+                                            ></x-checkbox-input>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="mb-2 space-x-2">
+                        <button
+                            class="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded"
+                            type="submit"
+                        >
+                            Envoyer
+                        </button>
+                        <button
+                            class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
+                            type="button"    
+                            onclick="window.location='{{ route('roles.index') }}'"
+                        >
+                            Annuler
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
