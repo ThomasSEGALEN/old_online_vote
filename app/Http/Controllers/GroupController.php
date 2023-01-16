@@ -23,13 +23,15 @@ class GroupController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('viewAny', Group::class);
 
-        $groups = Group::all();
+        $data = $this->groupService->index($request);
+        $groups = $data['groups'];
+        $pagination = $data['pagination'];
 
-        return view('groups.index', compact('groups'));
+        return view('groups.index', compact('groups', 'pagination'));
     }
 
     /**

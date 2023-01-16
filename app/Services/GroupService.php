@@ -11,6 +11,19 @@ class GroupService
         return Group::where('name', $name)->first();
     }
 
+    public function index($data)
+    {
+        $groups = Group::where('name', 'like', '%' . $data->search . '%')->get();
+        $pagination = false;
+
+        if (!$data->search || !$groups->first()) {
+            $groups = Group::paginate(25);
+            $pagination = true;
+        }
+
+        return ['groups' => $groups, 'pagination' => $pagination]; 
+    }
+
     public function store($data)
     {
         $group = Group::create([
