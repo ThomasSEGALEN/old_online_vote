@@ -176,7 +176,7 @@
                                                         {{ __('Groupes') }}
                                                     </span>
                                                     <div class="max-h-48 overflow-y-auto">
-                                                        @foreach ($user->groups as $group)
+                                                        @foreach ($user->groups->sortBy('name') as $group)
                                                         <li>{{ $group->name }}</li>
                                                         @endforeach
                                                     </div>
