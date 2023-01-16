@@ -77,7 +77,6 @@
                                                 type="checkbox"
                                                 name="users[]"
                                                 value="{{ $user->id }}"
-                                                required
                                             ></x-text-input>
                                             <x-input-label
                                                 class="form-check-label inline-block text-gray-800"
