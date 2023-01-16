@@ -16,7 +16,7 @@
         </h2>
     </x-slot>
     <div class="max-w-7xl mx-auto py-12 px-8">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="bg-white shadow-sm sm:rounded-lg">
             <div class="p-6 bg-white border-b border-gray-200">
                 @if (session('userUpdateSuccess'))
                 <div
@@ -197,7 +197,7 @@
                                 <span class="block font-bold mb-2">
                                     {{ __('Rôles') }}
                                 </span>
-                                <div class="h-48 px-1 overflow-auto">
+                                <div class="max-h-48 px-1 overflow-y-auto">
                                     @foreach ($roles as $role)
                                     <div class="@error ('role') is-invalid @enderror form-check flex flex-row">
                                         <x-radio-input
@@ -225,7 +225,7 @@
                                 <span class="block font-bold mb-2">
                                     {{ __('Groupes') }}
                                 </span>
-                                <div class="h-48 px-1 overflow-auto">
+                                <div class="max-h-48 px-1 overflow-y-auto">
                                     @foreach ($groups as $group)
                                     <div class="form-check flex flex-row">
                                         <x-checkbox-input

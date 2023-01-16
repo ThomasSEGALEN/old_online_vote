@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
     <div class="max-w-7xl mx-auto py-12 px-8">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="bg-white shadow-sm sm:rounded-lg">
             <div class="p-6 bg-white border-b border-gray-200">
                 @if (session('roleViewFailure'))
                 <div
