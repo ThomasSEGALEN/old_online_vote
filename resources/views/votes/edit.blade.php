@@ -56,7 +56,6 @@
                                     <input
                                         class="@error ('title') is-invalid @enderror appearance-none block w-full bg-gray-100 rounded py-3 px-4 md:mb-0"
                                         id="titleInput"
-                                        type="text"
                                         name="title"
                                         value="{{ $vote->title }}"
                                     >
@@ -74,7 +73,6 @@
                                     <textarea
                                         class="@error ('description') is-invalid @enderror appearance-none block w-full bg-gray-100 rounded py-3 px-4 md:mb-0"
                                         id="descriptionInput"
-                                        type="text"
                                         name="description">{{ $vote->description }}</textarea>
                                     @error ('description')
                                     <span class="text-red-600">{{ $message }}</span>
@@ -87,17 +85,16 @@
                                         Scrutin
                                     </span>
                                     @foreach ($types as $type)
-                                    <div class="@error ('type') is-invalid @enderror form-check flex flex-row">
+                                    <div class="@error ('type') is-invalid @enderror flex flex-row">
                                         <input
-                                            class="form-check-input appearance-none h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                            class="appearance-none h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                             id="typeInput-{{ $type->id }}"
-                                            type="radio"
                                             name="type"
                                             value="{{ $type->id }}"
                                             @if ($vote->type->id === $type->id) checked @endif
                                         >
                                         <label
-                                            class="form-check-label inline-block text-gray-800"
+                                            class="inline-block text-gray-800"
                                             for="typeInput-{{ $type->id }}"
                                         >
                                             {{ $type->name }}
@@ -105,6 +102,32 @@
                                     </div>
                                     @endforeach
                                     @error ('type')
+                                    <span class="text-red-600">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="w-full px-3 mb-3 md:mb-6">
+                                    <span class="block uppercase tracking-wide text-xs font-bold mb-2">
+                                        Réponses
+                                    </span>
+                                    <div class="@error ('answer') is-invalid @enderror flex flex-row">
+                                    <x-laravel-blade-sortable::sortable name="answers">
+                                    @foreach ($answers->sortBy('order') as $key => $answer)
+                                    <x-laravel-blade-sortable::sortable-item
+                                        sort-key="{{ $answer->id }}"
+                                        name="{{ $answer->name }}"
+                                    >
+                                        <input
+                                            class="inline-block text-gray-800"
+                                            id="answerInput-{{ $answer->id }}"
+                                            name="answers[]"
+                                            value="{{ $answer->name }}"
+                                            disabled
+                                        >
+                                    </x-laravel-blade-sortable::sortable-item>
+                                    @endforeach
+                                    </x-laravel-blade-sortable::sortable>
+                                    </div>
+                                    @error ('answer')
                                     <span class="text-red-600">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -131,3 +154,5 @@
         </div>
     </div>
 </x-app-layout>
+
+<x-laravel-blade-sortable::scripts/>

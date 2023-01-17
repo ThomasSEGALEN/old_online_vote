@@ -84,10 +84,10 @@
                         </button>
                     </form>
                     <span>Réponses :</span>
-                    @foreach ($vote->answers as $answer)
+                    @foreach ($vote->answers->sortBy('order') as $answer)
                     <li>{{ $answer->name }} : {{ $vote->results->where('answer_id', $answer->id)->count() }}</li>
                     @endforeach
-                    @foreach ($answers as $answer)
+                    @foreach ($answers->sortBy('order') as $answer)
                     <form
                         class="inline-flex"
                         id="voteForm-{{ $answer->id }}"    

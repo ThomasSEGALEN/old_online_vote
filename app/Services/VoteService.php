@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Answer;
 use App\Models\Vote;
 use App\Models\VoteAnswer;
 use App\Models\VoteResult;
@@ -22,8 +23,16 @@ class VoteService
             'type_id' => intval($data->type),
         ]);
 
+        if ($data->answer) {
+            $answers = Answer::where('label', $data->answer)->get();
+
+            foreach ($answers as $key => $answer) {
+                VoteAnswer::create(['name' => $answer->name, 'color' => $answer->color, 'order' => $key, 'vote_id' => $vote->id]);
+            }
+        }
+
         foreach ($data->answers as $key => $answer) {
-            if ($answer) VoteAnswer::create(['name' => $answer, 'color' => $data->colors[$key], 'vote_id' => $vote->id]);
+            if ($answer) VoteAnswer::create(['name' => $answer, 'color' => $data->colors[$key], 'order' => $key, 'vote_id' => $vote->id]);
         }
     }
 
@@ -43,6 +52,7 @@ class VoteService
 
     public function vote($answerId, $userId, $voteId)
     {
+        VoteAnswer::where('vote_id', $voteId)->where('id', $answerId)->increment('amount', 1);
         VoteResult::create([
             'answer_id' => $answerId,
             'user_id' => $userId,

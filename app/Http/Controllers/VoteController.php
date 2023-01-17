@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreVoteRequest;
 use App\Http\Requests\UpdateVoteRequest;
+use App\Models\Answer;
 use App\Models\Session;
 use App\Models\Vote;
 use App\Models\VoteAnswer;
@@ -44,10 +45,11 @@ class VoteController extends Controller
     {
         $this->authorize('create', Vote::class);
 
-        $types = VoteType::all();
         $session = Session::where('id', $sessionId)->first();
+        $types = VoteType::all();
+        $answers = array_unique(Answer::all()->pluck('label')->toArray());
 
-        return view('votes.create', compact('session', 'types'));
+        return view('votes.create', compact('session', 'types', 'answers'));
     }
 
     /**
@@ -79,16 +81,20 @@ class VoteController extends Controller
 
         $this->authorize('view', $vote);
 
-        $answers = VoteAnswer::where('vote_id', $vote->id)->get();
-        $results = VoteResult::where('vote_id', $vote->id)->selectRaw('count(answer_id) as amount')
-        ->groupBy('answer_id')
-        ->orderBy('amount', 'DESC')
-        ->get();
-    
+        $answers = VoteAnswer::where('vote_id', $vote->id)->orderBy('order', 'asc')->get();
+        // $results = VoteResult::where('vote_id', $vote->id)->selectRaw('count(answer_id) as amount')
+        // ->groupBy('answer_id')
+        // ->get();
+
+        // $results = VoteResult::where('vote_id', $vote->id)
+        // ->selectRaw('count(answer_id) as amount')
+        // ->groupBy('answer_id')
+        // ->get();
+
         $chart = (new LarapexChart)->donutChart()
             ->setTitle('Résultats - ' . $vote->title)
             ->setSubtitle($vote->created_at)
-            ->setDataset($results->pluck('amount')->toArray())
+            ->setDataset($answers->pluck('amount')->toArray())
             ->setColors($answers->pluck('color')->toArray())
             ->setLabels($answers->pluck('name')->toArray());
 
@@ -108,8 +114,9 @@ class VoteController extends Controller
         $this->authorize('update', $vote);
 
         $types = VoteType::all();
+        $answers = VoteAnswer::where('vote_id', $vote->id)->get();
 
-        return view('votes.edit', compact('vote', 'types'));
+        return view('votes.edit', compact('vote', 'types', 'answers'));
     }
 
     /**
@@ -129,6 +136,30 @@ class VoteController extends Controller
             if ($this->voteService->checkTitle($request->title, $vote->session_id)) return back()->with('voteCreateFailure', 'Ce titre est déjà utilisé');
         }
 
+        // UPDATE ANSWERS ORDER
+        $as = VoteAnswer::where('vote_id', $vote->id)->orderBy('order', 'asc')->get();
+
+        // dd($as);
+        // dd($request->answers);
+
+        foreach ($request->answers as $key => $answer) {
+            if (intval($answer) !== $as[$key]->id) {
+                $as->where('id', intval($answer))->first()->update([
+                    'order' => $key,
+                ]);
+            }
+        }
+
+
+        // foreach ($answers as $key => $answer) {
+        //     dd($answer);
+        //     if ($answer->id === $answers[$key]->id) {
+        //         $answer->update([
+        //             'order' => $key,
+        //         ]);
+        //     }
+        // }
+        
         $this->voteService->update($vote, $request);
 
         return back()->with('voteUpdateSuccess', 'Le vote a été modifié avec succès');
