@@ -106,11 +106,7 @@
                         <div>
                             <span>Utilisateurs :</span>
                             @foreach ($session->users->sortBy('first_name')->sortBy('last_name') as $user)
-                            @if (auth()->user()->can('view', $user))
-                            <li><a href="{{ route('users.show', $user) }}">{{ $user->last_name }} {{ $user->first_name }}</a></li>
-                            @else
                             <li>{{ $user->last_name }} {{ $user->first_name }}</li>
-                            @endif
                             @endforeach
                         </div>
                         @endif

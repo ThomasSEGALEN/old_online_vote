@@ -55,7 +55,6 @@
                                     <x-text-input
                                         class="@error ('name') is-invalid @enderror block w-full"
                                         id="nameInput"
-                                        type="text"
                                         name="name"
                                         value="{{ old('name') }}"
                                         required
@@ -70,16 +69,13 @@
                                     </span>
                                     <div class="max-h-48 px-1 overflow-y-auto">
                                         @foreach ($users->sortBy('first_name')->sortBy('last_name') as $user)
-                                        <div class="@error ('users') is-invalid @enderror form-check flex flex-row">
-                                            <x-text-input
-                                                class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                        <div class="@error ('users') is-invalid @enderror flex flex-row">
+                                            <x-checkbox-input
                                                 id="userInput-{{ $user->id }}"
-                                                type="checkbox"
                                                 name="users[]"
                                                 value="{{ $user->id }}"
-                                            ></x-text-input>
+                                            ></x-checkbox-input>
                                             <x-input-label
-                                                class="form-check-label inline-block text-gray-800"
                                                 for="userInput-{{ $user->id }}"
                                             >
                                                 {{ $user->last_name }} {{ $user->first_name }}

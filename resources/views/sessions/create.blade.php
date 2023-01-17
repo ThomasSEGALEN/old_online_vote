@@ -55,7 +55,6 @@
                                     <input
                                         class="@error ('title') is-invalid @enderror appearance-none block w-full bg-gray-100 rounded py-3 px-4 md:mb-0"
                                         id="titleInput"
-                                        type="text"
                                         name="title"
                                         value="{{ old('title') }}"
                                     >
@@ -73,7 +72,6 @@
                                     <textarea
                                         class="@error ('description') is-invalid @enderror appearance-none block w-full bg-gray-100 rounded py-3 px-4 md:mb-0"
                                         id="descriptionInput"
-                                        type="text"
                                         name="description"
                                     >{{ old('description') }}</textarea>
                                     @error ('description')
@@ -126,14 +124,14 @@
                                     </span>
                                     @foreach ($groups->sortBy('name') as $group)
                                     @if ($group->users->first())
-                                    <div class="form-check flex flex-col mb-2">
+                                    <div class="flex flex-col mb-2">
                                         <span class="block uppercase tracking-wide text-xs font-bold my-2">
                                             {{ $group->name }} :
                                         </span>
                                         @foreach ($group->users->sortBy('first_name')->sortBy('last_name') as $user)
                                         <div>
                                             <input
-                                                class="@error ('users') is-invalid @enderror form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                                class="@error ('users') is-invalid @enderror appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                                 id="userInput-{{ $user->id }}"
                                                 type="checkbox"
                                                 name="users[]"
@@ -141,7 +139,7 @@
                                                 @if (is_array(old('users')) && in_array($user->id, old('users'))) checked @endif
                                             >
                                             <label
-                                                class="form-check-label inline-block text-gray-800"
+                                                class="inline-block text-gray-800"
                                                 for="userInput-{{ $user->id }}"
                                             >
                                                 {{ $user->last_name }} {{ $user->first_name }}

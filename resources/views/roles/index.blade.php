@@ -47,7 +47,6 @@
                         <div class="relative">
                             <x-text-input
                                 class="block w-full mr-3"
-                                type="text"
                                 name="search"
                                 placeholder="Recherche"
                             />                            

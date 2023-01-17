@@ -54,7 +54,6 @@
                                 <x-text-input
                                     class="@error ('name') is-invalid @enderror block w-full"
                                     id="nameInput"
-                                    type="text"
                                     name="name"
                                     value="{{ old('name') }}"
                                     required
@@ -101,7 +100,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::USERS_VIEW_ANY }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::USERS_VIEW_ANY }}"
                                             ></x-checkbox-input>
@@ -109,7 +107,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::USERS_VIEW }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::USERS_VIEW }}"
                                             ></x-checkbox-input>
@@ -117,7 +114,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::USERS_CREATE }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::USERS_CREATE }}"
                                             ></x-checkbox-input>
@@ -125,7 +121,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::USERS_UPDATE }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::USERS_UPDATE }}"
                                             ></x-checkbox-input>
@@ -133,7 +128,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::USERS_DELETE }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::USERS_DELETE }}"
                                             ></x-checkbox-input>
@@ -146,7 +140,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::ROLES_VIEW_ANY }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::ROLES_VIEW_ANY }}"
                                             ></x-checkbox-input>
@@ -154,7 +147,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::ROLES_VIEW }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::ROLES_VIEW }}"
                                             ></x-checkbox-input>
@@ -162,7 +154,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::ROLES_CREATE }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::ROLES_CREATE }}"
                                             ></x-checkbox-input>
@@ -170,7 +161,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::ROLES_UPDATE }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::ROLES_UPDATE }}"
                                             ></x-checkbox-input>
@@ -178,7 +168,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::ROLES_DELETE }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::ROLES_DELETE }}"
                                             ></x-checkbox-input>
@@ -191,7 +180,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::GROUPS_VIEW_ANY }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::GROUPS_VIEW_ANY }}"
                                             ></x-checkbox-input>
@@ -199,7 +187,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::GROUPS_VIEW }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::GROUPS_VIEW }}"
                                             ></x-checkbox-input>
@@ -207,7 +194,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::GROUPS_CREATE }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::GROUPS_CREATE }}"
                                             ></x-checkbox-input>
@@ -215,7 +201,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::GROUPS_UPDATE }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::GROUPS_UPDATE }}"
                                             ></x-checkbox-input>
@@ -223,7 +208,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::GROUPS_DELETE }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::GROUPS_DELETE }}"
                                             ></x-checkbox-input>
@@ -236,7 +220,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::SESSIONS_VIEW_ANY }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::SESSIONS_VIEW_ANY }}"
                                             ></x-checkbox-input>
@@ -244,7 +227,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::SESSIONS_VIEW }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::SESSIONS_VIEW }}"
                                             ></x-checkbox-input>
@@ -252,7 +234,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::SESSIONS_CREATE }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::SESSIONS_CREATE }}"
                                             ></x-checkbox-input>
@@ -260,7 +241,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::SESSIONS_UPDATE }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::SESSIONS_UPDATE }}"
                                             ></x-checkbox-input>
@@ -268,7 +248,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::SESSIONS_DELETE }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::SESSIONS_DELETE }}"
                                             ></x-checkbox-input>

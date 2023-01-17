@@ -54,7 +54,6 @@
                                 <x-text-input
                                     class="@error ('name') is-invalid @enderror block w-full"
                                     id="nameInput"
-                                    type="text"
                                     name="name"
                                     value="{{ $role->name }}"
                                     required
@@ -101,7 +100,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::USERS_VIEW_ANY }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::USERS_VIEW_ANY }}"
                                                 :checked="$role->permissions->contains('id', \App\Models\Permission::USERS_VIEW_ANY)"
@@ -110,7 +108,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::USERS_VIEW }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::USERS_VIEW }}"
                                                 :checked="$role->permissions->contains('id', \App\Models\Permission::USERS_VIEW)"
@@ -119,7 +116,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::USERS_CREATE }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::USERS_CREATE }}"
                                                 :checked="$role->permissions->contains('id', \App\Models\Permission::USERS_CREATE)"
@@ -128,7 +124,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::USERS_UPDATE }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::USERS_UPDATE }}"
                                                 :checked="$role->permissions->contains('id', \App\Models\Permission::USERS_UPDATE)"
@@ -137,7 +132,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::USERS_DELETE }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::USERS_DELETE }}"
                                                 :checked="$role->permissions->contains('id', \App\Models\Permission::USERS_DELETE)"
@@ -151,7 +145,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::ROLES_VIEW_ANY }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::ROLES_VIEW_ANY }}"
                                                 :checked="$role->permissions->contains('id', \App\Models\Permission::ROLES_VIEW_ANY)"
@@ -160,7 +153,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::ROLES_VIEW }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::ROLES_VIEW }}"
                                                 :checked="$role->permissions->contains('id', \App\Models\Permission::ROLES_VIEW)"
@@ -169,7 +161,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::ROLES_CREATE }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::ROLES_CREATE }}"
                                                 :checked="$role->permissions->contains('id', \App\Models\Permission::ROLES_CREATE)"
@@ -178,7 +169,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::ROLES_UPDATE }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::ROLES_UPDATE }}"
                                                 :checked="$role->permissions->contains('id', \App\Models\Permission::ROLES_UPDATE)"
@@ -187,7 +177,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::ROLES_DELETE }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::ROLES_DELETE }}"
                                                 :checked="$role->permissions->contains('id', \App\Models\Permission::ROLES_DELETE)"
@@ -201,7 +190,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::GROUPS_VIEW_ANY }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::GROUPS_VIEW_ANY }}"
                                                 :checked="$role->permissions->contains('id', \App\Models\Permission::GROUPS_VIEW_ANY)"
@@ -210,7 +198,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::GROUPS_VIEW }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::GROUPS_VIEW }}"
                                                 :checked="$role->permissions->contains('id', \App\Models\Permission::GROUPS_VIEW)"
@@ -219,7 +206,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::GROUPS_CREATE }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::GROUPS_CREATE }}"
                                                 :checked="$role->permissions->contains('id', \App\Models\Permission::GROUPS_CREATE)"
@@ -228,7 +214,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::GROUPS_UPDATE }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::GROUPS_UPDATE }}"
                                                 :checked="$role->permissions->contains('id', \App\Models\Permission::GROUPS_UPDATE)"
@@ -237,7 +222,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::GROUPS_DELETE }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::GROUPS_DELETE }}"
                                                 :checked="$role->permissions->contains('id', \App\Models\Permission::GROUPS_DELETE)"
@@ -251,7 +235,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::SESSIONS_VIEW_ANY }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::SESSIONS_VIEW_ANY }}"
                                                 :checked="$role->permissions->contains('id', \App\Models\Permission::SESSIONS_VIEW_ANY)"
@@ -260,7 +243,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::SESSIONS_VIEW }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::SESSIONS_VIEW }}"
                                                 :checked="$role->permissions->contains('id', \App\Models\Permission::SESSIONS_VIEW)"
@@ -269,7 +251,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::SESSIONS_CREATE }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::SESSIONS_CREATE }}"
                                                 :checked="$role->permissions->contains('id', \App\Models\Permission::SESSIONS_CREATE)"
@@ -278,7 +259,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::SESSIONS_UPDATE }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::SESSIONS_UPDATE }}"
                                                 :checked="$role->permissions->contains('id', \App\Models\Permission::SESSIONS_UPDATE)"
@@ -287,7 +267,6 @@
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::SESSIONS_DELETE }}"
-                                                type="checkbox"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::SESSIONS_DELETE }}"
                                                 :checked="$role->permissions->contains('id', \App\Models\Permission::SESSIONS_DELETE)"
