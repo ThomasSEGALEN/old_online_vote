@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoteController;
+use App\Models\Answer;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
@@ -53,6 +55,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/groups/{group}/edit', [GroupController::class, 'edit'])->name('groups.edit');
     Route::put('/groups/{group}', [GroupController::class, 'update'])->name('groups.update');
     Route::delete('/groups/{group}', [GroupController::class, 'destroy'])->name('groups.destroy');
+
+    Route::get('/answers/create', [AnswerController::class, 'create'])->name('answers.create');
+    Route::post('/answers', [AnswerController::class, 'store'])->name('answers.store');
 
     Route::get('/sessions', [SessionController::class, 'index'])->name('sessions.index');
     Route::get('/sessions/create/', [SessionController::class, 'create'])->name('sessions.create');
