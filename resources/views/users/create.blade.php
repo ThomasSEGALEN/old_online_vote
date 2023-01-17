@@ -53,7 +53,6 @@
                                     <div class="flex flex-row px-1">
                                         <x-radio-input
                                             id="titleInput-{{ $title->id }}"
-                                            type="radio"
                                             name="title"
                                             value="{{ $title->id }}"
                                             :checked="$title->id === App\Models\UserTitle::MAN"
@@ -82,7 +81,6 @@
                                 <x-text-input
                                     class="@error ('lastName') is-invalid @enderror block w-full"
                                     id="lastNameInput"
-                                    type="text"
                                     name="lastName"
                                     value="{{ old('lastName') }}"
                                     required
@@ -101,7 +99,6 @@
                                 <x-text-input
                                     class="@error ('firstName') is-invalid @enderror block w-full"
                                     id="firstNameInput"
-                                    type="text"
                                     name="firstName"
                                     value="{{ old('firstName') }}"
                                     required
@@ -200,10 +197,9 @@
                                 </span>
                                 <div class="max-h-48 px-1 overflow-y-auto">
                                     @foreach ($roles as $role)
-                                    <div class="@error ('role') is-invalid @enderror form-check flex flex-row">
+                                    <div class="@error ('role') is-invalid @enderror flex flex-row">
                                         <x-radio-input
                                             id="roleInput-{{ $role->id }}"
-                                            type="radio"
                                             name="role"
                                             value="{{ $role->id }}"
                                             :checked="$role->id === App\Models\Role::USER"
@@ -228,10 +224,9 @@
                                 </span>
                                 <div class="max-h-48 px-1 overflow-y-auto">
                                     @foreach ($groups as $group)
-                                    <div class="form-check flex flex-row">
+                                    <div class="flex flex-row">
                                         <x-checkbox-input
                                             id="groupInput-{{ $group->id }}"
-                                            type="checkbox"
                                             name="groups[]"
                                             value="{{ $group->id }}"
                                         />
