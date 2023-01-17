@@ -66,19 +66,11 @@
                         @if ($user->groups->first())
                         <span>Groupes :</span>
                         @foreach ($user->groups->sortBy('name') as $group)
-                        @if (auth()->user()->can('view', $group))
-                        <li><a href={{ route('groups.show', $group) }}>{{ $group->name }}</a></li>
-                        @else
                         <li>{{ $group->name }}</li>
-                        @endif
                         @endforeach
                         @endif
                         <span>Rôle :</span>
-                        @if (auth()->user()->can('view', $user->role))
-                        <li><a href={{ route('roles.show', $user->role) }}>{{ $user->role->name }}</a></li>
-                        @else
                         <li>{{ $user->role->name }}</li>
-                        @endif
                     </div>
                 </div>
             </div>
