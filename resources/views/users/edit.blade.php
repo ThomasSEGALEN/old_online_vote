@@ -242,7 +242,7 @@
                             </div>
                         </div> 
                     </div>
-                    {{-- <div class="w-full mb-3">
+                    <div class="w-full mb-3">
                         <span class="block font-bold mb-2">
                             {{ __('Permissions') }}
                         </span>
@@ -276,64 +276,44 @@
                                             {{ __('Utilisateurs') }}
                                         </td>
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
-                                            @if ($user->permissions->contains('id', \App\Models\Permission::USERS_VIEW_ANY))
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::USERS_VIEW_ANY }}"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::USERS_VIEW_ANY }}"
-                                                checked
+                                                :checked="$user->permissions->contains('id', \App\Models\Permission::USERS_VIEW_ANY)"
                                             ></x-checkbox-input>
-                                            @else
-                                            <x-checkbox-input></x-checkbox-input>
-                                            @endif
                                         </td>
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
-                                            @if ($user->permissions->contains('id', \App\Models\Permission::USERS_VIEW))
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::USERS_VIEW }}"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::USERS_VIEW }}"
-                                                checked
+                                                :checked="$user->permissions->contains('id', \App\Models\Permission::USERS_VIEW)"
                                             ></x-checkbox-input>
-                                            @else
-                                            <x-checkbox-input></x-checkbox-input>
-                                            @endif
                                         </td>
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
-                                            @if ($user->permissions->contains('id', \App\Models\Permission::USERS_CREATE))
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::USERS_CREATE }}"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::USERS_CREATE }}"
-                                                checked
+                                                :checked="$user->permissions->contains('id', \App\Models\Permission::USERS_CREATE)"
                                             ></x-checkbox-input>
-                                            @else
-                                            <x-checkbox-input></x-checkbox-input>
-                                            @endif
                                         </td>
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
-                                            @if ($user->permissions->contains('id', \App\Models\Permission::USERS_UPDATE))
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::USERS_UPDATE }}"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::USERS_UPDATE }}"
-                                                checked
+                                                :checked="$user->permissions->contains('id', \App\Models\Permission::USERS_UPDATE)"
                                             ></x-checkbox-input>
-                                            @else
-                                            <x-checkbox-input></x-checkbox-input>
-                                            @endif
                                         </td>
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
-                                            @if ($user->permissions->contains('id', \App\Models\Permission::USERS_DELETE))
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::USERS_DELETE }}"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::USERS_DELETE }}"
-                                                checked
+                                                :checked="$user->permissions->contains('id', \App\Models\Permission::USERS_DELETE)"
                                             ></x-checkbox-input>
-                                            @else
-                                            <x-checkbox-input></x-checkbox-input>
-                                            @endif
                                         </td>
                                     </tr>
                                     <tr class="border-b bg-gray-100">
@@ -341,64 +321,44 @@
                                             {{ __('Rôles') }}
                                         </td>
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
-                                            @if ($user->permissions->contains('id', \App\Models\Permission::ROLES_VIEW_ANY))
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::ROLES_VIEW_ANY }}"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::ROLES_VIEW_ANY }}"
-                                                checked
+                                                :checked="$user->permissions->contains('id', \App\Models\Permission::ROLES_VIEW_ANY)"
                                             ></x-checkbox-input>
-                                            @else
-                                            <x-checkbox-input></x-checkbox-input>
-                                            @endif
                                         </td>
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
-                                            @if ($user->permissions->contains('id', \App\Models\Permission::ROLES_VIEW))
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::ROLES_VIEW }}"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::ROLES_VIEW }}"
-                                                checked
+                                                :checked="$user->permissions->contains('id', \App\Models\Permission::ROLES_VIEW)"
                                             ></x-checkbox-input>
-                                            @else
-                                            <x-checkbox-input></x-checkbox-input>
-                                            @endif
                                         </td>
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
-                                            @if ($user->permissions->contains('id', \App\Models\Permission::ROLES_CREATE))
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::ROLES_CREATE }}"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::ROLES_CREATE }}"
-                                                checked
+                                                :checked="$user->permissions->contains('id', \App\Models\Permission::ROLES_CREATE)"
                                             ></x-checkbox-input>
-                                            @else
-                                            <x-checkbox-input></x-checkbox-input>
-                                            @endif
                                         </td>
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
-                                            @if ($user->permissions->contains('id', \App\Models\Permission::ROLES_UPDATE))
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::ROLES_UPDATE }}"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::ROLES_UPDATE }}"
-                                                checked
+                                                :checked="$user->permissions->contains('id', \App\Models\Permission::ROLES_UPDATE)"
                                             ></x-checkbox-input>
-                                            @else
-                                            <x-checkbox-input></x-checkbox-input>
-                                            @endif
                                         </td>
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
-                                            @if ($user->permissions->contains('id', \App\Models\Permission::ROLES_DELETE))
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::ROLES_DELETE }}"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::ROLES_DELETE }}"
-                                                checked
+                                                :checked="$user->permissions->contains('id', \App\Models\Permission::ROLES_DELETE)"
                                             ></x-checkbox-input>
-                                            @else
-                                            <x-checkbox-input></x-checkbox-input>
-                                            @endif
                                         </td>
                                     </tr>
                                     <tr class="border-b bg-white">
@@ -406,135 +366,94 @@
                                             {{ __('Groupes') }}
                                         </td>
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
-                                            @if ($user->permissions->contains('id', \App\Models\Permission::GROUPS_VIEW_ANY))
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::GROUPS_VIEW_ANY }}"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::GROUPS_VIEW_ANY }}"
-                                                checked
+                                                :checked="$user->permissions->contains('id', \App\Models\Permission::GROUPS_VIEW_ANY)"
                                             ></x-checkbox-input>
-                                            @else
-                                            <x-checkbox-input></x-checkbox-input>
-                                            @endif
                                         </td>
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
-                                            @if ($user->permissions->contains('id', \App\Models\Permission::GROUPS_VIEW))
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::GROUPS_VIEW }}"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::GROUPS_VIEW }}"
-                                                checked
+                                                :checked="$user->permissions->contains('id', \App\Models\Permission::GROUPS_VIEW)"
                                             ></x-checkbox-input>
-                                            @else
-                                            <x-checkbox-input></x-checkbox-input>
-                                            @endif
                                         </td>
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
-                                            @if ($user->permissions->contains('id', \App\Models\Permission::GROUPS_CREATE))
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::GROUPS_CREATE }}"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::GROUPS_CREATE }}"
-                                                checked
+                                                :checked="$user->permissions->contains('id', \App\Models\Permission::GROUPS_CREATE)"
                                             ></x-checkbox-input>
-                                            @else
-                                            <x-checkbox-input></x-checkbox-input>
-                                            @endif
                                         </td>
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
-                                            @if ($user->permissions->contains('id', \App\Models\Permission::GROUPS_UPDATE))
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::GROUPS_UPDATE }}"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::GROUPS_UPDATE }}"
-                                                checked
+                                                :checked="$user->permissions->contains('id', \App\Models\Permission::GROUPS_UPDATE)"
                                             ></x-checkbox-input>
-                                            @else
-                                            <x-checkbox-input></x-checkbox-input>
-                                            @endif
                                         </td>
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
-                                            @if ($user->permissions->contains('id', \App\Models\Permission::GROUPS_DELETE))
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::GROUPS_DELETE }}"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::GROUPS_DELETE }}"
-                                                checked
+                                                :checked="$user->permissions->contains('id', \App\Models\Permission::GROUPS_DELETE)"
                                             ></x-checkbox-input>
-                                            @else
-                                            <x-checkbox-input></x-checkbox-input>
-                                            @endif
                                         </td>
                                     </tr>
                                     <tr class="border-b bg-gray-100">
                                         <td class="text-md text-gray-900 font-bold px-6 py-4">
-                                            {{ __('Groupes') }}
+                                            {{ __('Séances') }}
                                         </td>
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
-                                            @if ($user->permissions->contains('id', \App\Models\Permission::SESSIONS_VIEW_ANY))
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::SESSIONS_VIEW_ANY }}"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::SESSIONS_VIEW_ANY }}"
-                                                checked
+                                                :checked="$user->permissions->contains('id', \App\Models\Permission::SESSIONS_VIEW_ANY)"
                                             ></x-checkbox-input>
-                                            @else
-                                            <x-checkbox-input></x-checkbox-input>
-                                            @endif
                                         </td>
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
-                                            @if ($user->permissions->contains('id', \App\Models\Permission::SESSIONS_VIEW))
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::SESSIONS_VIEW }}"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::SESSIONS_VIEW }}"
-                                                checked
+                                                :checked="$user->permissions->contains('id', \App\Models\Permission::SESSIONS_VIEW)"
                                             ></x-checkbox-input>
-                                            @else
-                                            <x-checkbox-input></x-checkbox-input>
-                                            @endif
                                         </td>
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
-                                            @if ($user->permissions->contains('id', \App\Models\Permission::SESSIONS_CREATE))
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::SESSIONS_CREATE }}"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::SESSIONS_CREATE }}"
-                                                checked
+                                                :checked="$user->permissions->contains('id', \App\Models\Permission::SESSIONS_CREATE)"
                                             ></x-checkbox-input>
-                                            @else
-                                            <x-checkbox-input></x-checkbox-input>
-                                            @endif
                                         </td>
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
-                                            @if ($user->permissions->contains('id', \App\Models\Permission::SESSIONS_UPDATE))
                                             <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::SESSIONS_UPDATE }}"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::SESSIONS_UPDATE }}"
-                                                checked
+                                                :checked="$user->permissions->contains('id', \App\Models\Permission::SESSIONS_UPDATE)"
                                             ></x-checkbox-input>
-                                            @else
-                                            <x-checkbox-input></x-checkbox-input>
-                                            @endif
                                         </td>
-                                        <td class="text-md text-gray-900 font-semibold px-6 py-4">
-                                            @if ($user->permissions->contains('id', \App\Models\Permission::SESSIONS_DELETE))
-                                            <x-checkbox-input
+                                        <td class="text-md text-gray-900 font-semibold px-6 py-4">                                            <x-checkbox-input
                                                 id="permissionInput-{{ \App\Models\Permission::SESSIONS_DELETE }}"
                                                 name="permissions[]"
                                                 value="{{ \App\Models\Permission::SESSIONS_DELETE }}"
-                                                checked
+                                                :checked="$user->permissions->contains('id', \App\Models\Permission::SESSIONS_DELETE)"
                                             ></x-checkbox-input>
-                                            @else
-                                            <x-checkbox-input></x-checkbox-input>
-                                            @endif
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                    </div> --}}
+                    </div>
                     <div class="mt-6 space-x-2">
                         <x-primary-button type="submit">
                             {{ __('Envoyer') }}

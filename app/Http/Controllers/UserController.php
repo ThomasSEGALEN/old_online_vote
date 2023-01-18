@@ -81,11 +81,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        // if (!$user) return back()->with('userViewFailure', "Cet utilisateur n'existe pas");
-
-        // $this->authorize('view', $user);
-
-        // return view('users.show', compact('user'));
+        //
     }
 
     /**

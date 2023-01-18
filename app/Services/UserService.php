@@ -66,12 +66,18 @@ class UserService
         if ($data->groups) $user->groups()->sync(array_map('intval', $data->groups));
         else $user->groups()->sync([]);
 
-        $role = Role::where('id', intval($data->role))->first();
-        $permissions = array();
-
-        foreach ($role->permissions as $permission) array_push($permissions, $permission->id);
-
-        $user->permissions()->sync(array_map('intval', $permissions));
+        if ($data->permissions) {
+            $permissions = array_map('intval', $data->permissions);
+            sort($permissions);
+            $user->permissions()->sync($permissions);
+        } else {
+            $role = Role::where('id', intval($data->role))->first();
+            $permissions = array();
+    
+            foreach ($role->permissions as $permission) array_push($permissions, $permission->id);
+    
+            $user->permissions()->sync(array_map('intval', $permissions));
+        }
     }
 
     public function destroy($user)
