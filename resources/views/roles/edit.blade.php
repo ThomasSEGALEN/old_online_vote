@@ -230,7 +230,7 @@
                                     </tr>
                                     <tr class="border-b bg-gray-100">
                                         <td class="text-md text-gray-900 font-bold px-6 py-4">
-                                            {{ __('Groupes') }}
+                                            {{ __('Séances') }}
                                         </td>
                                         <td class="text-md text-gray-900 font-semibold px-6 py-4">
                                             <x-checkbox-input
