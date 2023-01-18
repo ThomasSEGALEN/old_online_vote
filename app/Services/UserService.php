@@ -53,6 +53,29 @@ class UserService
 
     public function update($user, $data)
     {
+        if ($data->groups) $user->groups()->sync(array_map('intval', $data->groups));
+        else $user->groups()->sync([]);
+
+        // Check si le rôle a changé
+        $role = Role::where('id', intval($data->role))->first();
+        $userPermissions = $user->permissions->pluck('id')->toArray();
+
+        if (intval($data->role) !== $user->role->id) {
+            $permissions = array();
+    
+            foreach ($role->permissions as $permission) array_push($permissions, $permission->id);
+    
+            $user->permissions()->sync(array_map('intval', $permissions));
+        }
+
+        // Check si les permissions ont changé
+        $permissions = array_map('intval', $data->permissions);
+
+        if ($permissions !== $userPermissions) {
+            sort($permissions);
+            $user->permissions()->sync($permissions);
+        }
+
         $user->update([
             'last_name' => $data->lastName,
             'first_name' => $data->firstName,
@@ -62,22 +85,6 @@ class UserService
             'role_id' => intval($data->role),
             'title_id' => intval($data->title),
         ]);
-
-        if ($data->groups) $user->groups()->sync(array_map('intval', $data->groups));
-        else $user->groups()->sync([]);
-
-        if ($data->permissions) {
-            $permissions = array_map('intval', $data->permissions);
-            sort($permissions);
-            $user->permissions()->sync($permissions);
-        } else {
-            $role = Role::where('id', intval($data->role))->first();
-            $permissions = array();
-    
-            foreach ($role->permissions as $permission) array_push($permissions, $permission->id);
-    
-            $user->permissions()->sync(array_map('intval', $permissions));
-        }
     }
 
     public function destroy($user)
