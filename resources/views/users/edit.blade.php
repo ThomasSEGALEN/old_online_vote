@@ -242,11 +242,20 @@
                             </div>
                         </div> 
                     </div>
-                    <div class="w-full mb-3">
-                        <span class="block font-bold mb-2">
+                    <div
+                        x-data="{ show: false }"
+                        class="w-full mb-3"
+                    >
+                        <span
+                            class="inline-flex font-bold mb-2"
+                            x-on:click="show = !show"
+                        >
                             {{ __('Permissions') }}
                         </span>
-                        <div class="overflow-x-auto">
+                        <div
+                            class="overflow-x-auto"
+                            :class="{'hidden': !show, 'block': show }"
+                        >
                             <table class="min-w-full">
                                 <thead class="bg-white border-b">
                                     <tr class="border-b bg-gray-100">
